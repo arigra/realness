@@ -104,3 +104,36 @@ Run: `bash scripts/run_study.sh fair radial` (resumable; `sbatch
 scripts/run_study.sbatch fair radial` continues it). Results:
 results/fair_radial_runs.json, results/fair_radial_verdict.json, detections
 results/fair_radial_dets.
+
+### RADIal results
+2026-10-30 ~20:20; results/fair_radial_runs.json, results/fair_radial_verdict.json.
+**Primary (AP@2, only): FAIL** -- gap 0.358 = 4.6 x noise 0.077, but 2/5 counted
+families ordered (contrast, smoothing). AP@4 only and recall@2 only fail the
+same way (2/5: contrast, smoothing). Mix fails on every score (gap <= 1.9 x
+noise; clean is the lowest mix version).
+
+Mean test scores, 3 seeds, only / mix:
+
+| version | AP@2 | AP@4 | recall@2 |
+|---|---|---|---|
+| clean | 0.312 / 0.804 | 0.438 / 0.882 | 0.677 / 0.895 |
+| contrast -6/-12/-20 | 0.204 0.152 0.083 / 0.823 0.841 0.852 | 0.269 0.198 0.102 / 0.890 0.889 0.901 | 0.610 0.502 0.449 / 0.909 0.916 0.910 |
+| unrendered 10/25/50% | 0.255 0.280 0.290 / 0.841 0.831 0.838 | 0.360 0.409 0.409 / 0.895 0.889 0.899 | 0.588 0.631 0.605 / 0.905 0.893 0.904 |
+| extra 10/25/50% | 0.313 0.214 0.274 / 0.829 0.821 0.845 | 0.428 0.306 0.398 / 0.882 0.883 0.895 | 0.673 0.621 0.679 / 0.895 0.890 0.911 |
+| smoothing 25/50/75% | 0.124 0.007 0.015 / 0.822 0.835 0.821 | 0.192 0.012 0.022 / 0.874 0.888 0.875 | 0.514 0.146 0.213 / 0.892 0.898 0.891 |
+| noise +6/+12 | 0.234 0.314 / 0.824 0.849 | 0.348 0.449 / 0.875 0.893 | 0.581 0.639 / 0.902 0.904 |
+| clutter +6/-6/+12/-12 | 0.269 0.353 0.329 0.252 / 0.808 0.824 0.827 0.823 | 0.349 0.493 0.400 0.346 / 0.866 0.887 0.886 0.881 | 0.644 0.634 0.711 0.569 / 0.900 0.888 0.891 0.904 |
+| range 1/2 | 0.365 0.341 / 0.822 0.838 | 0.389 0.450 / 0.885 0.886 | 0.706 0.628 / 0.882 0.905 |
+
+- **only**: smoothing again the strongest defect (25%: 0.312 -> 0.124; 50%
+  leaves a useless detector). Unlike CARRADA, weaker targets cost a lot and in
+  order (-20 dB: 0.083). Extra and unrendered objects stay within noise (extra
+  was a weak defect here: +22 bright cells on 1785). Range shifts of 1-2 cells
+  do nothing (CARRADA range 2: 0.055).
+- contrast -12 and noise +12 leave the same target-over-ring (12.8 vs 13.1 dB)
+  but AP 0.152 vs 0.314: what costs is targets sinking towards the scene's other
+  scatterers, not towards the noise floor (a reading, untested).
+- **mix**: nothing measurable, as on CARRADA; smoothing 50% gives 0.835 in the
+  mix and 0.007 alone.
+- Across both datasets only smoothing orders on every score; the second ordered
+  family differs (CARRADA extra, RADIal contrast).
