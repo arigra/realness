@@ -1,8 +1,6 @@
 """RADIal-style range-Doppler scenes from radar physics and scene geometry.
 
-The earlier simulator (src/simulator.py) draws a few point targets over a
-K-distributed clutter ridge on a 64x64 grid. Real RADIal maps look nothing like
-that, because they are shaped by mechanisms it does not have:
+Real RADIal maps are shaped by these mechanisms:
 
 1. DDMA MIMO. All 12 transmitters fire together, each with its own Doppler
    phase code, so every return appears once per transmitter, spread across the
@@ -26,7 +24,7 @@ import math
 
 import torch
 
-from src.radar_physics import RADIAL_SPEC, C_LIGHT, window
+from src.radar import RADIAL_SPEC, C_LIGHT, window
 
 # rpl.py: dividend_constant_arr = arange(0, 16*16, 16); the Tx sequence keeps
 # element 0 and elements 5..15, i.e. slots 1-4 are empty.
@@ -107,11 +105,9 @@ class Scenario:
     traffic_speed_spread_frac: float = 0.15
     # antenna and surface scattering
     azimuth_pattern_power: float = 2.0          # two-way cos^2 element pattern
-    # backscatter from a rough surface ~cos^n(incidence); n=2 for the
-    # engineer's variant, an uncertain physical law the fitted variant tunes
+    # backscatter from a rough surface ~cos^n(incidence); n=2, an uncertain law
     surface_incidence_power: float = 2.0
-    # vehicle bodies are smooth metal, not rough surfaces: the same cos^2 law,
-    # kept out of the fitted knobs (the fit drives the rough-surface law to 0)
+    # vehicle bodies are smooth metal, not rough surfaces: the same cos^2 law
     vehicle_incidence_power: float = 2.0
     # scene-density multipliers (1.0 = the road-type description as written)
     structure_coverage_scale: float = 1.0
@@ -436,19 +432,3 @@ class SceneSimulator:
         return {"x": torch.stack(frames), "labels": labels,
                 "ego_speed": v_ego, "road_type": name}
 
-
-def fitted_scenario(path="configs/scene_fitted.json"):
-    """The fitted variant: Scenario with knobs tuned to RADIal training recordings.
-
-    Kept separate from Scenario() on purpose -- the engineer's variant must
-    never inherit anything fitted.
-    """
-    import json
-    from pathlib import Path
-    knobs = dict(json.loads(Path(path).read_text())["knobs"])
-    ground = knobs.pop("ground_rcs_mean")
-    knobs["lowpass_order"] = int(round(knobs["lowpass_order"]))
-    return Scenario(ground_rcs_dbsm=(ground, 6.0), **knobs)
-
-
-VARIANTS = {"engineer": Scenario, "fitted": fitted_scenario}

@@ -1,6 +1,5 @@
 __pycache__/
+.ipynb_checkpoints/
 data/
 logs/
-*.heartbeat
-samples/*_dets/
-.ipynb_checkpoints/
+results/*_dets/

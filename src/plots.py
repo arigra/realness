@@ -9,16 +9,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from scripts.damage_study import CONFIGS, FAIR, N_SIM, SUITES
-from scripts.radial_detector_arms import dataset_pool
-from src.damage import shift_labels, smooth_background
+from src.data import load
+from src.versions import DATASETS, FAIR, SUITES, version as _version
 
-RESULTS = {"carrada": ("samples/damage_fair_verdict.json", "samples/damage_fair_study.json",
-                       "samples/damage_fair_dets"),
-           "radial": ("samples/damage_fair_radial_verdict.json", "samples/damage_fair_radial_study.json",
-                      "samples/damage_fair_radial_dets")}
 FAMILIES = SUITES["fair"][1] + SUITES["fair"][2]
-RANGE_RES = {"carrada": 0.2, "radial": 0.2}
+RANGE_RES_M = 0.2               # both datasets
+
+
+def _results(dataset, kind):
+    """results/fair_<dataset>_runs.json, _verdict.json or _dets."""
+    return Path("results") / f"fair_{dataset}_{kind}"
 
 
 def family(name):
@@ -28,22 +28,12 @@ def family(name):
 
 def version(dataset, name, n=16):
     """The first n sequences of one version, as the study trains on them."""
-    sim, _, damage = CONFIGS[dataset]
-    kind, value = FAIR[name]
-    if kind not in ("label", "range", "smooth"):
-        return dataset_pool(Path(damage) / name, "train", limit=n)
-    out = []
-    for it in dataset_pool(sim, "train", limit=min(n, N_SIM)):
-        if kind == "range":
-            it["traj"] = shift_labels(it["traj"], 0, value, it["x"].shape[-2], wrap=False)
-        elif kind == "smooth":
-            it["x"] = smooth_background(it["x"].float(), it["traj"], it["present"], value).half()
-        out.append(it)
-    return out
+    clean = load(DATASETS[dataset].sim, "train", limit=n)
+    return _version(dataset, name, *FAIR[name], clean, n=n)
 
 
 def real(dataset, split="train", n=16):
-    return dataset_pool(CONFIGS[dataset][1], split, limit=n)
+    return load(DATASETS[dataset].real, split, limit=n)
 
 
 def labels(item, t):
@@ -79,7 +69,7 @@ def show_real_and_sim(dataset, seqs=(0, 1, 2, 3), frame=0):
     for r, (label, items) in enumerate(rows.items()):
         for c, s in enumerate(seqs):
             m = items[s]["x"][frame].float().numpy()
-            _show(axes[r][c], m, *np.percentile(m, (5, 99.5)), labels(items[s], frame), RANGE_RES[dataset])
+            _show(axes[r][c], m, *np.percentile(m, (5, 99.5)), labels(items[s], frame), RANGE_RES_M)
             axes[r][c].set_title(f"{label}, sequence {s}, {len(labels(items[s], frame))} labelled")
         axes[r][0].set_ylabel("range (m)")
     for ax in axes[-1]:
@@ -96,7 +86,7 @@ def show_sequence(dataset, name, seq, zoom=None):
     lo, hi = np.percentile(x, (5, 99.7))
     fig, axes = plt.subplots(1, x.shape[0], figsize=(2.6 * x.shape[0], 3.4))
     for t, ax in enumerate(axes):
-        _show(ax, x[t], lo, hi, labels(item, t), RANGE_RES[dataset], window=_window(item, 0, zoom, x.shape[1:]))
+        _show(ax, x[t], lo, hi, labels(item, t), RANGE_RES_M, window=_window(item, 0, zoom, x.shape[1:]))
         ax.set_title(f"frame {t}")
     axes[0].set_ylabel("range (m)")
     fig.suptitle(f"{dataset}, {name}, sequence {seq}")
@@ -132,10 +122,10 @@ def show_family(dataset, fam, seq=None, frame=0, zoom=None):
     win = _window(items[0], frame, zoom, maps[0].shape)
     fig, axes = plt.subplots(2, len(names), figsize=(3.4 * len(names), 7), squeeze=False)
     for c, (n, it, m) in enumerate(zip(names, items, maps)):
-        _show(axes[0][c], m, lo, hi, labels(it, frame), RANGE_RES[dataset], window=win)
+        _show(axes[0][c], m, lo, hi, labels(it, frame), RANGE_RES_M, window=win)
         axes[0][c].set_title(n)
         diff = m - maps[0]
-        _show(axes[1][c], diff, -12, 12, (), RANGE_RES[dataset], cmap="RdBu_r", window=win)
+        _show(axes[1][c], diff, -12, 12, (), RANGE_RES_M, cmap="RdBu_r", window=win)
         axes[1][c].set_title(f"minus clean (max |change| {np.abs(diff).max():.0f} dB)", fontsize=9)
         axes[1][c].set_xlabel("Doppler bin")
     axes[0][0].set_ylabel("range (m)")
@@ -146,7 +136,7 @@ def show_family(dataset, fam, seq=None, frame=0, zoom=None):
 
 
 def load_results(dataset):
-    path = Path(RESULTS[dataset][1])
+    path = _results(dataset, "runs.json")
     return json.loads(path.read_text()) if path.exists() else None
 
 
@@ -182,7 +172,7 @@ def show_results(dataset, metric="ap2"):
 
 
 def print_verdict(dataset):
-    path = Path(RESULTS[dataset][0])
+    path = _results(dataset, "verdict.json")
     if not path.exists():
         print(f"{dataset}: no verdict yet")
         return
@@ -208,14 +198,14 @@ def show_detections(dataset, names, seq=None, frame=0, seed=1, setting="only", m
     idx = sum(it["x"].shape[0] for it in test[:seq]) + frame
     fig, axes = plt.subplots(1, len(names), figsize=(3.6 * len(names), 4), squeeze=False)
     for ax, n in zip(axes[0], names):
-        f = Path(RESULTS[dataset][2]) / f"{setting}_{n}_s{seed}.pt"
-        _show(ax, m, lo, hi, labels(item, frame), RANGE_RES[dataset],
+        f = _results(dataset, "dets") / f"{setting}_{n}_s{seed}.pt"
+        _show(ax, m, lo, hi, labels(item, frame), RANGE_RES_M,
               window=_window(item, frame, zoom, m.shape))
         if f.exists():
             for score, r, d in torch.load(f, weights_only=False)["dets"][idx]:
                 if score >= min_score:
-                    ax.plot(d, r * RANGE_RES[dataset], "x", color="white", ms=9, mew=2)
-                    ax.text(d + 1, r * RANGE_RES[dataset], f"{score:.2f}", color="white", fontsize=7)
+                    ax.plot(d, r * RANGE_RES_M, "x", color="white", ms=9, mew=2)
+                    ax.text(d + 1, r * RANGE_RES_M, f"{score:.2f}", color="white", fontsize=7, clip_on=True)
         ax.set_title(f"trained on {n}" if f.exists() else f"{n}: not run yet")
         ax.set_xlabel("Doppler bin")
     axes[0][0].set_ylabel("range (m)")

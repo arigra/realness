@@ -8,7 +8,7 @@ blinking kept map and label consistent. New defects and scoring proposed by
 Claude, accepted by Ari ("do it"), 2026-10-28; this note covers CARRADA, RADIal
 follows. Written before any result.
 
-## Versions (src/damage.py, `scripts/damage_study.py --suite fair`)
+## Versions (src/damage.py, src/versions.py, `scripts/damage_study.py --suite fair`)
 Same 200 simulator sequences, same seeds; re-rendered defects reproduce the
 clean scene except for the change (tests/test_damage.py).
 
@@ -28,7 +28,7 @@ For scale: the RADIal DiT's speckle was 36% under real (smoothing 25% ~ that).
 
 ## Training and test
 As the 2026-10-27 note: frame detector, settings **only** and **mix** (50 real),
-seeds 1-3, CARRADA official test. Detections kept (samples/damage_fair_dets).
+seeds 1-3, CARRADA official test. Detections kept (results/fair_carrada_dets).
 
 ## Scores
 - **AP within 2 bins**: primary, as before.
@@ -50,7 +50,7 @@ only. Applied to "only"; "mix" reported.
   primary score should change (Ari's decision).
 
 ## Results
-2026-10-28 ~02:40; samples/damage_fair_study.json, samples/damage_fair_verdict.json.
+2026-10-28 ~02:40; results/fair_carrada_runs.json, results/fair_carrada_verdict.json.
 **Primary (AP@2, only): FAIL** -- gap 0.371 = 6.9 x noise 0.054, but 2/5 counted
 families ordered (extra, smoothing). AP@4 only passes (gap 7.5 x noise 0.077;
 contrast, extra, smoothing), contrast only just (clean - worst 0.079 vs noise
@@ -100,6 +100,7 @@ spreads over the targets' Doppler.
 | noise | target over ring 23.7 -> 18.7 / 13.1 dB |
 | clutter | bright cells 1785 -> 2650 / 1169 / 3658 / 846 (+6/-6/+12/-12) |
 
-Run: scripts/run_damage_radial.sh (resumable; scripts/damage_radial.sbatch
-continues it). Results: samples/damage_fair_radial_study.json,
-samples/damage_fair_radial_verdict.json, detections samples/damage_fair_radial_dets.
+Run: `bash scripts/run_study.sh fair radial` (resumable; `sbatch
+scripts/run_study.sbatch fair radial` continues it). Results:
+results/fair_radial_runs.json, results/fair_radial_verdict.json, detections
+results/fair_radial_dets.

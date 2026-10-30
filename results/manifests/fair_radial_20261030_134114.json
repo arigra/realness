@@ -1,0 +1,173 @@
+{
+  "written": "2026-10-30T13:41:15",
+  "commit": "efa4b5114ca067ab4998b8c254c14aadea6017b3",
+  "branch": "main",
+  "dirty": true,
+  "files": {
+    "src/__init__.py": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c14",
+      "full": true
+    },
+    "src/__pycache__/__init__.cpython-310.pyc": {
+      "size": 163,
+      "sha256": "32c01fa59bcf5e5b",
+      "full": true
+    },
+    "src/__pycache__/carrada.cpython-310.pyc": {
+      "size": 4629,
+      "sha256": "24eda5a9183f7214",
+      "full": true
+    },
+    "src/__pycache__/carrada_sim.cpython-310.pyc": {
+      "size": 12910,
+      "sha256": "f5032c7244330468",
+      "full": true
+    },
+    "src/__pycache__/damage.cpython-310.pyc": {
+      "size": 8913,
+      "sha256": "71c71bdab9191e86",
+      "full": true
+    },
+    "src/__pycache__/data.cpython-310.pyc": {
+      "size": 4018,
+      "sha256": "60e1cfd2039f09fa",
+      "full": true
+    },
+    "src/__pycache__/detector.cpython-310.pyc": {
+      "size": 7584,
+      "sha256": "1d0f22fd3b938c0b",
+      "full": true
+    },
+    "src/__pycache__/detector_scene.cpython-310.pyc": {
+      "size": 6616,
+      "sha256": "2dd95fd629657d46",
+      "full": true
+    },
+    "src/__pycache__/radar.cpython-310.pyc": {
+      "size": 3357,
+      "sha256": "94e6592ac7b8d58b",
+      "full": true
+    },
+    "src/__pycache__/radar_physics.cpython-310.pyc": {
+      "size": 5100,
+      "sha256": "1c876f83739c9d88",
+      "full": true
+    },
+    "src/__pycache__/radial_sim.cpython-310.pyc": {
+      "size": 16645,
+      "sha256": "2d807fd024a123c1",
+      "full": true
+    },
+    "src/__pycache__/scene_data.cpython-310.pyc": {
+      "size": 2822,
+      "sha256": "0f5322e88095f67b",
+      "full": true
+    },
+    "src/__pycache__/scene_sim.cpython-310.pyc": {
+      "size": 17454,
+      "sha256": "d39e1de07ba00b9b",
+      "full": true
+    },
+    "src/__pycache__/train.cpython-310.pyc": {
+      "size": 3736,
+      "sha256": "99c7a8e8153783ca",
+      "full": true
+    },
+    "src/__pycache__/versions.cpython-310.pyc": {
+      "size": 5902,
+      "sha256": "51c4f853188e416e",
+      "full": true
+    },
+    "src/carrada_sim.py": {
+      "size": 13923,
+      "sha256": "d14780bba16554d8",
+      "full": true
+    },
+    "src/damage.py": {
+      "size": 8459,
+      "sha256": "8d0fbb7493da56d5",
+      "full": true
+    },
+    "src/data.py": {
+      "size": 3434,
+      "sha256": "155dd63ecbdfb685",
+      "full": true
+    },
+    "src/detector.py": {
+      "size": 7144,
+      "sha256": "3ef02d3da6d8196b",
+      "full": true
+    },
+    "src/plots.py": {
+      "size": 9516,
+      "sha256": "3d768abf8d922dd6",
+      "full": true
+    },
+    "src/radar.py": {
+      "size": 3139,
+      "sha256": "088b97f2d613b772",
+      "full": true
+    },
+    "src/radial_sim.py": {
+      "size": 22183,
+      "sha256": "c617562052db41be",
+      "full": true
+    },
+    "src/train.py": {
+      "size": 3119,
+      "sha256": "c89dc9f8c56986b3",
+      "full": true
+    },
+    "src/versions.py": {
+      "size": 5471,
+      "sha256": "14053f166ce1b04a",
+      "full": true
+    },
+    "scripts/__pycache__/__init__.cpython-310.pyc": {
+      "size": 167,
+      "sha256": "52da5433a7eff427",
+      "full": true
+    },
+    "scripts/__pycache__/build_carrada_cache.cpython-310.pyc": {
+      "size": 5205,
+      "sha256": "7c5ce57b5bb85462",
+      "full": true
+    },
+    "scripts/__pycache__/damage_study.cpython-310.pyc": {
+      "size": 6682,
+      "sha256": "e5ecc6da0818af52",
+      "full": true
+    },
+    "scripts/__pycache__/radial_detector_arms.cpython-310.pyc": {
+      "size": 11280,
+      "sha256": "8758d38a8ad6229e",
+      "full": true
+    },
+    "scripts/__pycache__/radial_detector_study.cpython-310.pyc": {
+      "size": 11817,
+      "sha256": "5b9575402808a46d",
+      "full": true
+    },
+    "scripts/damage_study.py": {
+      "size": 5820,
+      "sha256": "dc126e3cfd03b80d",
+      "full": true
+    },
+    "scripts/run_study.sbatch": {
+      "size": 710,
+      "sha256": "a193a358fdb1fa49",
+      "full": true
+    },
+    "scripts/run_study.sh": {
+      "size": 1051,
+      "sha256": "e58136904534f91b",
+      "full": true
+    },
+    "scripts/write_manifest.py": {
+      "size": 2057,
+      "sha256": "0e1a32884da45242",
+      "full": true
+    }
+  }
+}

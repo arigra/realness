@@ -6,7 +6,7 @@ when synthetic data gets worse. Defects, levels, settings, seeds and the rule
 below were proposed by Claude and accepted by Ari ("go"), 2026-10-27. Written
 before any result.
 
-## Data (src/damage.py, scripts/damage_study.py)
+## Data (src/damage.py, src/versions.py, scripts/damage_study.py)
 The first 200 sequences of the CARRADA engineer simulator cache (the sim-only
 pool of the CARRADA detector study), in 19 versions (clean + 18 defects):
 
@@ -31,7 +31,7 @@ labels 1381 clean, 1266/1059/719/352 missing, 1241/1032/667 blinking; hit rate
 3.57 (+6) / 2.33 (-6).
 
 ## Training
-The frame detector and training loop of scripts/radial_detector_study.py
+The frame detector and training loop of radSeq's step 6 study (here src/detector.py, src/train.py)
 (width 32, lr 1e-3, early stopping on 32 evenly spaced real val sequences,
 patience 4 x 250 steps), seeds 1-3, two settings:
 - **only**: the version alone (synthetic-only).
@@ -59,7 +59,7 @@ Test: CARRADA official test, 264 sequences, class-agnostic AP within 2 bins.
 - Caveat: AP matches detections within 2 bins, so a 3-bin label shift defeats
   scoring by construction; range/Doppler 1-2 are the informative levels.
 
-## Results (2026-10-27 23:00; samples/damage_study.json, samples/damage_verdict.json)
+## Results (2026-10-27 23:00; results/v1_carrada_runs.json, results/v1_carrada_verdict.json)
 **Both settings FAIL the rule.**
 
 | | gap | noise | gap / noise | ordered families |

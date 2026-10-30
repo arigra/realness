@@ -1,4 +1,4 @@
-"""Radar link budget from published parameters, not fitted to measurements.
+"""The RADIal radar, from published parameters, not fitted to measurements.
 
 Every constant here comes from a datasheet, a published specification table, or
 a standard propagation model -- never from the recordings the simulator is
@@ -83,48 +83,6 @@ RADIAL_SPEC = RadarSpec(
     n_tx=12,                # rpl.py numTxAnt
     window="hamming",       # rpl.py builds 0.54 - 0.46 cos on both axes
 )
-
-
-# Published automotive RCS at 76-77 GHz. These describe the target population
-# on a road, not these particular recordings.
-VEHICLE_RCS_DBSM = {
-    "car": (10.0, 5.0),
-    "truck": (20.0, 5.0),
-    "motorcycle": (0.0, 5.0),
-}
-
-
-def target_snr_db(range_m, rcs_dbsm, spec=RADIAL_SPEC):
-    """Single-target SNR from the radar equation: SNR ~ sigma / R^4.
-
-    Anchored on the sensor class's quoted reference performance rather than on
-    absolute Pt/G, which are not published for this radar.
-    """
-    range_m = torch.as_tensor(range_m, dtype=torch.float).clamp(min=spec.range_res_m)
-    rcs_dbsm = torch.as_tensor(rcs_dbsm, dtype=torch.float)
-    return (spec.ref_snr_db + (rcs_dbsm - spec.ref_rcs_dbsm)
-            - 40 * torch.log10(range_m / spec.ref_range_m))
-
-
-def clutter_cnr_db(range_m, spec=RADIAL_SPEC):
-    """Surface clutter versus range.
-
-    The illuminated ground patch grows linearly with range while returned power
-    falls as 1/R^4, so clutter-to-noise falls as 1/R^3. Standard
-    grazing-incidence surface-clutter geometry.
-    """
-    range_m = torch.as_tensor(range_m, dtype=torch.float).clamp(min=spec.range_res_m)
-    return spec.ref_cnr_db - 30 * torch.log10(range_m / spec.ref_range_m)
-
-
-def sample_rcs(n, generator=None, weights=(0.8, 0.15, 0.05)):
-    """Draw RCS values for a road-vehicle population (car / truck / motorcycle)."""
-    kinds = list(VEHICLE_RCS_DBSM)
-    idx = torch.multinomial(torch.tensor(weights, dtype=torch.float), n,
-                            replacement=True, generator=generator)
-    mean = torch.tensor([VEHICLE_RCS_DBSM[k][0] for k in kinds])[idx]
-    std = torch.tensor([VEHICLE_RCS_DBSM[k][1] for k in kinds])[idx]
-    return mean + std * torch.randn(n, generator=generator), idx
 
 
 def window(n, kind="hamming"):

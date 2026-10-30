@@ -1,8 +1,5 @@
 torch
-PyYAML
 numpy
-scipy
 matplotlib
-imageio
 pytest
-wandb
+jupyter

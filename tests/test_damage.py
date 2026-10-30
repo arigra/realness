@@ -87,7 +87,7 @@ def test_noisy_spec_and_smoothing():
 
 def _scene(seed=10_000_000, **kw):
     from src.damage import DamagedSceneSimulator
-    from src.scene_sim import SceneSimulator
+    from src.radial_sim import SceneSimulator
     cls = DamagedSceneSimulator if kw else SceneSimulator
     if kw:
         kw.setdefault("blink_generator", torch.Generator().manual_seed(1))

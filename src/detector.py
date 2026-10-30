@@ -1,96 +1,73 @@
-"""Per-frame target detector for research plan step 2: does synthetic data help?
+"""The frame detector and how its detections are scored.
 
-A small U-Net maps one normalised RD frame (64x64) to a heatmap of target
-centres. Labels are Gaussian blobs (sigma 1 bin, peak 1) at each target's
-rounded bin, trained with the CenterNet focal loss. Detections are 3x3 local
-maxima of the sigmoid heatmap; average precision matches them to true targets
-within 2 bins, each true target at most once.
+A small U-Net reads one range-Doppler frame and predicts a heatmap with a peak
+at each object (CenterNet style). It works frame by frame, so no training
+source can gain from reading neighbouring frames. The Doppler axis is circular
+(unshifted FFT order), so targets, convolutions, peak picking and matching all
+wrap around it.
 """
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-def _blobs(traj, n_targets, size, sigma):
-    """Gaussian blob (peak 1) at each target's rounded bin: (B, M, L, size, size), and the (B, M) real-target mask."""
+def heatmap_targets(traj, present, n_range=512, n_doppler=256, sigma=2.0):
+    """Gaussian blobs at each present object: (B, L, n_range, n_doppler).
+
+    Doppler distance wraps; an object near bin 255 must light up bin 0 as well,
+    or the detector is taught a seam the radar does not have.
+    """
     B, M, L, _ = traj.shape
     device = traj.device
-    centres = torch.round(traj.float())
-    r = torch.arange(size, device=device, dtype=torch.float32).view(1, 1, 1, size, 1)
-    d = torch.arange(size, device=device, dtype=torch.float32).view(1, 1, 1, 1, size)
-    blobs = torch.exp(-((r - centres[..., 0, None, None]) ** 2
-                        + (d - centres[..., 1, None, None]) ** 2) / (2 * sigma ** 2))
-    real = (torch.arange(M, device=device)[None] < n_targets.to(device)[:, None]).float()
-    return blobs, real
+    r = torch.arange(n_range, device=device, dtype=torch.float).view(1, 1, 1, n_range, 1)
+    d = torch.arange(n_doppler, device=device, dtype=torch.float).view(1, 1, 1, 1, n_doppler)
+    # Centres are rounded to a cell: the focal loss counts a cell as an object
+    # only if its target is exactly 1.0, and labelled ranges are fractional.
+    tr = torch.round(traj[..., 0].float()).view(B, M, L, 1, 1)
+    td = torch.remainder(torch.round(traj[..., 1].float()), n_doppler).view(B, M, L, 1, 1)
+    dd = torch.remainder(d - td + n_doppler / 2, n_doppler) - n_doppler / 2
+    blobs = torch.exp(-((r - tr) ** 2 + dd ** 2) / (2 * sigma ** 2))
+    blobs = blobs * present.to(device).view(B, M, L, 1, 1).float()
+    return blobs.amax(dim=1)
 
 
-def heatmap_targets(traj, n_targets, size=64, sigma=1.0):
-    """traj (B, M, L, 2) bins; n_targets (B,) -> (B, L, size, size), peak 1 at rounded bins."""
-    blobs, real = _blobs(traj, n_targets, size, sigma)
-    B, M = real.shape
-    return (blobs * real.view(B, M, 1, 1, 1)).amax(dim=1)
+def _conv(cin, cout):
+    """3x3 convolution that wraps in Doppler and pads normally in range."""
+    return nn.Sequential(
+        _WrapPad(), nn.Conv2d(cin, cout, 3, padding=0), nn.GroupNorm(1, cout), nn.SiLU(),
+        _WrapPad(), nn.Conv2d(cout, cout, 3, padding=0), nn.GroupNorm(1, cout), nn.SiLU())
 
 
-def class_heatmap_targets(traj, n_targets, cls, n_classes=3, size=64, sigma=1.0):
-    """-> (B, n_classes, L, size, size): each target's blob in its class channel only."""
-    blobs, real = _blobs(traj, n_targets, size, sigma)
-    B, M = real.shape
-    onehot = F.one_hot(cls.to(traj.device).long(), n_classes).float() * real[..., None]
-    return (blobs[:, :, None] * onehot.view(B, M, n_classes, 1, 1, 1)).amax(dim=1)
+class _WrapPad(nn.Module):
+    def forward(self, x):
+        x = F.pad(x, (1, 1, 0, 0), mode="circular")     # Doppler: circular
+        return F.pad(x, (0, 0, 1, 1), mode="replicate")  # range: replicate
 
 
-def _block(cin, cout):
-    return nn.Sequential(nn.Conv2d(cin, cout, 3, padding=1), nn.GroupNorm(8, cout), nn.SiLU(),
-                         nn.Conv2d(cout, cout, 3, padding=1), nn.GroupNorm(8, cout), nn.SiLU())
+class FrameDetector(nn.Module):
+    """U-Net over one frame; (B, L, R, D) inputs are folded into the batch."""
 
-
-class HeatmapDetector(nn.Module):
     def __init__(self, width=32):
         super().__init__()
-        self.enc1 = _block(1, width)
-        self.enc2 = _block(width, 2 * width)
-        self.enc3 = _block(2 * width, 4 * width)
-        self.dec2 = _block(4 * width + 2 * width, 2 * width)
-        self.dec1 = _block(2 * width + width, width)
-        self.head = nn.Conv2d(width, 1, 1)
-        nn.init.constant_(self.head.bias, -2.19)       # sigmoid ~0.1 at start (CenterNet)
+        w = width
+        self.enc1, self.enc2, self.enc3 = _conv(1, w), _conv(w, 2 * w), _conv(2 * w, 4 * w)
+        self.mid = _conv(4 * w, 4 * w)
+        self.dec3, self.dec2, self.dec1 = _conv(8 * w, 2 * w), _conv(4 * w, w), _conv(2 * w, w)
+        self.head = nn.Conv2d(w, 1, 1)
+        self.head.bias.data.fill_(-4.0)                 # rare positives
 
     def forward(self, x):
-        """x (B, 64, 64) normalised frames -> (B, 64, 64) logits."""
-        e1 = self.enc1(x[:, None])
-        e2 = self.enc2(F.max_pool2d(e1, 2))
-        e3 = self.enc3(F.max_pool2d(e2, 2))
-        d2 = self.dec2(torch.cat([F.interpolate(e3, scale_factor=2), e2], 1))
-        d1 = self.dec1(torch.cat([F.interpolate(d2, scale_factor=2), e1], 1))
-        return self.head(d1)[:, 0]
-
-
-class SequenceClassDetector(nn.Module):
-    """All 16 frames in, one heatmap per class per frame out.
-
-    (B, 16, 64, 64) normalised maps -> (B, n_classes, 16, 64, 64) logits. Seeing the
-    whole sequence lets it use frame-to-frame amplitude fluctuation (Swerling-1)
-    and range extent (extended targets).
-    """
-
-    def __init__(self, frames=16, n_classes=3, width=48):
-        super().__init__()
-        self.frames, self.n_classes = frames, n_classes
-        self.enc1 = _block(frames, width)
-        self.enc2 = _block(width, 2 * width)
-        self.enc3 = _block(2 * width, 4 * width)
-        self.dec2 = _block(4 * width + 2 * width, 2 * width)
-        self.dec1 = _block(2 * width + width, width)
-        self.head = nn.Conv2d(width, n_classes * frames, 1)
-        nn.init.constant_(self.head.bias, -2.19)
-
-    def forward(self, x):
-        e1 = self.enc1(x)
-        e2 = self.enc2(F.max_pool2d(e1, 2))
-        e3 = self.enc3(F.max_pool2d(e2, 2))
-        d2 = self.dec2(torch.cat([F.interpolate(e3, scale_factor=2), e2], 1))
-        d1 = self.dec1(torch.cat([F.interpolate(d2, scale_factor=2), e1], 1))
-        return self.head(d1).view(x.shape[0], self.n_classes, self.frames, *x.shape[-2:])
+        b, l = x.shape[:2]
+        h = x.reshape(b * l, 1, *x.shape[2:])
+        e1 = self.enc1(h)
+        e2 = self.enc2(F.avg_pool2d(e1, 2))
+        e3 = self.enc3(F.avg_pool2d(e2, 2))
+        m = self.mid(F.avg_pool2d(e3, 2))
+        up = lambda t, ref: F.interpolate(t, size=ref.shape[-2:], mode="nearest")
+        d3 = self.dec3(torch.cat([up(m, e3), e3], 1))
+        d2 = self.dec2(torch.cat([up(d3, e2), e2], 1))
+        d1 = self.dec1(torch.cat([up(d2, e1), e1], 1))
+        return self.head(d1).reshape(b, l, *x.shape[2:])
 
 
 def focal_loss(logits, target, alpha=2, beta=4):
@@ -102,19 +79,12 @@ def focal_loss(logits, target, alpha=2, beta=4):
     return (pos_loss + neg_loss) / pos.sum().clamp_min(1)
 
 
-def detect(prob, threshold=0.05, top_k=10, circular_doppler=False):
-    """prob (F, H, W) in [0, 1] -> per frame list of (score, range, doppler).
-
-    circular_doppler: the last axis wraps (RADIal's unshifted Doppler), so a
-    peak straddling bins W-1 and 0 is one peak, not two -- with plain padding
-    both edge cells were local maxima and the second counted as a false alarm.
-    """
+def detect(prob, threshold=0.05, top_k=10):
+    """prob (F, R, D) in [0, 1] -> per frame a list of (score, range, doppler):
+    local maxima above threshold, Doppler wrapping, the top_k strongest."""
     p = prob[:, None]
-    if circular_doppler:
-        p = torch.cat([p[..., -1:], p, p[..., :1]], dim=-1)
-        local_max = F.max_pool2d(p, 3, 1, padding=(1, 0))[:, 0]
-    else:
-        local_max = F.max_pool2d(p, 3, 1, 1)[:, 0]
+    p = torch.cat([p[..., -1:], p, p[..., :1]], dim=-1)
+    local_max = F.max_pool2d(p, 3, 1, padding=(1, 0))[:, 0]
     peaks = (prob == local_max) & (prob > threshold)
     out = []
     for f in range(prob.shape[0]):
@@ -125,32 +95,71 @@ def detect(prob, threshold=0.05, top_k=10, circular_doppler=False):
     return out
 
 
-def average_precision(detections, targets, radius=2.0):
-    """detections: per frame list of (score, r, d); targets: per frame (m, 2) true bins.
+def _distances(tgt, r, d, n_doppler):
+    dd = torch.remainder(tgt[:, 1] - d + n_doppler / 2, n_doppler) - n_doppler / 2
+    return torch.sqrt((tgt[:, 0] - r) ** 2 + dd ** 2)
 
-    All-point interpolated AP over all frames; a true target is matched at most once.
-    """
+
+def average_precision(detections, targets, n_doppler, radius=2.0):
+    """All-point interpolated AP over all frames, class-agnostic. A detection is
+    a hit if an unmatched labelled object lies within `radius` cells (Doppler
+    wrapping); strongest detections are matched first.
+    detections: per frame a list of (score, r, d); targets: per frame (m, 2)."""
     scored, n_true = [], 0
     for frame_dets, tgt in zip(detections, targets):
         n_true += len(tgt)
         used = torch.zeros(len(tgt), dtype=torch.bool)
-        for score, r, d in sorted(frame_dets, reverse=True):
-            hit = False
+        for score, r, d in sorted(frame_dets, key=lambda t: -t[0]):
+            hit = -1
             if len(tgt):
-                dist = (tgt.float() - torch.tensor([r, d])).norm(dim=1)
+                dist = _distances(tgt, r, d, n_doppler)
                 dist[used] = float("inf")
-                j = int(dist.argmin())
-                if float(dist[j]) <= radius:
-                    used[j] = True
-                    hit = True
-            scored.append((score, hit))
-    if n_true == 0 or not scored:
-        return 0.0
-    scored.sort(key=lambda s: -s[0])
-    hits = torch.tensor([float(h) for _, h in scored])
-    tp = torch.cumsum(hits, 0)
-    precision = tp / torch.arange(1, len(hits) + 1)
-    recall = tp / n_true
-    envelope = torch.flip(torch.cummax(torch.flip(precision, [0]), 0).values, [0])
-    previous = torch.cat([torch.zeros(1), recall[:-1]])
-    return float(((recall - previous) * envelope).sum())
+                best = int(torch.argmin(dist))
+                if float(dist[best]) <= radius:
+                    hit = best
+            if hit >= 0:
+                used[hit] = True
+            scored.append((score, hit >= 0))
+    if n_true == 0:
+        return float("nan")
+    scored.sort(key=lambda t: -t[0])
+    tp = fp = 0
+    points = []
+    for _, is_tp in scored:
+        tp, fp = tp + int(is_tp), fp + int(not is_tp)
+        points.append((tp / n_true, tp / (tp + fp)))
+    # precision envelope, then sum over recall steps (all-point interpolation)
+    envelope, best = [], 0.0
+    for recall, precision in reversed(points):
+        best = max(best, precision)
+        envelope.append((recall, best))
+    ap, prev_recall = 0.0, 0.0
+    for recall, precision in reversed(envelope):
+        ap += (recall - prev_recall) * precision
+        prev_recall = recall
+    return ap
+
+
+def recall(detections, targets, n_doppler, radius=2.0):
+    """Share of labelled objects with a detection within radius (matched as in the AP)."""
+    hit = n = 0
+    for frame_dets, tgt in zip(detections, targets):
+        n += len(tgt)
+        used = torch.zeros(len(tgt), dtype=torch.bool)
+        for _, r, d in sorted(frame_dets, key=lambda t: -t[0]):
+            if not len(tgt):
+                break
+            dist = _distances(tgt, r, d, n_doppler)
+            dist[used] = float("inf")
+            best = int(torch.argmin(dist))
+            if float(dist[best]) <= radius:
+                used[best] = True
+        hit += int(used.sum())
+    return hit / max(n, 1)
+
+
+def scores(detections, targets, n_doppler):
+    """The study's three scores: AP within 2 cells (primary), AP within 4, recall within 2."""
+    return {"ap2": average_precision(detections, targets, n_doppler, radius=2.0),
+            "ap4": average_precision(detections, targets, n_doppler, radius=4.0),
+            "recall2": recall(detections, targets, n_doppler, radius=2.0)}

@@ -1,25 +1,54 @@
 # realness
 
-Can an inexpensive realism measure predict the real-test detector utility of
-synthetic radar range-Doppler sequences, when there is too little labelled real
-data to check utility directly?
+**Question.** Can a cheap measure of how realistic synthetic radar data looks
+predict how much it helps a detector on real data, in the setting where there
+is too little labelled real data to check that directly?
 
-Split out of radSeq (at radSeq 5d1729e, 2026-10-30). The simulators, detector and
-data loaders are copies, so changes in radSeq cannot change results here.
+Before any realism measure can be judged, the thing it must predict has to
+move: a detector trained on worse synthetic data must score worse on real
+test data. Study 1 checks that.
 
-## Layout
-- `src/damage.py`: controlled defects (label defects; map defects re-render the same simulator scene).
-- `src/damage_viz.py`: the plots of `notebooks/damage_study.ipynb`.
-- `scripts/damage_study.py`: train the frame detector on each version and score it on real test data.
-- `src/carrada_sim.py`, `src/scene_sim.py`: CARRADA and RADIal simulators (from specs, never fitted to data).
-- `src/detector*.py`, `scripts/radial_detector_*.py`: detector and training loop.
-- `docs/notes/`: pre-registrations and results, one note per study.
-- `data/`: symlinks to the radSeq caches (simulator, 50 real sequences with val/test, damaged versions).
+## Study 1: does detector AP respond to damaged synthetic data?
 
-## Studies
-1. Does detector AP respond to controlled defects? `docs/notes/2026-10-27-damage-spread.md` (v1, failed),
-   `docs/notes/2026-10-28-damage-spread-fair.md` (fair defects; CARRADA done, RADIal running).
+200 simulator sequences, and versions of the same scenes with one controlled
+defect each (weaker targets, missing objects, unlabelled objects, smoothed
+texture, more noise, more/less clutter, misplaced labels). A detector is
+trained on each version, alone ("only") and mixed with 50 real sequences
+("mix"), 3 seeds, and scored on real test data. CARRADA and RADIal.
+
+- Pre-registrations and results: `docs/notes/2026-10-27-damage-spread.md` (first
+  attempt, failed), `docs/notes/2026-10-28-damage-spread-fair.md` (fair defects).
+- Everything visual (maps, labels, each defect, results, detections):
+  `notebooks/damage_study.ipynb`.
+
+## Code
+
+| file | what it is |
+|---|---|
+| `src/radar.py` | the RADIal radar's published specification |
+| `src/carrada_sim.py`, `src/radial_sim.py` | the two simulators, from published specs; nothing fitted to data |
+| `src/damage.py` | the defects: label edits, smoothing, and simulators that re-render a scene with one change |
+| `src/versions.py` | the datasets, the versions in each suite, and how each version is made |
+| `src/data.py` | cache format: loading, writing, label packing |
+| `src/detector.py` | the frame detector, peak picking, AP and recall |
+| `src/train.py` | training batches, early-stopped training, test detections |
+| `src/plots.py` | the notebook's figures |
+| `scripts/damage_study.py` | trains and scores every version, applies the pre-registered rule |
+| `scripts/run_study.sh`, `scripts/run_study.sbatch` | run or resume a study, here or on the cluster |
+| `scripts/write_manifest.py` | records the exact code and data behind a run |
+
+Results: `results/<suite>_<dataset>_runs.json` (every run's scores) and
+`_verdict.json` (the rule applied); test detections in `_dets/` (local only).
+
+## Data
+
+`data/` holds links to caches built in radSeq (git 5d1729e): the clean
+simulator sequences, the 50 real training sequences with their real val and
+test splits, and the damaged versions (re-rendered on first use).
+The simulators, detector and training loop were copied from radSeq and give
+identical results (checked on data, weights, detections and scores).
 
 ## Run
+
     PYTHONPATH=. python3 -m pytest tests -q
-    bash scripts/run_damage_radial.sh          # resumable; or from ece-hpc: sbatch scripts/damage_radial.sbatch
+    bash scripts/run_study.sh fair radial         # from ece-hpc: sbatch scripts/run_study.sbatch fair radial

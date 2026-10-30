@@ -1,7 +1,7 @@
 """CARRADA-style range-Doppler scenes from radar physics (engineer's variant).
 
-Spec: docs/design/2026-10-26-carrada-simulator-design.md (approved by Ari,
-2026-10-26). Built from published parameters and the dataset paper's scene
+Spec: radSeq docs/design/2026-10-26-carrada-simulator-design.md (approved by
+Ari, 2026-10-26). Built from published parameters and the dataset paper's scene
 description; nothing is fitted to the recordings.
 
 - Radar: 77 GHz FMCW, TDM MIMO 2 Tx x 4 Rx = 8 virtual channels, static on a
@@ -24,7 +24,7 @@ import math
 
 import torch
 
-from src.radar_physics import window
+from src.radar import window
 
 C_LIGHT = 299_792_458.0
 K_T0_DBW_HZ = -204.0

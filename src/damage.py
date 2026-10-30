@@ -1,4 +1,4 @@
-"""Controlled defects in synthetic CARRADA data (docs/notes/2026-10-27-damage-spread.md,
+"""Controlled defects in synthetic radar data (docs/notes/2026-10-27-damage-spread.md,
 docs/notes/2026-10-28-damage-spread-fair.md).
 
 Label defects act on a cache's traj/present; map defects re-render the same
@@ -10,6 +10,7 @@ import dataclasses
 import torch
 
 from src.carrada_sim import CarradaSimulator, CarradaSpec, TrackScenario
+from src.radial_sim import SceneSimulator, _elevation_gain_db, _power_db as _scene_power_db
 
 GONE_DB = -200.0      # an RCS this low leaves nothing in the map
 
@@ -107,7 +108,6 @@ class DamagedCarradaSimulator(CarradaSimulator):
 
 
 # ---------------------------------------------------------------- RADIal
-from src.scene_sim import SceneSimulator, _elevation_gain_db, _power_db as _scene_power_db  # noqa: E402
 
 
 class DamagedSceneSimulator(SceneSimulator):
