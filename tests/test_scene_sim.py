@@ -1,0 +1,116 @@
+"""The scene simulator's mechanisms are physics from published sources, so the
+tests pin each mechanism rather than any match to RADIal's pixels."""
+import math
+
+import torch
+
+from src.scene_sim import DDMA_OFFSETS, SceneSimulator
+
+
+def _one(power_db=30.0, rng=50.0, az=0.0, vr=-3.0):
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(0))
+    p = sim._render(torch.tensor([rng]), torch.tensor([az]), torch.tensor([vr]),
+                    torch.tensor([power_db]), None)
+    return 10 * torch.log10(p / 16 + 1e-12)
+
+
+def test_ddma_offsets_match_radials_processing_code():
+    """rpl.py: slots every 16 bins, Tx0 plus slots 5..15 (1-4 empty)."""
+    assert DDMA_OFFSETS == (0, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240)
+
+
+def test_every_return_is_replicated_once_per_transmitter():
+    db = _one()
+    tx0 = (-30) % 256                       # -3 m/s at 0.1 m/s per bin
+    row = db[250]                           # 50 m at 0.2 m per bin
+    top = sorted(int(k) for k in torch.topk(row, 12).indices)
+    assert top == sorted((tx0 + o) % 256 for o in DDMA_OFFSETS)
+
+
+def test_rendered_peak_carries_the_requested_power():
+    assert abs(float(_one(power_db=30.0).max()) - 30.0) < 0.5
+
+
+def test_static_world_is_seen_at_minus_ego_speed_straight_ahead():
+    """A stationary object dead ahead closes at exactly the ego speed."""
+    sim = SceneSimulator(seq_len=1)
+    az = torch.tensor([0.0])
+    vr = (torch.zeros(1) - 7.0) * torch.cos(az)
+    assert float(vr) == -7.0
+
+
+def test_near_range_is_dark_but_floored():
+    """IF high-pass darkens near range; ADC noise stops it going to -inf."""
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(1))
+    x = sim.gen_sequence()["x"][0]
+    near, mid = float(x[:10].median()), float(x[100:300].median())
+    assert near < mid
+    assert float(x.max() - x.min()) < 120.0
+
+
+def test_labels_cover_moving_traffic_at_the_published_rate():
+    """RADIal publishes 9,550 vehicles over 8,252 labelled frames (~1.16 per
+    frame), so parked cars are scene rather than labels."""
+    counts = []
+    for seed in range(40):
+        sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(seed))
+        labels = sim.gen_sequence()["labels"][0]
+        assert all(l["moving"] for l in labels)
+        counts.append(len(labels))
+    assert 0.5 < sum(counts) / len(counts) < 1.6
+
+
+
+
+def test_a_car_ahead_shows_only_its_near_face():
+    """The car was once five equally bright points (corners and centre), which
+    rendered as three range spikes 2.25 m apart. The body shadows its far side:
+    straight ahead, only the rear face reflects, so the whole return sits in
+    one or two range bins, and the label is at that face."""
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(0))
+    car = sim._car(0.0, 30.0, 10.0, vy=5.0)
+    visible, rcs = sim._car_returns(car, car["x"], car["y"])
+    rng = torch.sqrt(car["x"][visible] ** 2 + car["y"][visible] ** 2)
+    assert bool((car["ny"][visible] == -1).all())          # rear face only
+    assert float(rng.max() - rng.min()) < 2 * 0.2           # within ~2 range bins
+    assert abs(float(rng.min()) - (30.0 - 4.5 / 2)) < 0.05
+
+
+def test_an_oblique_car_shows_its_near_end_and_one_side_weakly():
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(0))
+    car = sim._car(8.0, 20.0, 10.0, vy=5.0)
+    car["scint"] = torch.zeros_like(car["scint"])
+    visible, rcs = sim._car_returns(car, car["x"], car["y"])
+    nx, ny = car["nx"][visible], car["ny"][visible]
+    assert set(zip(nx.tolist(), ny.tolist())) == {(0.0, -1.0), (-1.0, 0.0)}
+    side, rear = rcs[nx == -1.0], rcs[ny == -1.0]
+    assert float(side.max()) < float(rear.min())            # grazing side is weaker
+    total = 10 * torch.log10((10 ** (rcs / 10)).sum())
+    assert abs(float(total) - 10.0) < 1e-3                  # published RCS kept
+
+
+def test_a_car_over_the_radar_has_no_visible_face():
+    """Traffic is not kept from driving through the ego car's position; with the
+    radar inside a footprint no face points at it, and the frame must still
+    render (the cache build crashed on exactly this)."""
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(0))
+    car = sim._car(0.0, 0.5, 10.0, vy=5.0)
+    visible, rcs = sim._car_returns(car, car["x"], car["y"])
+    assert not bool(visible.any()) and rcs.numel() == 0
+
+
+def test_same_direction_traffic_moves_with_the_ego_car():
+    """Speeds were drawn independently of the ego speed, so highway traffic
+    closed at up to +/-16 m/s, past the +/-12.8 m/s the Doppler axis holds. A
+    traffic stream's speeds spread ~15% around its mean."""
+    from src.scene_sim import ROAD_TYPES
+    sim = SceneSimulator(seq_len=1, generator=torch.Generator().manual_seed(0))
+    road = ROAD_TYPES["highway"]
+    rel = []
+    for _ in range(200):
+        for v in sim._vehicles(road, 7.0, v_ego=30.0):
+            if v["vy"] > 0:
+                rel.append(v["vy"] - 30.0)
+    rel = torch.tensor(rel)
+    assert len(rel) > 50
+    assert abs(float(rel.mean())) < 1.0 and 3.5 < float(rel.std()) < 7.0
