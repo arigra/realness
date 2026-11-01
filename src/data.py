@@ -56,14 +56,14 @@ def pack_labels(frame_labels, seq_len, slot_by_rank=False):
     return traj, present
 
 
-def write_cache(out, n, make, grid, stats_every, slot_by_rank=False):
-    """Write a training split of n sequences: make(i) -> (x (8, *grid) dB, frame labels, meta).
+def write_cache(out, n, make, grid, stats_every, slot_by_rank=False, split="train"):
+    """Write a split of n sequences: make(i) -> (x (8, *grid) dB, frame labels, meta).
 
-    stats_every: mean/std come from every stats_every-th sequence (CARRADA
-    caches used all of them, RADIal every 4th, for memory)."""
+    stats_every: mean/std of the training split come from every stats_every-th
+    sequence (CARRADA caches used all of them, RADIal every 4th, for memory)."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    x = open_memmap(out / "train_x.npy", mode="w+", dtype=np.float16, shape=(n, 8, *grid))
+    x = open_memmap(out / f"{split}_x.npy", mode="w+", dtype=np.float16, shape=(n, 8, *grid))
     trajs, presents, metas = [], [], []
     for i in range(n):
         xi, labels, meta = make(i)
@@ -72,6 +72,7 @@ def write_cache(out, n, make, grid, stats_every, slot_by_rank=False):
         trajs.append(t); presents.append(p); metas.append(meta)
     x.flush()
     torch.save({"traj": torch.stack(trajs), "present": torch.stack(presents), "meta": metas},
-               out / "train_labels.pt")
-    sample = np.asarray(x[::stats_every], dtype=np.float32)
-    torch.save({"mean": float(sample.mean()), "std": float(sample.std())}, out / "stats.pt")
+               out / f"{split}_labels.pt")
+    if split == "train":
+        sample = np.asarray(x[::stats_every], dtype=np.float32)
+        torch.save({"mean": float(sample.mean()), "std": float(sample.std())}, out / "stats.pt")

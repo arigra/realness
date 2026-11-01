@@ -158,7 +158,7 @@ class CarradaSimulator:
             if not bool(vis.any()):
                 return None
             w = cos[vis] ** 2
-            rcs = sc.car_rcs_dbsm + 10 * torch.log10(w / w.sum()) + car["scint"][vis]
+            rcs = o.get("rcs_dbsm", sc.car_rcs_dbsm) + 10 * torch.log10(w / w.sum()) + car["scint"][vis]
             vx, vy = torch.full_like(w, o["vx"]), torch.full_like(w, o["vy"])
             px, py = px[vis], py[vis]
         else:                                                      # person (and rider)
@@ -222,9 +222,9 @@ class CarradaSimulator:
                         generator=self._dg, device=self.device)
         return (z ** 2).sum(-1) / 2
 
-    def gen_sequence(self):
+    def _static(self):
+        """The static scene, at zero Doppler (the radar does not move): ground and poles."""
         spec, sc = self.spec, self.sc
-        # static scene: ground and poles, at zero Doppler (the radar does not move)
         m = sc.ground_scatterers
         gx, gy = self._u(-30.0, 30.0, (m,)), self._u(0.5, spec.max_range_m, (m,))
         grcs = self._n(*sc.ground_rcs_dbsm, (m,))
@@ -232,9 +232,17 @@ class CarradaSimulator:
         gx = torch.cat([gx, self._u(-20.0, 20.0, (n_poles,))])
         gy = torch.cat([gy, self._u(2.0, spec.max_range_m - 2, (n_poles,))])
         grcs = torch.cat([grcs, self._n(*sc.pole_rcs_dbsm, (n_poles,))])
-        empty = bool(self._u(0, 1) < sc.p_empty)
+        return gx, gy, grcs
+
+    def _objects(self):
+        empty = bool(self._u(0, 1) < self.sc.p_empty)
         n_obj = 0 if empty else 1 + int(self._u(0, 1) < 0.5)
-        objects = [self._object(1 + int(torch.randint(3, (), generator=self.g)), i) for i in range(n_obj)]
+        return [self._object(1 + int(torch.randint(3, (), generator=self.g)), i) for i in range(n_obj)]
+
+    def gen_sequence(self):
+        spec = self.spec
+        gx, gy, grcs = self._static()
+        objects = self._objects()
         frames, labels = [], []
         for l in range(self.L):
             t = l * spec.frame_interval_s
