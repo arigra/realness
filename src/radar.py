@@ -89,6 +89,8 @@ def window(n, kind="hamming"):
     """The window RADIal applies before each FFT (rpl.py lines 128-129)."""
     if kind == "none":
         return torch.ones(n)
+    if kind == "hann":
+        return 0.5 - 0.5 * torch.cos(2 * math.pi * torch.arange(n) / (n - 1))
     if kind != "hamming":
         raise ValueError(f"unknown window {kind!r}")
     return 0.54 - 0.46 * torch.cos(2 * math.pi * torch.arange(n) / (n - 1))

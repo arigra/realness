@@ -1,0 +1,6 @@
+{
+  "target": {"over_floor": 4.84, "over_clutter": 0.79, "source": "medians on data/raddet_n50 train, src/measures.py"},
+  "method": "4x4 grid (target, static) in {-3,-6,-9,-12} dB on 25 sequences, linear solve, then checks on 40 sequences (seeds SEED0+i)",
+  "alone": {"target_db": -17.0, "static_db": -16.0, "checked": "(-16,-15): 5.04/1.15, (-18,-16): 4.50/0.84; between them"},
+  "all": {"target_db": -12.0, "static_db": -4.0, "checked": "4.73/0.85"}
+}

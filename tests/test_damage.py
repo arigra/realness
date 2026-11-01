@@ -107,3 +107,13 @@ def test_radial_undamaged_and_damaged_scenes():
     assert float((extra["x"] - a["x"]).max()) > 6.0
     clut = _scene(clutter_offset_db=6.0)
     assert float((clut["x"] - a["x"]).quantile(0.9)) > 3.0      # clutter cells rise; noise cells do not
+
+
+def test_smoothall_reaches_the_objects():
+    from src.damage import smooth_background
+    x = torch.randn(2, 32, 16) * 3
+    traj, present = torch.tensor([[[10.0, 8.0], [10.0, 8.0]]]), torch.ones(1, 2, dtype=torch.bool)
+    kept = smooth_background(x, traj, present, 0.5)
+    whole = smooth_background(x, traj, present, 0.5, protect=False)
+    assert torch.equal(kept[:, 10, 8], x[:, 10, 8]) and not torch.equal(whole[:, 10, 8], x[:, 10, 8])
+    assert torch.equal(whole[:, 0, 0], kept[:, 0, 0])            # away from labels: the same

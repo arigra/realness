@@ -212,3 +212,26 @@ def show_detections(dataset, names, seq=None, frame=0, seed=1, setting="only", m
     fig.suptitle(f"{dataset} real test sequence {seq}, frame {frame} ({setting}, seed {seed})")
     fig.tight_layout()
     plt.show()
+
+
+def show_score_vs_ap(fits, metric="ap2"):
+    """Realness score against synthetic-only AP, one panel per (dataset, score).
+    fits: {dataset: {kind: Score}} (src/score.py); the CARRADA-fitted scores are
+    applied unchanged to RADIal. Labels mark every version; rho = Spearman of -score with AP."""
+    from src.score import points, rho
+    rows = [(ds, kind) for ds, by in fits.items() for kind in by]
+    fig, axes = plt.subplots(1, len(rows), figsize=(4.2 * len(rows), 4), squeeze=False)
+    for ax, (ds, kind) in zip(axes[0], rows):
+        p = points(ds, metric)
+        names = list(p)
+        D, ap = np.stack([p[n][0] for n in names]), np.array([p[n][1] for n in names])
+        s = fits[ds][kind](D)
+        ax.plot(s, ap, "o", color="C0")
+        for x, y, n in zip(s, ap, names):
+            ax.annotate(n, (x, y), fontsize=6, xytext=(2, 2), textcoords="offset points")
+        r, ci = rho(s, ap)
+        ax.set_title(f"{ds}, {kind}: rho {r:+.2f} [{ci[0]:+.2f}, {ci[1]:+.2f}]", fontsize=9)
+        ax.set_xlabel("score (higher = less real)")
+        ax.set_ylabel(f"{metric}, synthetic only")
+    fig.tight_layout()
+    plt.show()

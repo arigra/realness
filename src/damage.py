@@ -28,10 +28,13 @@ def shift_labels(traj, axis, bins, n_bins, wrap):
     return t
 
 
-def smooth_background(x, traj, present, frac, win_r=3, win_d=2):
+def smooth_background(x, traj, present, frac, win_r=3, win_d=2, protect=True):
     """Over-smoothing, as the generator does: pull every cell frac of the way to
-    its 4-neighbour mean, except around labelled objects. x (L, R, D) dB."""
+    its 4-neighbour mean, except (protect=True, Study 1) around labelled objects;
+    protect=False smooths the whole map, objects included. x (L, R, D) dB."""
     nb = (torch.roll(x, 1, -2) + torch.roll(x, -1, -2) + torch.roll(x, 1, -1) + torch.roll(x, -1, -1)) / 4
+    if not protect:
+        return x - frac * (x - nb)
     keep = torch.zeros_like(x, dtype=torch.bool)
     n_d = x.shape[-1]
     for m, t in present.nonzero().tolist():

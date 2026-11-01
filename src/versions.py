@@ -13,6 +13,7 @@ import torch
 from src.damage import (DamagedCarradaSimulator, DamagedSceneSimulator, clutter_scenario,
                         drop_labels, noisy_spec, shift_labels, smooth_background)
 from src.data import load, write_cache
+from src.raddet_tuned import TunedRaddetSimulator, range_gain
 from src.radial_sim import Scenario
 
 N_SIM, SEED0 = 200, 10_000_000      # sequences per version; the simulator cache's seeds
@@ -30,6 +31,7 @@ class Dataset:
 DATASETS = {
     "carrada": Dataset("data/carrada_sim_engineer", "data/carrada_seq_n50", "data/carrada_damage", (256, 64), 1),
     "radial": Dataset("data/scene_engineer", "data/radial_fold0_n50", "data/radial_damage", (512, 256), 4),
+    "raddet": Dataset("data/raddet_sim", "data/raddet_n50", "data/raddet_damage", (256, 64), 1),
 }
 
 # name -> (defect, strength)
@@ -48,11 +50,26 @@ FAIR |= {f"smooth{p}": ("smooth", p / 100) for p in (25, 50, 75)}
 FAIR |= {f"noise+{d}": ("noise", d) for d in (6, 12)}
 FAIR |= {f"clutter{d:+d}": ("clutter", float(d)) for d in (6, -6, 12, -12)}
 FAIR |= {f"range{b}": ("range", b) for b in (1, 2)}
+# Study 1's smoothing left the cells around labels unsmoothed; this one smooths
+# whole maps (docs/notes/2026-11-01-realness-score.md). Its clean runs are the
+# fair suite's (same clean pool, seeds and training).
+SMOOTHALL = {"clean": ("clean", None)} | {f"smoothall{p}": ("smoothall", p / 100) for p in (25, 50)}
+# RADDet simulator tuned to the real maps, one fix per version and all together
+# (src/raddet_tuned.py; docs/notes/2026-11-01-realness-score.md, step 6). The
+# contrast offsets (target dB, static dB) are fitted per version and read from
+# results/tuning/raddet_contrast_fit.json ("alone": no other fix, "all": with them).
+TUNE = {"clean": ("clean", None),
+        "processing": ("tuned", {"processing": True}),
+        "rangegain": ("tuned", {"range_gain": True}),
+        "contrast": ("tuned", {"contrast": "alone"}),
+        "allfixes": ("tuned", {"processing": True, "range_gain": True, "contrast": "all"})}
 # suite -> (versions, families counted by the rule, families reported only);
 # a family is a defect, its versions in increasing damage after clean
 SUITES = {"v1": (V1, ("drop", "range", "doppler", "blink", "contrast"), ("clutter",)),
-          "fair": (FAIR, ("contrast", "unrender", "extra", "smooth", "noise"), ("clutter", "range"))}
-ON_CACHE = ("clean", "drop", "range", "doppler", "smooth")      # the rest are re-rendered
+          "fair": (FAIR, ("contrast", "unrender", "extra", "smooth", "noise"), ("clutter", "range")),
+          "smoothall": (SMOOTHALL, ("smoothall",), ()),
+          "tune": (TUNE, (), ())}
+ON_CACHE = ("clean", "drop", "range", "doppler", "smooth", "smoothall")      # the rest are re-rendered
 
 
 def family(versions, fam):
@@ -93,14 +110,26 @@ def _radial_sequence(kind, value, i):
     return o["x"].numpy(), o["labels"], {"road_type": o["road_type"], "ego_speed": o["ego_speed"]}
 
 
+def _raddet_sequence(kind, value, i):
+    kw = {"generator": torch.Generator().manual_seed(SEED0 + i),
+          "processing": value.get("processing", False)}
+    if value.get("range_gain"):
+        kw["range_gain_db"] = range_gain()
+    if "contrast" in value:
+        fit = json.loads(Path("results/tuning/raddet_contrast_fit.json").read_text())[value["contrast"]]
+        kw |= {"target_offset_db": fit["target_db"], "static_offset_db": fit["static_db"]}
+    o = TunedRaddetSimulator(**kw).gen_sequence()
+    return o["x"].numpy(), o["labels"], {"classes": o["classes"]}
+
+
 def render(dataset, name, kind, value):
     """The cache of a re-rendered version, written on first use."""
     ds = DATASETS[dataset]
     out = Path(ds.damage) / name
     if not (out / "DONE").exists():
-        seq = _carrada_sequence if dataset == "carrada" else _radial_sequence
+        seq = {"carrada": _carrada_sequence, "radial": _radial_sequence, "raddet": _raddet_sequence}[dataset]
         write_cache(out, N_SIM, lambda i: seq(kind, value, i), ds.grid, ds.stats_every,
-                    slot_by_rank=dataset == "carrada")
+                    slot_by_rank=dataset != "radial")
         (out / "DONE").write_text(json.dumps({"kind": kind, "value": value}))
     return out
 
@@ -121,5 +150,8 @@ def version(dataset, name, kind, value, clean, n=N_SIM):
             it["traj"] = shift_labels(it["traj"], 1, value, it["x"].shape[-1], wrap=True)
         elif kind == "smooth":
             it["x"] = smooth_background(it["x"].float(), it["traj"], it["present"], value).half()
+        elif kind == "smoothall":
+            it["x"] = smooth_background(it["x"].float(), it["traj"], it["present"], value,
+                                        protect=False).half()
         out.append(it)
     return out

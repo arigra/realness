@@ -5,7 +5,8 @@ docs/notes/2026-10-28-damage-spread-fair.md (--suite fair).
 
 Every version (src/versions.py) trains the frame detector in two settings,
 "only" (the version alone) and "mix" (each batch half from 50 real
-sequences, half from the version), with 3 seeds; every detector is scored on
+sequences, half from the version), with 3 seeds ("real": the 50 real
+sequences alone, a reference; run it with --versions clean); every detector is scored on
 the real test split. Resumable per (setting, version, seed). Writes
 results/<suite>_<dataset>_runs.json, _verdict.json and _dets/.
 
@@ -88,6 +89,8 @@ def main():
             model = FrameDetector(width=32).to(dev)
             if setting == "only":
                 draw = lambda g, p=pool: frame_batch(p, 8, dev, g)
+            elif setting == "real":                     # reference: the 50 real sequences alone
+                draw = lambda g: frame_batch(real, 8, dev, g)
             else:
                 def draw(g, p=pool):
                     x1, h1 = frame_batch(real, 4, dev, g)

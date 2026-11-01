@@ -1,0 +1,35 @@
+{
+  "ap2": {
+    "only": {
+      "metric": "ap2",
+      "test_mean": {
+        "clean": 0.3120283664656854,
+        "smoothall25": 0.27328242525116553,
+        "smoothall50": 0.28587212071908974
+      },
+      "seed_range": {
+        "clean": 0.040611715550438465,
+        "smoothall25": 0.12259867186485204,
+        "smoothall50": 0.1960319373050689
+      },
+      "noise": 0.12259867186485204,
+      "gap": 0.03874594121451985,
+      "gap_over_noise": 0.3160388332528745,
+      "families": {
+        "smoothall": {
+          "means": {
+            "clean": 0.3120283664656854,
+            "smoothall25": 0.27328242525116553,
+            "smoothall50": 0.28587212071908974
+          },
+          "ordered": false
+        }
+      },
+      "counted": [
+        "smoothall"
+      ],
+      "n_ordered": 0,
+      "pass": false
+    }
+  }
+}

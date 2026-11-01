@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run (or resume) one damage study: bash scripts/run_study.sh <suite> <dataset>,
+# Run (or resume) one damage study: bash scripts/run_study.sh <suite> <dataset> [args],
 # e.g. fair radial. Writes a manifest of the code and data first; a heartbeat
 # file keeps two copies of the same study apart.
 set -euo pipefail
@@ -20,5 +20,5 @@ trap 'rm -f "$LOCK"' EXIT
 say "start"
 "$PY" scripts/write_manifest.py --allow-dirty --paths src scripts \
     --out "results/manifests/${suite}_${dataset}_$(date +%Y%m%d_%H%M%S).json" >> "$LOG" 2>&1
-"$PY" scripts/damage_study.py --suite "$suite" --dataset "$dataset" >> "$LOG" 2>&1
+"$PY" scripts/damage_study.py --suite "$suite" --dataset "$dataset" "${@:3}" >> "$LOG" 2>&1
 say "DONE"
