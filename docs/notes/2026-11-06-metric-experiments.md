@@ -346,3 +346,13 @@ Speed/range logistic baseline: 0.62 (CARRADA), 0.60 (RADDet); 0.37 on matched sa
 - **With range and speed matched across classes, CARRADA classification is at chance (0.32)**: on CARRADA
   RD maps the classes are told apart by kinematics, not by target signature. RADDet keeps a small
   residual (0.49 vs 0.44 erased), still with erased and ridge-only above chance.
+
+## Phase 6 selections (committed 03de8c3, before any bank candidate was trained)
+M1 frozen on the two other radars, reference = 5 real sequences (subset 0):
+- **CARRADA: bank:dr_broad** (bank order dr_broad, dr_strong, dr_narrow, dr_weak, hybrid_x1, hybrid_x1.5);
+  global score picks hybrid_x1.
+- **RADDet: bank:dr_weak** (dr_weak, dr_narrow, dr_broad, hybrid_x1.5, dr_strong, hybrid_x1); global picks dr_broad.
+Weakness seen in the CARRADA scores (not acted on; the rule is fixed for this test): probes that barely vary
+across the two calibration radars get the scale floor (1e-3), so their penalties are huge (coverage ~1,305
+for every CARRADA candidate). Constant across the bank, it does not change the bank's order, which comes
+from the target and label penalties; a cross-radar scale should not be allowed to collapse like this.
