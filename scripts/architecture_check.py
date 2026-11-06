@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from scripts.build_metric_features import REGISTRY, load_candidate
+from scripts.build_metric_features import load_candidate, registry
 from src.data import load
 from src.detector import scores
 from src.provenance import provenance
@@ -37,7 +37,7 @@ def main():
     full_val = load(ds.real, "val")
     val = [full_val[int(i)] for i in np.linspace(0, len(full_val) - 1, N_VAL).round()]
     test = load(ds.real, "test")
-    reg = {r["candidate"]: r for r in json.loads(REGISTRY.read_text())["candidates"] if r["dataset"] == a.dataset}
+    reg = registry(a.dataset)
     for cid in a.candidates.split(","):
         todo = [s for s in map(int, a.seeds.split(",")) if str(s) not in report["runs"].get(cid, {})]
         if not todo:

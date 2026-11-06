@@ -31,6 +31,15 @@ from src.versions import DATASETS, N_SIM, ON_BEST, SUITES, best, render, version
 
 OUT = Path("results/metric/features")
 REGISTRY = Path("results/metric/candidates.json")
+BANK = Path("results/metric/bank.json")         # Phase 6 candidates (src/natural.py), no results yet
+
+
+def registry(dataset):
+    """{candidate: row} of a dataset: the registry, plus the Phase 6 bank when it exists."""
+    rows = json.loads(REGISTRY.read_text())["candidates"]
+    if BANK.exists():
+        rows = rows + json.loads(BANK.read_text())["candidates"]
+    return {r["candidate"]: r for r in rows if r["dataset"] == dataset}
 N_REAL = 50
 _LOAD = data.load
 
@@ -52,6 +61,8 @@ def classes_of(cache):
 
 def load_candidate(row):
     ds = DATASETS[row["dataset"]]
+    if row["suite"] == "bank":
+        return train_only(row["cache"], "train", N_SIM), None
     kind, value = SUITES[row["suite"]][0][row["version"]]
     clean = (train_only(render(row["dataset"], "best", "tuned2", best(row["dataset"])), "train", N_SIM)
              if row["suite"] in ON_BEST else train_only(ds.sim, "train", N_SIM))
@@ -191,11 +202,12 @@ def main():
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     data.load = versions.load = train_only          # nothing below may read val or test
-    reg = {r["candidate"]: r for r in json.loads(REGISTRY.read_text())["candidates"] if r["dataset"] == a.dataset}
+    reg = registry(a.dataset)
     real = real_tables(a.dataset)
     budgets = [int(b) for b in a.budgets.split(",")] + [N_REAL]
     cands = {}
-    ids = [c for c, r in reg.items() if r["usable"]] if a.candidates == "all" else a.candidates.split(",")
+    ids = ([c for c, r in reg.items() if r["usable"]] if a.candidates == "all" else
+           [c for c, r in reg.items() if r["suite"] == "bank"] if a.candidates == "bank" else a.candidates.split(","))
     for cid in ids:
         row = reg[cid]
         d = candidate_dir(a.dataset, cid)

@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from scripts.build_metric_features import REGISTRY, load_candidate, subsets
+from scripts.build_metric_features import load_candidate, registry, subsets
 from src.data import load
 from src.detector import FrameDetector, average_precision, focal_loss
 from src.provenance import provenance
@@ -58,9 +58,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="carrada", choices=tuple(DATASETS))
     ap.add_argument("--top", type=int, default=5)
+    ap.add_argument("--candidates", default="all", help="'all' usable, 'bank' (Phase 6, seed 1 only, own file)")
     a = ap.parse_args()
     dev = torch.device("cuda")
-    out = OUT / f"{a.dataset}.json"
+    out = OUT / (f"{a.dataset}.json" if a.candidates == "all" else f"{a.dataset}_{a.candidates}.json")
     report = json.loads(out.read_text()) if out.exists() else {
         "config": {"width": WIDTH, "n_seq": N_SEQ, "steps": STEPS, "batch": BATCH, "lr": LR,
                    "reference": "budget-5 subsets 0,1,2 of the real training sequences"}, "runs": {}}
@@ -68,7 +69,8 @@ def main():
     subs = subsets(5, 3)
     real_subsets = [[real[int(i)] for i in subs[s]] for s in range(3)]
     report["reference_sequences"] = {str(s): subs[s].tolist() for s in range(3)}
-    rows = [r for r in json.loads(REGISTRY.read_text())["candidates"] if r["dataset"] == a.dataset and r["usable"]]
+    reg = registry(a.dataset)
+    rows = [r for r in reg.values() if (r["usable"] if a.candidates == "all" else r["suite"] == "bank")]
 
     def run(row, seed):
         cid = row["candidate"]
@@ -87,6 +89,8 @@ def main():
 
     for row in rows:
         run(row, 1)
+    if a.candidates != "all":
+        return
     best = sorted(rows, key=lambda r: -report["runs"][r["candidate"]]["1"]["proxy"])[:a.top]
     for row in best:
         for seed in (2, 3):
