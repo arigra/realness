@@ -8,6 +8,10 @@ cd "$(dirname "$0")/.." || exit 1
 export PYTHONPATH=.
 DRY=$1
 running() { pgrep -f "$1" > /dev/null; }
+# processes paused with SIGSTOP (e.g. before a session change): continue them first
+for p in $(pgrep -f "scripts/[p]roxy_detector|scripts/[c]lassify_controls_v2|scripts/[p]rospective|scripts/[a]ugment_study|scripts/[l]earned_features|scripts/[b]uild_metric_features|scripts/[a]rchitecture_check|[m]etric_gpu2?.sh"); do
+    [ "$(ps -o stat= -p $p | cut -c1)" = "T" ] && { [ "$DRY" = "--dry" ] && echo "would continue $p" || kill -CONT $p; }
+done
 launch() {        # name, log, command...
     local name=$1 log=$2; shift 2
     if [ "$DRY" = "--dry" ]; then echo "would start: $name"; return; fi
@@ -15,12 +19,22 @@ launch() {        # name, log, command...
     OMP_NUM_THREADS=4 nohup "$@" >> "$log" 2>&1 &
 }
 
-# CPU: Phase 1 features (cached candidates are skipped)
+# CPU: Phase 1 features (cached candidates are skipped); a dataset whose every usable candidate has a
+# current vector is done
+features_done() {
+    python3 -c "
+import json, os, sys
+from scripts.build_metric_features import feature_key, candidate_dir
+key = feature_key('$1')
+rows = [r for r in json.load(open('results/metric/candidates.json'))['candidates'] if r['dataset'] == '$1' and r['usable']]
+p = lambda r: candidate_dir('$1', r['candidate']) / 'reference_50_0.json'
+sys.exit(0 if all(p(r).exists() and json.load(open(p(r))).get('feature_key') == key for r in rows) else 1)"
+}
 for d in carrada raddet; do
-    running "build_metric_features.py --dataset $d --candidates all" ||
+    features_done $d || running "build_metric_features.py --dataset $d --candidates all" ||
         launch "features $d" logs/metric_features_$d.log python3 scripts/build_metric_features.py --dataset $d --candidates all --check
 done
-if ! running "build_metric_features.py --dataset radial"; then
+if ! features_done radial && ! running "build_metric_features.py --dataset radial"; then
     python3 -c "
 import json
 reg=[r for r in json.load(open('results/metric/candidates.json'))['candidates'] if r['dataset']=='radial' and r['usable']]
@@ -37,8 +51,10 @@ fi
     launch "bank render" logs/bank_render.log nice -n 10 python3 scripts/prospective.py render
 
 # GPU: Phase 8 controls, and the Phase 4-5 chain (one after the other)
-running "classify_controls_v2.py" ||
+grep -q small_mask_matched results/metric/classification/controls_v2.json 2>/dev/null || running "[c]lassify_controls_v2.py" ||
     launch "classification controls" logs/classify_controls_v2.log python3 scripts/classify_controls_v2.py
-if ! running "metric_chain.sh" && ! running "metric_gpu.sh"; then
+if [ ! -f logs/metric_chain.done ] && ! running "[m]etric_chain.sh" && ! running "[m]etric_gpu.sh"; then
     launch "GPU chain (proxy carrada, raddet; augmentation; proxy radial)" logs/metric_gpu.log bash scripts/metric_gpu.sh
 fi
+grep -q "gpu2 done" logs/metric_chain.done 2>/dev/null || running "[m]etric_gpu2.sh" ||
+    launch "GPU queue 2 (Stage B RADDet; learned features)" logs/metric_gpu2.log bash scripts/metric_gpu2.sh
