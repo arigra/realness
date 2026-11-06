@@ -262,3 +262,65 @@ Observations for Phase 2-3 (not acted on; the plan forbids choosing probes with 
   share of cells at the frame's minimum / maximum (clipping).
 - **Existing global score** (baseline): the 2026-11-01 realness score's "sum" (texture, contrast, label
   group distances of src/measures.py, nothing fitted), recomputed from these tables.
+
+## Results: Phase 3-5 (2026-11-06 15:30)
+All usable candidates: CARRADA 111, RADDet 76, RADIal 97. Reference = 5 real sequences (subset 0).
+results/metric/scores/evaluation.json, figures/validation.png. Regret = test AP@2 of the oracle minus
+that of the pick (lower is better); seed noise (median test seed range): ~0.05-0.07.
+
+**Leave one family out (within a radar)**, mean regret / pairwise ordering accuracy:
+
+| | CARRADA | RADDet | RADIal |
+|---|---|---|---|
+| M1 (tolerance) | 0.022 / 0.86 | 0.013 / 0.82 | 0.027 / 0.81 |
+| proxy detector | 0.020 / 0.85 | 0.014 / 0.75 | 0.037 / 0.71 |
+| global score | 0.065 / 0.55 | 0.062 / 0.64 | 0.027 / 0.79 |
+| random | 0.077 / 0.50 | 0.077 / 0.50 | 0.102 / 0.50 |
+
+M1 - global: CARRADA -0.043 [-0.080, -0.015], RADDet -0.049 [-0.091, -0.013], RADIal -0.001 [-0.018, 0.019].
+M1 - proxy: +0.003, -0.001, -0.010, all intervals include 0. **Decision gate: passed on CARRADA and RADDet,
+not on RADIal** (M1 ties the global score there). Caveat: within a radar the tolerance intervals are
+anchored on the same simulator's undamaged versions, so M1 hardly depends on the real reference
+(regret 0.022-0.024 over all 7 references): this test mostly measures "unlike a simulator known to work".
+
+**Leave one radar out** (calibrated on the two other radars; the realistic test):
+
+| held out | set | M1 | proxy | global | random | Kendall M1 / proxy / global |
+|---|---|---|---|---|---|---|
+| CARRADA | all 111 | 0.073 | 0.138 | 0.141 | 0.138 | 0.17 / 0.55 / 0.00 |
+| CARRADA | natural 8 | 0.000 | 0.000 | 0.126 | 0.088 | 0.64 / 0.71 / - |
+| RADDet | all 76 | 0.032 | 0.032 | 0.257 | 0.133 | 0.41 / 0.62 / 0.01 |
+| RADDet | natural 8 | 0.000 | 0.000 | 0.022 | 0.052 | 0.57 / 0.43 / 0.36 |
+| RADIal | all 97 | 0.172 | 0.136 | 0.128 | 0.283 | 0.43 / 0.63 / 0.15 |
+| RADIal | natural 7 | 0.005 | 0.005 | 0.117 | 0.082 | 0.62 / 0.71 / -0.05 |
+
+Reading:
+1. **Choosing among simulators (natural candidates):** M1 and the proxy both pick the best (or within
+   0.005) on all three radars; the global realism score does not (regret 0.12 on CARRADA and RADIal).
+2. **M1 does not beat the proxy.** Top-1 among all candidates: M1 better on CARRADA (0.073 vs 0.138, about
+   one noise width), equal on RADDet, worse on RADIal; the proxy orders all candidates better (Kendall
+   0.55-0.63 vs 0.17-0.43). One selection per held-out radar: no interval.
+3. **No cost advantage:** probes take 22 / 29 / 87 s CPU per candidate (CARRADA / RADDet / RADIal), the
+   proxy 16 / 17 / 31 s GPU.
+4. Map-only scores (global, coverage, domain classifier) are near random on their own.
+5. RADIal: the best of all 97 candidates is study2:rangeshift1 (labels 1 range cell further than the tuned
+   simulator's convention); "label only" picks it, M1 does not. The tuned RADIal label convention is
+   probably about a cell off.
+
+**Augmentation, 5 real sequences (Phase 5 Stage A)**, gain in test AP@2 over the same 5 sequences alone
+(CARRADA 0.225, RADDet 0.101):
+
+| | CARRADA | RADDet |
+|---|---|---|
+| tuned | +0.12 | +0.21 |
+| rangeshift1 | +0.11 | +0.18 |
+| extra50 | +0.14 | +0.17 |
+| contrast-12 | +0.13 | +0.13 |
+| unrender90 | +0.10 | +0.10 |
+| spec | +0.10 | +0.08 |
+| tail2 | +0.13 | +0.05 |
+
+CARRADA: the spread (0.04) is within seed noise (0.05): with 5 real sequences, the candidates are
+interchangeable. RADDet: spread 0.17 > 2 x noise, so Stage B runs (budgets 1 and 10). With real labels in
+the batch the label shift costs little (synthetic-only it was the most harmful defect); target shape
+(tail2) costs most on RADDet. Which simulator is "best" depends on the use.
