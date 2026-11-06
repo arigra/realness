@@ -157,3 +157,24 @@ Observations for Phase 2-3 (not acted on; the plan forbids choosing probes with 
    10-sequence band.
 4. Normalisation couples defects: anything that changes a map's std (extra objects, clutter) moves every
    z-unit probe. Phase 2 should read probes as the detector sees them (z), and report this coupling.
+
+## Phase 1.4-1.5 definitions (fixed before the runs)
+- **Fixed negative detector**: FrameDetector(width=32) trained on the dataset's best tuned simulator
+  alone, seed 1, Study 2's training (early stopping on the 32 real val sequences); weights saved to
+  results/metric/negative_detector_<dataset>.pt. It is run on the 50 real *training* sequences and on
+  every candidate. A false positive = a detection (local maximum, threshold 0.05, top 10 per frame)
+  with score >= 0.3 and no label within 4 cells.
+- **Negatives** of a pool: its detector false positives, and, detector-free, the 3 most prominent
+  unlabelled local maxima of each frame (no label within 4 cells). Each gets the target-response
+  features at its strongest cell (within +/-1 of the detection), its prominence, range, ridge flag.
+- **Hard-negative coverage**: for each real false positive, the distance (features standardised by the
+  real negatives' spread) to its nearest negative of the candidate, vs to the nearest real negative of
+  another sequence (reference). Reported overall and by stratum: on the ridge, beyond the real FPs'
+  median range, above their median prominence. Also: the fixed detector's false positives per frame on
+  the candidate vs on real.
+- **Processing**: per frame, multi-scale spread and residual correlations at lags 1, 2, 4 (range,
+  Doppler); range-row median and 99th percentile profiles in 32 bands; frame median and 99th
+  percentile; zero-Doppler ridge excess over the row median per band and its width (static radars);
+  share of cells at the frame's minimum / maximum (clipping).
+- **Existing global score** (baseline): the 2026-11-01 realness score's "sum" (texture, contrast, label
+  group distances of src/measures.py, nothing fitted), recomputed from these tables.
