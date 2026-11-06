@@ -421,3 +421,24 @@ Gain in test AP@2 over the same real sequences alone (real only: 0.014 / 0.101 /
 On RADDet the order of candidates is stable across budgets (tuned / all fixes on top; spec, unrender90 and
 tail2 at the bottom), the gains shrink slowly (tuned +0.25 -> +0.19), and the label shift stays a mild
 defect once real labels are present (it was the most harmful one synthetic-only).
+
+## Results: Phase 7.2 learned-feature distances (CARRADA, RADDet; final evaluation 2026-11-06 21:19)
+Energy distances on cross-fitted embeddings of real-trained detectors (U-Net, transformer) and on raw
+multiscale patches, as rankers (uncalibrated). Regret, reference 5 sequences:
+
+| | CARRADA LOFO | CARRADA LORO all / natural | RADDet LOFO | RADDet LORO all / natural |
+|---|---|---|---|---|
+| M1 | 0.022 | 0.073 / 0.000 | 0.013 | 0.032 / 0.000 |
+| proxy | 0.020 | 0.138 / 0.000 | 0.014 | 0.032 / 0.000 |
+| U-Net features | 0.046 | 0.110 / 0.063 | 0.038 | 0.226 / 0.022 |
+| U-Net features, conditional | 0.029 | 0.000 / 0.000 | 0.028 | 0.226 / 0.022 |
+| transformer features | 0.030 | 0.086 / 0.084 | 0.024 | 0.135 / 0.022 |
+| transformer features, conditional | 0.033 | 0.258 / 0.039 | 0.035 | 0.135 / 0.052 |
+| raw patches | 0.045 | 0.110 / 0.063 | 0.014 | 0.049 / 0.022 |
+| global score | 0.065 | 0.141 / 0.126 | 0.062 | 0.257 / 0.022 |
+| random | 0.077 | 0.138 / 0.088 | 0.077 | 0.133 / 0.052 |
+
+Learned features sit between the realism score and M1 / the proxy and are inconsistent (the same encoder
+is best on one test and worst on another); transformer features are not better than the U-Net's or than
+raw patches. Ordering of all candidates (Kendall, leave one radar out): proxy 0.55 / 0.62, M1 0.17 / 0.41,
+learned 0.24-0.42. No learned feature space replaces the interpretable probes or the proxy.

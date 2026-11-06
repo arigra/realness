@@ -1,10 +1,10 @@
 {
  "provenance": {
-  "commit": "5b962c03029fea199ba5a86dee16fc0ab5a48810",
-  "dirty": false,
+  "commit": "c1f6ffa873878e273dbf4a881d59799315c48aa1",
+  "dirty": true,
   "command": "scripts/evaluate_utility_metric.py",
-  "written": "2026-11-06T15:09:09",
-  "host": "hpc-node3"
+  "written": "2026-11-06T21:19:35",
+  "host": "hpc-permuter3"
  },
  "reference": [
   5,
