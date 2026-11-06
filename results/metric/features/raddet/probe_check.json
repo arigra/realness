@@ -1,0 +1,193 @@
+{
+ "provenance": {
+  "commit": "9674b3f110eaad6b0a4ef37966e9f10b80d95e15",
+  "dirty": false,
+  "command": "scripts/build_metric_features.py --dataset raddet --candidates tuned,spec,study2:rangeshift1,study2:dopplershift1,study2:extra50,study2:unrender90,study2:contrast-12,study2:blur2,study2b:tail2 --check",
+  "written": "2026-11-06T11:38:24",
+  "host": "hpc-node3"
+ },
+ "threshold_q": 25,
+ "threshold": 3.588205337524414,
+ "n_boot": 500,
+ "checks": {
+  "study2:rangeshift1": {
+   "probes": {
+    "peak_dr": {
+     "expected": "down",
+     "diff": -0.5936050415039062,
+     "ci95": [
+      -0.658486270904541,
+      -0.4532620429992676
+     ],
+     "moved": true
+    },
+    "cen_dr": {
+     "expected": "down",
+     "diff": -0.6052282397478876,
+     "ci95": [
+      -0.7256494113201363,
+      -0.4319472767161145
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:dopplershift1": {
+   "probes": {
+    "peak_dd": {
+     "expected": "down",
+     "diff": -0.9755935668945312,
+     "ci95": [
+      -0.9866883993148804,
+      -0.9494255542755127
+     ],
+     "moved": true
+    },
+    "cen_dd": {
+     "expected": "down",
+     "diff": -0.9499490189348982,
+     "ci95": [
+      -0.9801005936892074,
+      -0.930511274255417
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:extra50": {
+   "probes": {
+    "unlabelled_off_ridge_per_frame": {
+     "expected": "up",
+     "diff": 0.9400000000000004,
+     "ci95": [
+      0.7126718750000001,
+      1.155984375
+     ],
+     "moved": true
+    },
+    "unlabelled_per_frame": {
+     "expected": "up",
+     "diff": 0.7437499999999986,
+     "ci95": [
+      0.5221562499999974,
+      0.9601250000000007
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:unrender90": {
+   "probes": {
+    "labels_with_peak_r2": {
+     "expected": "down",
+     "diff": -0.4317219870795278,
+     "ci95": [
+      -0.46144481319620145,
+      -0.40105256619929375
+     ],
+     "moved": true
+    },
+    "label_prom": {
+     "expected": "down",
+     "diff": -4.357090473175049,
+     "ci95": [
+      -4.528209269791842,
+      -4.122175376117229
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:contrast-12": {
+   "probes": {
+    "label_prom": {
+     "expected": "down",
+     "diff": -2.3398277759552,
+     "ci95": [
+      -2.4521497011184694,
+      -2.1913383305072784
+     ],
+     "moved": true
+    },
+    "over_floor": {
+     "expected": "down",
+     "diff": -2.424327500164509,
+     "ci95": [
+      -2.5303002944216133,
+      -2.25552902854979
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:blur2": {
+   "probes": {
+    "width_r2": {
+     "expected": "up",
+     "diff": 5.0,
+     "ci95": [
+      4.0,
+      5.0
+     ],
+     "moved": true
+    },
+    "width_d2": {
+     "expected": "up",
+     "diff": 2.0,
+     "ci95": [
+      2.0,
+      2.0
+     ],
+     "moved": true
+    },
+    "area2": {
+     "expected": "up",
+     "diff": 15.0,
+     "ci95": [
+      12.0,
+      17.0
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2b:tail2": {
+   "probes": {
+    "far_ext2": {
+     "expected": "up",
+     "diff": 3.0,
+     "ci95": [
+      3.0,
+      3.0
+     ],
+     "moved": true
+    },
+    "tail_asym2": {
+     "expected": "up",
+     "diff": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "moved": true
+    },
+    "tail_level": {
+     "expected": "up",
+     "diff": 0.4401699900627136,
+     "ci95": [
+      0.35008967742323877,
+      0.5137612923979759
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  }
+ }
+}

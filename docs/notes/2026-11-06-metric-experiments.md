@@ -106,3 +106,54 @@ fixed 5-sequence subsets. Record proxy AP@2, wall-clock and GPU time, ranking me
   or the factor is marked unmeasured; it is never declared irrelevant.
 - Phase 3 decision gate above.
 - No classification-metric work until Phase 8's gate passes.
+
+## Phase 1 progress (2026-11-06): coverage, label agreement, target response on CARRADA and RADDet
+
+Code: src/utility_metric.py (probes), scripts/build_metric_features.py (raw tables, vectors per
+reference subset, `--check`), scripts/plot_metric_probes.py; tests/test_utility_metric.py (8 tests:
+Doppler wrap, label shift -> offset, weaker target -> lower contrast, unlabelled object -> more
+unlabelled peaks, wider target -> wider response, identical input -> zero distance, determinism,
+the builder reads only training splits). Hard negatives (1.4) and processing (1.5) are not built
+yet; RADIal has no radar entry yet (its zero-Doppler bin and resolutions are still to be added).
+
+Outputs: results/metric/features/<dataset>/<candidate>/raw.npz (+ .json meta), reference_<b>_<s>.json
+for b = 5, 10 (subsets 0-2) and 50; probe_check.json; figures/probes.{pdf,png}; probes_summary.json.
+
+**Every controlled intervention moves its intended probe** (paired bootstrap over the 200 shared-seed
+sequences vs the tuned simulator, 95% interval excludes 0), on both datasets:
+
+| intervention | probe | CARRADA | RADDet |
+|---|---|---|---|
+| rangeshift1 | strongest cell - label, range (median) | -0.75 | -0.59 |
+| dopplershift1 | same, Doppler | -0.99 | -0.98 |
+| extra50 | unlabelled target-like peaks off the ridge / frame | +1.47 | +0.94 |
+| unrender90 | labels with a target-like peak within 2 cells | -0.54 | -0.43 |
+| contrast-12 | target prominence (z) | -2.6 | -2.3 |
+| blur2 | range / Doppler width at 2 z (cells) | +3 / +2 | +5 / +2 |
+| tail2 | extent behind the peak at 2 z (cells) | +2 | +3 |
+
+Changes made while validating the probes (recorded, not hidden):
+- Power centroid is now taken around the return's strongest cell, not the label (a window on the label
+  pulled the centroid towards it; found by the label-shift unit test).
+- The total count of unlabelled target-like peaks *fell* under extra50 on CARRADA (-4.8 / frame): extra
+  objects raise the map's std, every other peak shrinks in z (each source is normalised by its own
+  statistics), and most strong unlabelled peaks of a static radar sit on the zero-Doppler ridge.
+  Off the ridge the count tracks the extra objects; it is added as its own feature (config version 2).
+  The total is kept and reported.
+
+Observations for Phase 2-3 (not acted on; the plan forbids choosing probes with AP):
+1. **Distance to real is not monotone in harm.** Unweighted W1 distances say contrast-12, blur2 and
+   extra50 are *closer* to real CARRADA than the tuned simulator (its targets are more prominent than
+   real: median 8.0 vs 5.3 z), yet Study 2 found contrast-12 harmful. Signed, per-probe tolerance
+   intervals are needed, not symmetric distances or component means.
+2. **RADDet label offset:** the real label sits 1.5 cells behind the strongest cell (median), the tuned
+   simulator's 0.5. rangeshift1 moves the simulator *towards* real on this probe (-1.1), and on the
+   centroid and near-edge versions, yet Study 2's AP@2 falls 0.29 -> 0.20 (val 0.26 -> 0.19). The probe
+   detects the shift; its distance to real does not explain the harm. Open question for Phase 3.
+3. **Few-label resolution.** With 5 or 10 real sequences the reference bands are wide (CARRADA: ~27
+   labels in 5 sequences; label-offset band -2.5 to +0.3 cells), so only large defects (unrender90,
+   Doppler shift, RADDet width / extent / prominence) fall outside the 10-sequence band. RADDet's tuned
+   targets are wider (6.7 vs 5.5 cells) and longer behind the peak (2.6 vs 1.9) than real, outside the
+   10-sequence band.
+4. Normalisation couples defects: anything that changes a map's std (extra objects, clutter) moves every
+   z-unit probe. Phase 2 should read probes as the detector sees them (z), and report this coupling.

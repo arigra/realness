@@ -1,0 +1,52 @@
+{
+ "provenance": {
+  "commit": "9674b3f110eaad6b0a4ef37966e9f10b80d95e15",
+  "dirty": false,
+  "command": "scripts/build_metric_features.py --dataset carrada --candidates tuned,spec,study2:rangeshift1,study2:dopplershift1,study2:extra50,study2:unrender90,study2:contrast-12,study2:blur2,study2:tail2 --check",
+  "written": "2026-11-06T11:35:59",
+  "host": "hpc-node3"
+ },
+ "cache": "data/carrada_seq_n50",
+ "split": "train",
+ "n_sequences": 50,
+ "feature_config": {
+  "version": 2,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   }
+  }
+ },
+ "feature_config_hash": "3f75cf54366f",
+ "seconds": 0.7651071548461914
+}
