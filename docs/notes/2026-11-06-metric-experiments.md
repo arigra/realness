@@ -144,7 +144,24 @@ and tuned + real runs are the budget study's (same code, seeds and sequences). S
 10, sim2 variants, noise+12, blur2) only if Stage A's Delta_AP spread across candidates exceeds 2x the
 seed noise.
 
-## Prospective selection (Phase 6) — *TBD (freeze point, before generating final candidates)*
+## Prospective selection (Phase 6) — freeze point, 2026-11-06, before any bank candidate is generated
+- **Radars:** CARRADA and RADDet, each held out in turn.
+- **Bank** (src/natural.py BANK, on the best tuned simulator and its scene seeds): dr_narrow, dr_broad,
+  dr_weak, dr_strong (per-sequence blur, range tail, target dB offset, confuser density, micro-motion
+  drawn uniformly from the ranges in BANK); hybrid_x1, hybrid_x1.5 (targets unrendered, real target
+  templates pasted at labels at 1x / 1.5x their excess; templates from real training sequences outside
+  the metric's reference subset).
+- **Metric:** M1 of src/utility_score.py with the probe definitions of this note, calibrated on the two
+  other radars' development candidates (val AP), reference = budget 5 subset 0 of the held-out radar's
+  real training sequences (scripts/prospective.py select; the tolerance intervals and NNLS weights are
+  written into the selection file).
+- **Selection rule:** the bank candidate with the lowest M1; ties by lower M2, then by name.
+- The ranking and the selection are committed before any bank candidate is trained. Then every bank
+  candidate trains synthetic-only (Study 2's training, 3 seeds); the proxy detector (seed 1) runs on
+  the bank too.
+- **Success:** the selected candidate's test AP@2 is within the bank's seed noise of the test oracle, and
+  its regret is lower than random choice (expected), the global score's pick and the proxy's pick.
+  Val-oracle and test-oracle picks are reported as upper references.
 
 ## Architecture and learned features (Phase 7) — fixed 2026-11-06, before its runs
 - 7.1 (scripts/architecture_check.py): src/transformer_detector.py (0.84M parameters vs the U-Net's
