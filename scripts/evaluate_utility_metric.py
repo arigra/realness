@@ -111,9 +111,9 @@ def baselines(dataset, rows):
             cache.setdefault(cid, {})[k] = {
                 "global": vec["global"]["sum"], "target_energy": target_energy(cand, ref),
                 "target_conditional": float(np.mean(strata)) if strata else None,
-                "coverage_only": sc["coverage"], "label_only": sc["label"],
-                "five_unweighted": float(np.nanmean([sc[c] for c in ("coverage", "label", "target",
-                                                                      "processing", "negatives")])),
+                "coverage_only": nan(sc["coverage"]), "label_only": nan(sc["label"]),
+                "five_unweighted": float(np.nanmean([nan(sc[c]) for c in ("coverage", "label", "target",
+                                                                           "processing", "negatives")])),
                 "domain_classifier": domain_classifier(cand, ref)}
             changed = True
     if changed:
