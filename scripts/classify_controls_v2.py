@@ -47,6 +47,8 @@ def crops(frames, dataset, mode):
     xs, ys, fs, seq = [], [], [], []
     for s, frame in frames:
         x, y, f = from_frames([frame], *RES[dataset], mode=mode)
+        if not len(y):
+            continue                    # its empty tensor has the default crop size
         xs.append(x); ys.append(y); fs.append(f); seq += [s] * len(y)
     return torch.cat(xs), torch.cat(ys), torch.cat(fs), torch.tensor(seq)
 
