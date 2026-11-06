@@ -120,6 +120,12 @@ Reference subsets: budget 5 (subsets 0, 1, 2), budget 10 (0, 1, 2), and all 50; 
   pairwise ordering accuracy over pairs whose AP differs by more than the noise. Secondary: Kendall
   tau, Spearman rho, top-3 recall, runtime; stability across reference subsets. Uncertainty: bootstrap
   over families (LOFO summaries, 2,000 draws).
+- Ties (equal risk, e.g. several candidates with zero penalty): the selection is uniform over the tied
+  best set, so regret and P(within noise) are their expectations over that set; a tied pair counts 0.5
+  in pairwise accuracy. A NaN risk (baseline not computable) ranks last.
+- Family groups for LOFO are mechanisms (all bases held out together); a held-out family is evaluated
+  per base (its levels on the tuned simulator with the tuned simulator; on the spec simulator with
+  the spec simulator) and summarised per family as the mean over its bases.
 - Decision gate: M1 must beat both random and the global score on LOFO mean regret (bootstrap
   interval of the difference excludes 0) before M2 or anything learned is reported as the metric.
 
