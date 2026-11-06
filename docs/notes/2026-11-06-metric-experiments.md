@@ -324,3 +324,25 @@ CARRADA: the spread (0.04) is within seed noise (0.05): with 5 real sequences, t
 interchangeable. RADDet: spread 0.17 > 2 x noise, so Stage B runs (budgets 1 and 10). With real labels in
 the batch the label shift costs little (synthetic-only it was the most harmful defect); target shape
 (tail2) costs most on RADDet. Which simulator is "best" depends on the use.
+
+## Results: Phase 8 classification redesign (2026-11-06)
+results/metric/classification/controls_v2.json. Real-trained, test balanced accuracy, 95% interval
+over test sequences (chance 0.33):
+
+| design | CARRADA target / erased / ridge only | RADDet target / erased / ridge only |
+|---|---|---|
+| current (25 x 17) | 0.61 / 0.46 / 0.68 | 0.66 / 0.50 / 0.60 |
+| small (13 x 9) | 0.63 / 0.42 / 0.65 | 0.64 / 0.43 / 0.57 |
+| small, masked, noise background | 0.56 / 0.56 / 0.66 | 0.54 / 0.46 / 0.58 |
+| same, peak-centred | 0.60 / 0.57 / 0.62 | 0.51 / 0.45 / 0.56 |
+| same, range/speed matched | 0.32 / 0.35 / 0.53 (n 201) | 0.49 / 0.44 / 0.45 (n 777) |
+
+Speed/range logistic baseline: 0.62 (CARRADA), 0.60 (RADDet); 0.37 on matched samples.
+**No design passes the gate**; the classification metric stays blocked, as preregistered.
+- The zero-Doppler ridge alone classifies as well as or better than the target (CARRADA 0.68): where the
+  ridge falls inside a slow target's crop gives its speed away.
+- Masking does not remove context: masked crops score about the same with the target erased (CARRADA
+  0.56 vs 0.56).
+- **With range and speed matched across classes, CARRADA classification is at chance (0.32)**: on CARRADA
+  RD maps the classes are told apart by kinematics, not by target signature. RADDet keeps a small
+  residual (0.49 vs 0.44 erased), still with erased and ridge-only above chance.
