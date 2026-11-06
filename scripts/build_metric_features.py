@@ -15,6 +15,7 @@ scenes), 95% interval of the difference in medians / rates. Writes .../probe_che
         --candidates spec,tuned,study2:rangeshift1,study2:extra50,study2:unrender90 --check
 """
 import argparse
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -23,6 +24,7 @@ import numpy as np
 import torch
 
 from src import data, versions
+from src.detector import FrameDetector, detect
 from src.provenance import config_hash, provenance
 from src.utility_metric import PRIMARY_Q, RADARS, config, raw, select, summarise, thresholds, rates
 from src.versions import DATASETS, N_SIM, ON_BEST, SUITES, best, render, version
@@ -76,11 +78,39 @@ def load_raw(path):
     return out
 
 
-def fresh(path):
-    """A saved raw table built with the current feature definition."""
+def detector_path(dataset):
+    return Path(f"results/metric/negative_detector_{dataset}.pt")
+
+
+def feature_key(dataset):
+    """Hash of the feature definition and the fixed negative detector's weights."""
+    p = detector_path(dataset)
+    det = hashlib.sha256(p.read_bytes()).hexdigest()[:12] if p.exists() else None
+    return config_hash(config() | {"negative_detector": det})
+
+
+def fresh(path, dataset):
+    """A saved raw table built with the current feature definition and detector."""
     meta = path.with_suffix(".json")
-    return path.exists() and meta.exists() and \
-        json.loads(meta.read_text())["feature_config_hash"] == config_hash(config())
+    return path.exists() and meta.exists() and json.loads(meta.read_text()).get("feature_key") == feature_key(dataset)
+
+
+@torch.no_grad()
+def detector_dets(dataset, pool):
+    """The fixed negative detector's detections on every frame of a pool, or None without it."""
+    p = detector_path(dataset)
+    if not p.exists():
+        return None
+    ck = torch.load(p, weights_only=False)
+    dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = FrameDetector(width=ck["width"]).to(dev)
+    model.load_state_dict(ck["state_dict"])
+    model.eval()
+    dets = []
+    for item in pool:
+        x = torch.stack([data.normalised(item, t) for t in range(item["x"].shape[0])])[:, None]
+        dets += detect(torch.sigmoid(model(x.to(dev)).float())[:, 0].cpu(), threshold=0.05, top_k=10)
+    return dets
 
 
 def subsets(budget, n_subsets):
@@ -97,15 +127,16 @@ def candidate_dir(dataset, cid):
 
 def real_tables(dataset):
     path = OUT / dataset / "real" / "raw.npz"
-    if fresh(path):
+    if fresh(path, dataset):
         return load_raw(path)
     ds = DATASETS[dataset]
     t0 = time.time()
     pool = train_only(ds.real, "train")
-    tables = raw(pool, RADARS[dataset], classes_of(ds.real))
+    tables = raw(pool, RADARS[dataset], classes_of(ds.real), detector_dets(dataset, pool))
     save_raw(path, tables, {"provenance": provenance(), "cache": ds.real, "split": "train",
                             "n_sequences": len(pool), "feature_config": config(),
-                            "feature_config_hash": config_hash(config()), "seconds": time.time() - t0})
+                            "feature_config_hash": config_hash(config()), "feature_key": feature_key(dataset),
+                            "seconds": time.time() - t0})
     return tables
 
 
@@ -133,6 +164,8 @@ EXPECT = {
     "study2:unrender90": [("labels_with_peak_r2", -1), ("label_prom", -1)],
     "study2:contrast-12": [("label_prom", -1), ("over_floor", -1)],
     "study2:blur2": [("width_r2", +1), ("width_d2", +1), ("area2", +1)],
+    "study2:clutter+12": [("ridge_excess", +1)],
+    "study2b:confusers4": [("unlabelled_per_frame", +1)],
     "study2b:tail2": [("far_ext2", +1), ("tail_asym2", +1), ("tail_level", +1)],
 }
 
@@ -140,6 +173,9 @@ EXPECT = {
 def probe_value(tables, probe, thr):
     if probe in ("unlabelled_per_frame", "unlabelled_off_ridge_per_frame", "labels_with_peak_r2"):
         return rates(tables, thr)[probe]
+    if probe in tables["frames"]:
+        v = tables["frames"][probe]
+        return float(np.mean(v[np.isfinite(v)]))
     v = tables["objects"][probe]
     v = v[np.isfinite(v)]
     return float(np.median(v)) if len(v) else np.nan
@@ -148,7 +184,8 @@ def probe_value(tables, probe, thr):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="carrada", choices=tuple(RADARS))
-    ap.add_argument("--candidates", required=True, help="comma-separated candidate ids (registry)")
+    ap.add_argument("--candidates", required=True,
+                    help="comma-separated candidate ids (registry), or 'all' (every usable candidate)")
     ap.add_argument("--budgets", default="5,10")
     ap.add_argument("--subsets", type=int, default=3)
     ap.add_argument("--check", action="store_true")
@@ -158,22 +195,25 @@ def main():
     real = real_tables(a.dataset)
     budgets = [int(b) for b in a.budgets.split(",")] + [N_REAL]
     cands = {}
-    for cid in a.candidates.split(","):
+    ids = [c for c, r in reg.items() if r["usable"]] if a.candidates == "all" else a.candidates.split(",")
+    for cid in ids:
         row = reg[cid]
         d = candidate_dir(a.dataset, cid)
         t0 = time.time()
-        if fresh(d / "raw.npz"):
+        if fresh(d / "raw.npz", a.dataset):
             tables = load_raw(d / "raw.npz")
         else:
             pool, cls = load_candidate(row)
-            tables = raw(pool, RADARS[a.dataset], cls)
+            tables = raw(pool, RADARS[a.dataset], cls, detector_dets(a.dataset, pool))
             save_raw(d / "raw.npz", tables, {"provenance": provenance(), "candidate": row,
                                              "n_sequences": len(pool), "feature_config": config(),
                                              "feature_config_hash": config_hash(config()),
+                                             "feature_key": feature_key(a.dataset),
                                              "seconds": time.time() - t0})
             del pool
         raw_s = time.time() - t0
-        cands[cid] = tables
+        if a.check and (cid == "tuned" or cid in EXPECT):
+            cands[cid] = tables                 # only what the check needs stays in memory
         for b in budgets:
             for s, seqs in (subsets(b, a.subsets) if b < N_REAL else {0: np.arange(N_REAL)}).items():
                 t1 = time.time()
@@ -183,8 +223,8 @@ def main():
                     "candidate": cid, "family": row["family"], "level": row["level"], "suite": row["suite"],
                     "version": row["version"], "reference": {"budget": b, "subset": s,
                                                              "sequence_indices": seqs.tolist()},
-                    "feature_config_hash": config_hash(config()), "raw_seconds": raw_s,
-                    "summary_seconds": time.time() - t1, "vector": vec}), indent=1))
+                    "feature_config_hash": config_hash(config()), "feature_key": feature_key(a.dataset),
+                    "raw_seconds": raw_s, "summary_seconds": time.time() - t1, "vector": vec})))
         v = json.loads((d / f"reference_{N_REAL}_0.json").read_text())["vector"]
         print(f"{cid:22s} n_obj {len(tables['objects']['seq']):5d}  scores vs 50 real: "
               + " ".join(f"{k} {x:.2f}" for k, x in v["scores"].items()), flush=True)

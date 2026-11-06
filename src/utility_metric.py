@@ -27,6 +27,7 @@ from scipy import ndimage
 from scipy.stats import wasserstein_distance
 
 from src.data import normalised
+from src.measures import GROUPS, _box, texture
 from src.measures import objects as contrast_and_displacement
 
 PEAK_FLOOR = 1.5            # z; real CARRADA labelled objects: 10th percentile of prominence 2.9
@@ -37,6 +38,9 @@ DROPS = (1, 2, 4)           # z below the peak: width / area thresholds
 UNLABELLED_RADIUS = 4       # a peak farther than this from every label is unlabelled
 QUANTILES = (10, 25, 50)    # target-like = prominence >= this percentile of the reference's labels
 PRIMARY_Q = 25
+N_BANDS = 32                # range bands of the processing profiles
+FP_SCORE, FP_RADIUS = 0.3, 4    # a detector false positive: score >= FP_SCORE, no label within FP_RADIUS
+N_NEG_PEAKS = 3             # detector-free negatives: the most prominent unlabelled maxima per frame
 
 
 @dataclasses.dataclass(frozen=True)
@@ -47,12 +51,15 @@ class Radar:
     static: bool            # static radar: the zero-Doppler ridge is the static scene
 
 
-RADARS = {"carrada": Radar(0.2, 0.42, 32, True), "raddet": Radar(0.1953125, 0.4197, 32, True)}
+RADARS = {"carrada": Radar(0.2, 0.42, 32, True), "raddet": Radar(0.1953125, 0.4197, 32, True),
+          # RADIal: unshifted Doppler (bin 0 = zero speed); a moving radar, so no static ridge
+          "radial": Radar(0.2, 0.1, 0, False)}
 
 
 def config():
     """Everything that defines the raw features (hashed into every output)."""
-    return {"version": 2, "peak_floor": PEAK_FLOOR, "k_offset": K_OFFSET, "radii": RADII, "k_r": K_R,
+    return {"version": 3, "n_bands": N_BANDS, "fp_score": FP_SCORE, "fp_radius": FP_RADIUS,
+            "n_neg_peaks": N_NEG_PEAKS, "peak_floor": PEAK_FLOOR, "k_offset": K_OFFSET, "radii": RADII, "k_r": K_R,
             "k_d": K_D, "drops": DROPS, "unlabelled_radius": UNLABELLED_RADIUS, "quantiles": QUANTILES,
             "primary_q": PRIMARY_Q, "radars": {k: dataclasses.asdict(v) for k, v in RADARS.items()}}
 
@@ -186,11 +193,79 @@ def label_agreement(z, x_db, prom, peaks_rd, rf, df):
     return out, int(pr), int(pd)
 
 
+# ------------------------------------------------------------------ per frame: processing
+
+def _bands(v):
+    return [float(b.mean()) for b in np.array_split(v, N_BANDS)]
+
+
+def processing(zt, radar):
+    """Low-level statistics of one frame (z units)."""
+    z = zt.numpy()
+    out = texture(zt)                                   # spread1..8, corr_range, corr_doppler (lag 1)
+    res = zt - _box(zt, 1)
+    var = float((res ** 2).mean())
+    for lag in (2, 4):
+        out[f"corr_range{lag}"] = float((res[:-lag] * res[lag:]).mean()) / var
+        out[f"corr_doppler{lag}"] = float((res * torch.roll(res, lag, 1)).mean()) / var
+    rowmed = np.median(z, axis=1)
+    rowq99 = np.quantile(z, 0.99, axis=1)
+    out |= {f"rowmed_b{k}": v for k, v in enumerate(_bands(rowmed))}
+    out |= {f"rowq99_b{k}": v for k, v in enumerate(_bands(rowq99))}
+    out["frame_median"], out["frame_q99"] = float(np.median(z)), float(np.quantile(z, 0.99))
+    out["clip_min"], out["clip_max"] = float((z == z.min()).mean()), float((z == z.max()).mean())
+    if radar.static:
+        ridge = z[:, radar.zero] - rowmed
+        out |= {f"ridge_b{k}": v for k, v in enumerate(_bands(ridge))}
+        col = (z - rowmed[:, None]).mean(0)
+        half = col[radar.zero] / 2
+        a, b = _run(np.roll(col, -radar.zero + len(col) // 2), len(col) // 2, half)
+        out["ridge_width"] = float(a + b + 1)
+        out["ridge_excess"] = float(col[radar.zero])
+    return out
+
+
+# ------------------------------------------------------------------ per frame: negatives
+
+def negatives(z, prom, pk, nearest, labels, dets, radar):
+    """Detector-free negatives (the N_NEG_PEAKS most prominent unlabelled maxima) and, if dets are
+    given, the detector's false positives; each with the target-response features at its strongest
+    cell. Returns (rows, number of false positives or nan)."""
+    n_r, n_d = z.shape
+    rows = []
+
+    def row(kind, score, r, d):
+        out = {"kind": kind, "score": score, "r": r, "d": d, "prom": float(prom[r, d]),
+               "range_m": r * radar.range_res,
+               "on_ridge": float(radar.static and abs(wrap(d - radar.zero, n_d)) <= 1)}
+        return out | target_response(z, r, d)
+    unl = np.flatnonzero(nearest > UNLABELLED_RADIUS)
+    for i in unl[np.argsort(-pk[unl, 2], kind="stable")[:N_NEG_PEAKS]]:
+        rows.append(row(0, np.nan, int(pk[i, 0]), int(pk[i, 1])))
+    if dets is None:
+        return rows, np.nan
+    n_fp = 0
+    lab = np.asarray(labels).reshape(-1, 2)
+    for score, r, d in dets:
+        if score < FP_SCORE:
+            continue
+        if len(lab) and np.hypot(lab[:, 0] - r, wrap(lab[:, 1] - d, n_d)).min() <= FP_RADIUS:
+            continue
+        w, o_r, o_d = _window(z, int(r), int(d), 1, 1)
+        i = np.unravel_index(int(np.argmax(w)), w.shape)
+        n_fp += 1
+        rows.append(row(1, float(score), int(r) + int(o_r[i[0]]), (int(d) + int(o_d[i[1]])) % n_d))
+    return rows, float(n_fp)
+
+
 # ------------------------------------------------------------------ a pool
 
-def raw(pool, radar, classes=None):
-    """The three raw tables of a pool (list of cache items). classes: (n_seq, M) class per slot or None."""
-    objs, peaks, frames = [], [], []
+def raw(pool, radar, classes=None, dets=None):
+    """The raw tables of a pool (list of cache items). classes: (n_seq, M) class per slot or None.
+    dets: the fixed negative detector's detections, one list of (score, r, d) per frame in pool
+    order (sequence-major), or None."""
+    objs, peaks, frames, negs = [], [], [], []
+    f_i = 0
     for s, item in enumerate(pool):
         for t in range(item["x"].shape[0]):
             zt = normalised(item, t)
@@ -213,7 +288,10 @@ def raw(pool, radar, classes=None):
             for (r, d, p), nd, rid in zip(pk, nearest, on_ridge):
                 peaks.append({"seq": s, "frame": t, "r": r, "d": d, "prom": p, "nearest_label": nd,
                               "on_ridge": float(rid)})
-            frames.append({"seq": s, "frame": t, "n_labels": len(labels)})
+            neg, n_fp = negatives(z, prom, pk, nearest, labels, None if dets is None else dets[f_i], radar)
+            f_i += 1
+            negs += [{"seq": s, "frame": t} | n for n in neg]
+            frames.append({"seq": s, "frame": t, "n_labels": len(labels), "n_fp": n_fp} | processing(zt, radar))
             contrast = contrast_and_displacement(zt, labels)
             for k, (slot, (rf, df)) in enumerate(zip(slots, labels)):
                 la, pr, pd = label_agreement(z, x_db, prom, pk, rf, df)
@@ -222,11 +300,11 @@ def raw(pool, radar, classes=None):
                        "near_zero": float(abs(wrap(df - radar.zero, n_d)) <= 1), "n_in_frame": len(labels),
                        "cls": float(classes[s, slot]) if classes is not None else np.nan,
                        "over_floor": contrast[k]["over_floor"], "over_clutter": contrast[k]["over_clutter"],
-                       "ring_prominence": contrast[k]["prominence"]}
+                       "ring_prominence": contrast[k]["prominence"], "displacement": contrast[k]["displacement"]}
                 row |= la | target_response(z, pr, pd)
                 objs.append(row)
     table = lambda rows: {k: np.asarray([r[k] for r in rows], dtype=np.float64) for k in rows[0]} if rows else {}
-    return {"objects": table(objs), "peaks": table(peaks), "frames": table(frames)}
+    return {"objects": table(objs), "peaks": table(peaks), "frames": table(frames), "negatives": table(negs)}
 
 
 def select(tables, seqs):
@@ -346,9 +424,101 @@ def summarise(cand, ref):
         out["label"][f"labels_with_peak_r{r}"] = {"cand": c, "ref": rr, "w1": abs(c - rr)}
     out["target"] = {k: feature_distance(co[k], ro[k]) for k in TARGET}
     out["target_strata"] = strata(cand, ref)
+    out["processing"] = processing_distances(cand["frames"], ref["frames"])
+    out["negatives"], out["negative_strata"] = negative_distances(cand, ref)
     out["scores"] = {comp: float(np.nanmean([v["w1"] for v in out[comp].values()]))
-                     for comp in ("coverage", "label", "target")}
+                     for comp in ("coverage", "label", "target", "processing", "negatives")}
+    out["global"] = global_score(cand, ref)
     return out
+
+
+PROCESSING = ("spread1", "spread2", "spread4", "spread8", "corr_range", "corr_doppler", "corr_range2",
+              "corr_doppler2", "corr_range4", "corr_doppler4", "frame_median", "frame_q99", "clip_min",
+              "clip_max", "ridge_width", "ridge_excess")
+
+
+def processing_distances(cf, rf):
+    out = {k: feature_distance(cf[k], rf[k]) for k in PROCESSING if k in cf and k in rf}
+    for prof in ("rowmed", "rowq99", "ridge"):
+        keys = [f"{prof}_b{b}" for b in range(N_BANDS)]
+        if all(k in cf and k in rf for k in keys):
+            d = [feature_distance(cf[k], rf[k]) for k in keys]
+            out[f"{prof}_profile"] = {"w1": float(np.nanmean([x["w1"] for x in d])),
+                                      "shift": float(np.nanmean([x["shift"] for x in d]))}
+    return out
+
+
+NEG_FEATURES = ("prom", "range_m", "on_ridge", "width_r2", "width_d2", "area2", "near_ext2", "far_ext2",
+                "tail_level", "n_peaks2", "entropy_r", "entropy_d", "acorr_r", "acorr_d")
+
+
+def _nn(a, b, chunk=512):
+    """Distance from each row of a to its nearest row of b."""
+    out = np.empty(len(a))
+    for i in range(0, len(a), chunk):
+        d = ((a[i:i + chunk, None] - b[None]) ** 2).sum(-1)
+        out[i:i + chunk] = np.sqrt(d.min(1))
+    return out
+
+
+def negative_distances(cand, ref, min_n=5):
+    """Hard negatives: the candidate's negatives against the real ones; the fixed detector's false
+    positives per frame; and coverage of the real false positives by the candidate's negatives
+    (nearest-neighbour distance, vs to real negatives of other sequences)."""
+    cn, rn = cand["negatives"], ref["negatives"]
+    out = {}
+    if not cn or not rn:
+        return out, {}
+    c0, r0 = cn["kind"] == 0, rn["kind"] == 0
+    for k in NEG_FEATURES:
+        out[f"peak_{k}"] = feature_distance(cn[k][c0], rn[k][r0])
+    cf, rf = cand["frames"]["n_fp"], ref["frames"]["n_fp"]
+    if np.isfinite(cf).all() and np.isfinite(rf).all():
+        out["fp_per_frame"] = feature_distance(cf, rf) | {"cand_mean": float(cf.mean()), "ref_mean": float(rf.mean())}
+    r_fp = rn["kind"] == 1
+    strata_ = {}
+    if r_fp.sum() >= min_n:
+        feats = lambda t, m: np.column_stack([np.nan_to_num(t[k][m], nan=0.0) for k in NEG_FEATURES])
+        sd = feats(rn, np.ones(len(rn["kind"]), bool)).std(0)
+        sd[sd == 0] = 1
+        q = feats(rn, r_fp) / sd
+        cand_all = feats(cn, np.ones(len(cn["kind"]), bool)) / sd
+        to_cand = _nn(q, cand_all)
+        # reference: nearest real negative of another sequence
+        r_all = feats(rn, np.ones(len(rn["kind"]), bool)) / sd
+        to_real = np.empty(len(q))
+        fp_seq, all_seq = rn["seq"][r_fp], rn["seq"]
+        for s in np.unique(fp_seq):
+            m = fp_seq == s
+            other = all_seq != s
+            to_real[m] = _nn(q[m], r_all[other]) if other.any() else np.nan
+        ratio = lambda m: float(np.nanmedian(to_cand[m]) / max(np.nanmedian(to_real[m]), 1e-9)) if m.sum() >= min_n else np.nan
+        out["fp_coverage"] = {"w1": max(ratio(np.ones(len(q), bool)) - 1, 0.0), "ratio": ratio(np.ones(len(q), bool)),
+                              "to_cand": float(np.nanmedian(to_cand)), "to_real": float(np.nanmedian(to_real)),
+                              "n_real_fp": int(len(q))}
+        far = rn["range_m"][r_fp] > np.median(rn["range_m"][r_fp])
+        strong = rn["prom"][r_fp] > np.median(rn["prom"][r_fp])
+        ridge = rn["on_ridge"][r_fp] == 1
+        strata_ = {"ridge": ratio(ridge), "off_ridge": ratio(~ridge), "far": ratio(far), "near": ratio(~far),
+                   "strong": ratio(strong), "weak": ratio(~strong)}
+    return out, strata_
+
+
+def global_score(cand, ref):
+    """The 2026-11-01 realness score ("sum": nothing fitted): mean W1 / real sd per group of
+    src/measures.py (texture per frame; contrast and label per object), summed over groups."""
+    src = {"spread1": "frames", "spread2": "frames", "spread4": "frames", "spread8": "frames",
+           "corr_range": "frames", "corr_doppler": "frames", "over_floor": "objects",
+           "over_clutter": "objects", "displacement": "objects", "prominence": "objects"}
+    col = {"prominence": "ring_prominence"}
+    groups = {}
+    for g, ms in GROUPS.items():
+        d = []
+        for m in ms:
+            c, r = _clean(cand[src[m]][col.get(m, m)]), _clean(ref[src[m]][col.get(m, m)])
+            d.append(wasserstein_distance(c, r) / (r.std() + 1e-12) if len(c) and len(r) else np.nan)
+        groups[g] = float(np.mean(d))
+    return {"groups": groups, "sum": float(sum(groups.values()))}
 
 
 def strata(cand, ref, min_n=10):

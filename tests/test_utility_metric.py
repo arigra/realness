@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import torch
 
-from src.utility_metric import Radar, raw, rates, summarise
+from src.utility_metric import Radar, negatives, processing, raw, rates, row_prominence, summarise
 
 RADAR = Radar(0.2, 0.4, 16, True)
 R, D = 64, 32
@@ -76,8 +76,9 @@ def test_identical_inputs_zero_distance():
     pool = [item([(30, 10, 12, 1.2)], [(30, 10)], seed=s, frames=8) for s in range(4)]
     t = raw(pool, RADAR)
     v = summarise(t, t)
-    for comp in ("coverage", "label", "target"):
+    for comp in ("coverage", "label", "target", "processing", "negatives"):
         assert v["scores"][comp] == pytest.approx(0.0, abs=1e-9), comp
+    assert v["global"]["sum"] == pytest.approx(0.0, abs=1e-9)
 
 
 def test_deterministic():
@@ -105,3 +106,24 @@ def test_builder_reads_training_splits_only(monkeypatch):
     row = {"dataset": "carrada", "suite": "study2", "version": "rangeshift1", "cache": "(on the tuned cache)"}
     bfm.load_candidate(row)
     assert seen and set(seen) == {"train"}
+
+
+def test_ridge_width_and_excess():
+    x = torch.zeros(R, D)
+    x[:, RADAR.zero - 1:RADAR.zero + 2] = 5.0          # a 3-bin zero-Doppler ridge
+    p = processing(x, RADAR)
+    assert p["ridge_width"] == 3 and p["ridge_excess"] == pytest.approx(5.0)
+    assert p["ridge_b0"] == pytest.approx(5.0)
+
+
+def test_false_positives_need_score_and_distance():
+    it = item([(30, 10, 12, 1.2), (45, 22, 12, 1.2)], [(30, 10)])
+    z = it["x"][0].float().numpy()
+    prom = row_prominence(it["x"][0].float()).numpy()
+    pk = np.array([[45, 22, prom[45, 22]], [30, 10, prom[30, 10]]], dtype=float)
+    nearest = np.array([np.hypot(15, 12), 0.0])
+    dets = [(0.9, 30.0, 10.0), (0.5, 45.0, 22.0), (0.2, 50.0, 5.0)]   # on a label / FP / too weak
+    rows, n_fp = negatives(z, prom, pk, nearest, [(30, 10)], dets, RADAR)
+    assert n_fp == 1
+    assert [r["kind"] for r in rows] == [0, 1]       # the unlabelled peak, then the false positive
+    assert rows[1]["r"] == 45 and rows[1]["d"] == 22
