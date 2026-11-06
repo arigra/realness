@@ -31,7 +31,14 @@ CLASSES = ("person", "two-wheeler", "vehicle")
 #          of it (target shape without the dataset's label-to-return offset);
 #   erase: the crop is taken ERASE_ROWS rows away from the target in range, at the same Doppler:
 #          the ridge and background are there, the target is not (a classifier must be at chance).
-MODE = {"ridge": "noise", "align": "label", "erase": False}    # "constant" leaked speed (results/crop_controls.json)
+#   kr, kd: half sizes (Phase 8 of docs/notes/2026-11-06-metric-experiments.md: smaller crops);
+#   mask: None, or "component": keep only the connected cells around the target's strongest cell
+#         that stand >= max(peak - 2, 1) crop-sd over the crop median; bg "noise" then replaces
+#         everything outside the mask by N(0, 1) (background randomised);
+#   ridge_only: the zero-Doppler columns kept, every other cell N(0, 1) (does the ridge alone tell
+#         the class?).
+MODE = {"ridge": "noise", "align": "label", "erase": False,    # "constant" leaked speed (results/crop_controls.json)
+        "kr": K_R, "kd": K_D, "mask": None, "bg": "keep", "ridge_only": False}
 ERASE_ROWS = 40
 
 
@@ -47,8 +54,9 @@ def crop(frame_db, r, d, n_doppler=64, mode=None, generator=None):
         ri, di = int(rr[k // 7]), int(dd[k % 7])
     if m["erase"]:
         ri = ri + ERASE_ROWS if ri + ERASE_ROWS + K_R < R else ri - ERASE_ROWS
-    rows = torch.arange(ri - K_R, ri + K_R + 1).clamp(0, R - 1)
-    bins = torch.remainder(torch.arange(di - K_D, di + K_D + 1), n_doppler)
+    kr, kd = m["kr"], m["kd"]
+    rows = torch.arange(ri - kr, ri + kr + 1).clamp(0, R - 1)
+    bins = torch.remainder(torch.arange(di - kd, di + kd + 1), n_doppler)
     c = frame_db[rows][:, bins].float().clone()
     ridge = (torch.remainder(bins - ZERO + n_doppler // 2, n_doppler) - n_doppler // 2).abs() <= 1
     if bool(ridge.any()) and m["ridge"] != "keep":
@@ -58,7 +66,26 @@ def crop(frame_db, r, d, n_doppler=64, mode=None, generator=None):
         else:                     # values of the crop's other cells, drawn at random
             pick = torch.randint(rest.numel(), (int(ridge.sum()) * c.shape[0],), generator=generator)
             c[:, ridge] = rest.flatten()[pick].view(c.shape[0], -1)
-    return (c - c.median()) / (c.std() + 1e-6)
+    c = (c - c.median()) / (c.std() + 1e-6)
+    if m["ridge_only"]:
+        out = torch.randn(c.shape, generator=generator)
+        out[:, ridge] = c[:, ridge]
+        return out
+    if m["mask"] == "component":
+        from scipy import ndimage
+        w = c[kr - 1: kr + 2, kd - 1: kd + 2]
+        k = int(w.argmax())
+        pr, pd = kr - 1 + k // 3, kd - 1 + k % 3
+        level = max(float(c[pr, pd]) - 2.0, 1.0)
+        lab, _ = ndimage.label((c >= level).numpy())
+        keep = torch.from_numpy(lab == lab[pr, pd]) if lab[pr, pd] > 0 else torch.zeros(c.shape, dtype=torch.bool)
+        if m["bg"] == "noise":
+            c = torch.where(keep, c, torch.randn(c.shape, generator=generator))
+        else:
+            c = torch.where(keep, c, torch.zeros_like(c))
+    elif m["bg"] == "noise":
+        raise ValueError("bg noise needs a mask")
+    return c
 
 
 def speed_range(r, d, range_res, vel_res):

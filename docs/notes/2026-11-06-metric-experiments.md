@@ -146,6 +146,15 @@ seed noise.
 
 ## Prospective selection (Phase 6) — *TBD (freeze point, before generating final candidates)*
 
+## Classification redesign (Phase 8) — fixed 2026-11-06, before its runs
+scripts/classify_controls_v2.py. Designs: current crops (25 x 17, label-centred, ridge filled with
+noise); small (13 x 9); small + mask to the target's connected component (cells >= max(peak - 2, 1)
+crop-sd, around the strongest cell within 1 of the centre) with N(0,1) background; the same
+peak-centred; the same with range/speed-matched class sampling (5 x 5 quantile bins). Controls per
+design: target erased (40 rows away), ridge only. Real-trained, 3 seeds, 95% interval over test
+sequences. Gate: erased and ridge-only intervals include 1/3, and the real-trained interval lies above
+the speed/range logistic baseline. Only a passing design is trained on the tuned simulator.
+
 ## Stopping rules
 - Phase 1 stops if a controlled intervention moves none of its intended probes: that probe is fixed
   or the factor is marked unmeasured; it is never declared irrelevant.
