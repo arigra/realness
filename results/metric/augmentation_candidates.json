@@ -1,10 +1,70 @@
 {
  "written": "2026-11-06",
- "stage_A": {"datasets": ["carrada", "raddet"], "budget": 5, "seeds": [1, 2, 3],
-             "candidates": ["spec", "tuned", "study2:extra50", "study2:unrender90", "study2:contrast-12",
-                            "study2:rangeshift1", "study2b:tail2"],
-             "reused": {"real_only": "results/budget_<dataset>_real5_runs.json runs.real.clean",
-                        "tuned": "results/budget_<dataset>_real5_runs.json runs.mix.clean"}},
- "stage_B": {"condition": "Stage A Delta_AP spread across candidates > 2 x seed noise",
-             "budgets": [1, 10], "extra_candidates": ["sim2 variants", "study2:noise+12", "study2:blur2"]}
+ "stage_A": {
+  "datasets": [
+   "carrada",
+   "raddet"
+  ],
+  "budget": 5,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "candidates": [
+   "spec",
+   "tuned",
+   "study2:extra50",
+   "study2:unrender90",
+   "study2:contrast-12",
+   "study2:rangeshift1",
+   "study2b:tail2"
+  ],
+  "reused": {
+   "real_only": "results/budget_<dataset>_real5_runs.json runs.real.clean",
+   "tuned": "results/budget_<dataset>_real5_runs.json runs.mix.clean"
+  }
+ },
+ "stage_B": {
+  "condition": "Stage A Delta_AP spread across candidates > 2 x seed noise",
+  "budgets": [
+   1,
+   10
+  ],
+  "extra_candidates": [
+   "sim2 variants",
+   "study2:noise+12",
+   "study2:blur2"
+  ],
+  "triggered": {
+   "carrada": false,
+   "raddet": true
+  },
+  "triggered_note": "2026-11-06 15:10: Stage A Delta_AP spread CARRADA 0.040 (2x noise 0.102), RADDet 0.166 (2x noise 0.128)",
+  "datasets": [
+   "raddet"
+  ],
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "candidates": [
+   "spec",
+   "tuned",
+   "study2:extra50",
+   "study2:unrender90",
+   "study2:contrast-12",
+   "study2:rangeshift1",
+   "study2b:tail2",
+   "sim2:all",
+   "sim2:all-processing",
+   "sim2:all-range_gain",
+   "sim2:all-scenes",
+   "sim2:all-label",
+   "sim2:all-contrast",
+   "study2:noise+12",
+   "study2:blur2"
+  ]
+ }
 }
