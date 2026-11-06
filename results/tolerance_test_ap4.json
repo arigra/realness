@@ -1,0 +1,470 @@
+{
+ "carrada": {
+  "clean": 0.5877509938424298,
+  "noise": 0.10120255720196814,
+  "families": {
+   "blur": {
+    "means": {
+     "blur1.25": 0.5712683599230283,
+     "blur1.5": 0.5256324165844838,
+     "blur2": 0.5131306727936615,
+     "blur3": 0.47783718162874395,
+     "blur5": 0.38791122738879613,
+     "blur8": 0.5975807471701514
+    },
+    "onset": null
+   },
+   "sidelobes+": {
+    "means": {
+     "sidelobes+5": 0.44565639831516796,
+     "sidelobes+10": 0.2561757687868782,
+     "sidelobes+15": 0.05053849813243481,
+     "sidelobes+20": 0.041006448559552815
+    },
+    "onset": "sidelobes+5"
+   },
+   "smoothing": {
+    "means": {
+     "smoothing5": 0.5679964514282909,
+     "smoothing10": 0.5605232904541335,
+     "smoothing25": 0.5596818091024353,
+     "smoothing50": 0.5797228454162082,
+     "smoothing75": 0.5562439608642665,
+     "smoothing90": 0.58596664632613
+    },
+    "onset": null
+   },
+   "contrast": {
+    "means": {
+     "contrast-3": 0.5436146843227453,
+     "contrast-6": 0.5366660598061385,
+     "contrast-12": 0.4446110747498952,
+     "contrast-20": 0.3348806722405448,
+     "contrast-30": 0.21626491140087312
+    },
+    "onset": "contrast-12"
+   },
+   "noise": {
+    "means": {
+     "noise+3": 0.589236070913043,
+     "noise+6": 0.5359706884853849,
+     "noise+12": 0.39144070724611635,
+     "noise+20": 0.2939378485355892,
+     "noise+30": 0.15164090305970812
+    },
+    "onset": "noise+12"
+   },
+   "clutter-": {
+    "means": {
+     "clutter-6": 0.5456804608910008,
+     "clutter-12": 0.4326515980089743,
+     "clutter-20": 0.10315009290145453
+    },
+    "onset": "clutter-12"
+   },
+   "clutter+": {
+    "means": {
+     "clutter+6": 0.5581698621757907,
+     "clutter+12": 0.47949069450275195,
+     "clutter+20": 0.3507366925887481
+    },
+    "onset": "clutter+12"
+   },
+   "unrender": {
+    "means": {
+     "unrender10": 0.5727946987289383,
+     "unrender25": 0.499307981099873,
+     "unrender50": 0.5465470562466742,
+     "unrender75": 0.5955079037216023,
+     "unrender90": 0.4345097558153593
+    },
+    "onset": "unrender90"
+   },
+   "extra": {
+    "means": {
+     "extra10": 0.5647937832289496,
+     "extra25": 0.5185820984106271,
+     "extra50": 0.4582337970763508,
+     "extra100": 0.30336931786342886,
+     "extra200": 0.3327837818341615
+    },
+    "onset": "extra50"
+   },
+   "rangeshift": {
+    "means": {
+     "rangeshift1": 0.42973787828097704,
+     "rangeshift2": 0.3998190335669769,
+     "rangeshift3": 0.22452819720807585,
+     "rangeshift5": 0.0514443273113488,
+     "rangeshift8": 0.009651470352933627
+    },
+    "onset": "rangeshift1"
+   },
+   "dopplershift": {
+    "means": {
+     "dopplershift1": 0.5690411113757831,
+     "dopplershift2": 0.4839339714395279,
+     "dopplershift3": 0.3551524440019645,
+     "dopplershift5": 0.0386722809238539,
+     "dopplershift8": 0.001686480491902595
+    },
+    "onset": "dopplershift2"
+   },
+   "support": {
+    "means": {
+     "support25": 0.5288755127763486,
+     "support50": 0.5002827549188956,
+     "support75": 0.4587762383609038,
+     "support100": 0.43756756907450184
+    },
+    "onset": "support75"
+   },
+   "annotation": {
+    "means": {
+     "annotation+6": 0.6054238327738048,
+     "annotation+12": 0.5260027394489122,
+     "annotation+18": 0.49676709435748023
+    },
+    "onset": null
+   },
+   "tail": {
+    "means": {
+     "tail2": 0.6041863106564856,
+     "tail4": 0.5779849923654011,
+     "tail8": 0.5049857423914927,
+     "tail16": 0.5329287168260697
+    },
+    "onset": null
+   },
+   "confusers-": {
+    "means": {
+     "confusers0.5": 0.5137584049577772,
+     "confusers0": 0.4779552130856439
+    },
+    "onset": "confusers0"
+   },
+   "confusers+": {
+    "means": {
+     "confusers2": 0.5188250549369652,
+     "confusers4": 0.480050867753469
+    },
+    "onset": "confusers4"
+   }
+  },
+  "apart": {
+   "sidelobes-10": 0.4468238171189718
+  }
+ },
+ "raddet": {
+  "clean": 0.5442252295465836,
+  "noise": 0.0631094020913836,
+  "families": {
+   "blur": {
+    "means": {
+     "blur1.25": 0.4910078859825641,
+     "blur1.5": 0.5172088156938096,
+     "blur2": 0.44493633651726566,
+     "blur3": 0.2805443698165504,
+     "blur5": 0.2148449566239171,
+     "blur8": 0.1473284824874016
+    },
+    "onset": "blur2"
+   },
+   "sidelobes+": {
+    "means": {
+     "sidelobes+5": 0.23971286007060746,
+     "sidelobes+10": 0.14606855249983622,
+     "sidelobes+15": 0.04675799396472197,
+     "sidelobes+20": 0.030884726988249008
+    },
+    "onset": "sidelobes+5"
+   },
+   "smoothing": {
+    "means": {
+     "smoothing5": 0.5315993851913766,
+     "smoothing10": 0.5139008580763751,
+     "smoothing25": 0.5402605639020139,
+     "smoothing50": 0.5676745205172247,
+     "smoothing75": 0.5758374312958908,
+     "smoothing90": 0.5007592854402644
+    },
+    "onset": null
+   },
+   "contrast": {
+    "means": {
+     "contrast-3": 0.5164055407317792,
+     "contrast-6": 0.45935219103464453,
+     "contrast-12": 0.39985946261281663,
+     "contrast-20": 0.33010382301099267,
+     "contrast-30": 0.28755521772670795
+    },
+    "onset": "contrast-6"
+   },
+   "noise": {
+    "means": {
+     "noise+3": 0.5064791118364708,
+     "noise+6": 0.5204656348406639,
+     "noise+12": 0.4880893505610148,
+     "noise+20": 0.4624835487692987,
+     "noise+30": 0.2387138213678318
+    },
+    "onset": "noise+20"
+   },
+   "clutter-": {
+    "means": {
+     "clutter-6": 0.5455166722415727,
+     "clutter-12": 0.6009179483821497,
+     "clutter-20": 0.6012849614692237
+    },
+    "onset": null
+   },
+   "clutter+": {
+    "means": {
+     "clutter+6": 0.3949056668568471,
+     "clutter+12": 0.3504054073297546,
+     "clutter+20": 0.41410644610328884
+    },
+    "onset": "clutter+6"
+   },
+   "unrender": {
+    "means": {
+     "unrender10": 0.5159988280193765,
+     "unrender25": 0.5308221767614177,
+     "unrender50": 0.5361194494446891,
+     "unrender75": 0.5295698059863426,
+     "unrender90": 0.4723840136552286
+    },
+    "onset": "unrender90"
+   },
+   "extra": {
+    "means": {
+     "extra10": 0.43285623064741735,
+     "extra25": 0.493308052076789,
+     "extra50": 0.4763033280142977,
+     "extra100": 0.4253548391691772,
+     "extra200": 0.40517497104194994
+    },
+    "onset": "extra50"
+   },
+   "rangeshift": {
+    "means": {
+     "rangeshift1": 0.457073276817939,
+     "rangeshift2": 0.3128747998154664,
+     "rangeshift3": 0.18134551825449843,
+     "rangeshift5": 0.031935352452532796,
+     "rangeshift8": 0.01680272397373307
+    },
+    "onset": "rangeshift1"
+   },
+   "dopplershift": {
+    "means": {
+     "dopplershift1": 0.48764207457430814,
+     "dopplershift2": 0.4401784024725872,
+     "dopplershift3": 0.3357747500732664,
+     "dopplershift5": 0.020334124007073507,
+     "dopplershift8": 0.0007468516521035085
+    },
+    "onset": "dopplershift2"
+   },
+   "support": {
+    "means": {
+     "support25": 0.4602520403158792,
+     "support50": 0.45509398613709956,
+     "support75": 0.4855505255262107,
+     "support100": 0.528207288655644
+    },
+    "onset": null
+   },
+   "annotation": {
+    "means": {
+     "annotation+6": 0.5106904150597673,
+     "annotation+12": 0.5373729773399231,
+     "annotation+18": 0.4142140832194807
+    },
+    "onset": "annotation+18"
+   },
+   "tail": {
+    "means": {
+     "tail2": 0.372656267378862,
+     "tail4": 0.29224222910290837,
+     "tail8": 0.23234644040528876,
+     "tail16": 0.19124156432799153
+    },
+    "onset": "tail2"
+   },
+   "confusers-": {
+    "means": {
+     "confusers0.5": 0.5385751075348987,
+     "confusers0": 0.5161388648064218
+    },
+    "onset": null
+   },
+   "confusers+": {
+    "means": {
+     "confusers2": 0.5190061009682815,
+     "confusers4": 0.5430233272557797
+    },
+    "onset": null
+   }
+  },
+  "apart": {
+   "sidelobes-10": 0.46332694940052993
+  }
+ },
+ "radial": {
+  "clean": 0.5873043882046632,
+  "noise": 0.08217662327258635,
+  "families": {
+   "blur": {
+    "means": {
+     "blur1.25": 0.3761776164856964,
+     "blur1.5": 0.0849831667145526,
+     "blur2": 0.020778216472859493,
+     "blur3": 0.02325228436283638,
+     "blur5": 0.01219705517022074,
+     "blur8": 0.0035486059334170392
+    },
+    "onset": "blur1.25"
+   },
+   "sidelobes+": {
+    "means": {
+     "sidelobes+5": 0.6201730709766871,
+     "sidelobes+10": 0.6212054658424283,
+     "sidelobes+15": 0.5958947389047989,
+     "sidelobes+20": 0.4845910432495988
+    },
+    "onset": "sidelobes+20"
+   },
+   "smoothing": {
+    "means": {
+     "smoothing5": 0.6757774340140431,
+     "smoothing10": 0.6213352326808326,
+     "smoothing25": 0.6698601249112718,
+     "smoothing50": 0.6264827104223626,
+     "smoothing75": 0.6227485339529932,
+     "smoothing90": 0.6335870640531044
+    },
+    "onset": null
+   },
+   "contrast": {
+    "means": {
+     "contrast-3": 0.640775176495071,
+     "contrast-6": 0.6191206013629836,
+     "contrast-12": 0.5992543664924634,
+     "contrast-20": 0.4816574334994029,
+     "contrast-30": 0.06753203235138744
+    },
+    "onset": "contrast-20"
+   },
+   "noise": {
+    "means": {
+     "noise+3": 0.6622393382884489,
+     "noise+6": 0.6539685440898247,
+     "noise+12": 0.6159243206323044,
+     "noise+20": 0.4915485072883919,
+     "noise+30": 0.33248971767736896
+    },
+    "onset": "noise+20"
+   },
+   "clutter-": {
+    "means": {
+     "clutter-6": 0.6694642798777549,
+     "clutter-12": 0.581176230672355,
+     "clutter-20": 0.5000478498055205
+    },
+    "onset": "clutter-20"
+   },
+   "clutter+": {
+    "means": {
+     "clutter+6": 0.6788598513633569,
+     "clutter+12": 0.6074387836914682,
+     "clutter+20": 0.6579478648851654
+    },
+    "onset": null
+   },
+   "unrender": {
+    "means": {
+     "unrender10": 0.6366398118235201,
+     "unrender25": 0.6469488283359656,
+     "unrender50": 0.5859461288104267,
+     "unrender75": 0.5115952562046417,
+     "unrender90": 0.42404568047497454
+    },
+    "onset": "unrender90"
+   },
+   "extra": {
+    "means": {
+     "extra10": 0.6485141584757429,
+     "extra25": 0.5790767787151013,
+     "extra50": 0.5115065156884139,
+     "extra100": 0.49882036233508714,
+     "extra200": 0.389063768080308
+    },
+    "onset": "extra100"
+   },
+   "rangeshift": {
+    "means": {
+     "rangeshift1": 0.6371684936857461,
+     "rangeshift2": 0.5793765037491091,
+     "rangeshift3": 0.6454400807834552,
+     "rangeshift5": 0.15759153693897707,
+     "rangeshift8": 0.00019802093790005702
+    },
+    "onset": "rangeshift5"
+   },
+   "dopplershift": {
+    "means": {
+     "dopplershift1": 0.6277226644337414,
+     "dopplershift2": 0.5827930524292758,
+     "dopplershift3": 0.5327441358968856,
+     "dopplershift5": 8.464334111245142e-05,
+     "dopplershift8": 0.0023774939966475952
+    },
+    "onset": "dopplershift5"
+   },
+   "support": {
+    "means": {
+     "support25": 0.5873043882046632,
+     "support50": 0.5873043882046632,
+     "support75": 0.5873043882046632,
+     "support100": 0.5873043882046632
+    },
+    "onset": null
+   },
+   "annotation": {
+    "means": {
+     "annotation+6": 0.619328897115944,
+     "annotation+12": 0.6591756918427689,
+     "annotation+18": 0.6148770105767437
+    },
+    "onset": null
+   },
+   "tail": {
+    "means": {
+     "tail2": null,
+     "tail4": null,
+     "tail8": null,
+     "tail16": null
+    },
+    "onset": "incomplete"
+   },
+   "confusers-": {
+    "means": {
+     "confusers0.5": null,
+     "confusers0": null
+    },
+    "onset": "incomplete"
+   },
+   "confusers+": {
+    "means": {
+     "confusers2": null,
+     "confusers4": null
+    },
+    "onset": "incomplete"
+   }
+  },
+  "apart": {
+   "sidelobes-10": 0.6347199579037017
+  }
+ }
+}

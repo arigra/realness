@@ -1,0 +1,34 @@
+{
+  "ap2": {
+    "only": {
+      "metric": "ap2",
+      "test_mean": {
+        "clean": 0.294704429550523,
+        "all": 0.28705309314018496,
+        "all-processing": 0.23154148737984162,
+        "all-range_gain": 0.22388060195390888,
+        "all-scenes": 0.37853637767966947,
+        "all-label": 0.31565418551048463,
+        "all-contrast": 0.33972912466876726,
+        "all-clutter_profile": 0.25205124627423864
+      },
+      "seed_range": {
+        "clean": 0.05481351728185724,
+        "all": 0.06929311080539541,
+        "all-processing": 0.3402168273361176,
+        "all-range_gain": 0.10860773269678875,
+        "all-scenes": 0.07398953169222922,
+        "all-label": 0.07552694570599416,
+        "all-contrast": 0.05030573687420703,
+        "all-clutter_profile": 0.014821886663508088
+      },
+      "noise": 0.07164132124881231,
+      "gap": 0.15465577572576059,
+      "gap_over_noise": 2.158751025663482,
+      "families": {},
+      "counted": [],
+      "n_ordered": 0,
+      "pass": false
+    }
+  }
+}

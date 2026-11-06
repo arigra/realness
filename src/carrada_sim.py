@@ -77,6 +77,7 @@ class TrackScenario:
     person_rcs_dbsm: tuple = (-10.0, 5.0)    # Deep et al., over a walking stride
     gait_hz: float = 1.8
     limb_swing: float = 2.3                  # limb speed reaches (1 + 2.3) x body
+    wheel_micro: float = 1.0                 # rim speed spread (1: 0..2x bike speed; 0: no wheel micro-Doppler)
     wheel_radius_m: float = 0.35
     wheel_rcs_dbsm: float = -15.0            # assumption, flagged
     gear_ratio: float = 1.5                  # wheel turns per pedal turn
@@ -177,7 +178,7 @@ class CarradaSimulator:
                 fr = torch.tensor([-0.6, 0.0, 0.6])
                 th = torch.arange(8, dtype=torch.float) / 8 * 2 * math.pi + o["speed"] * t / sc.wheel_radius_m
                 wheel_along = torch.cat([sc.wheel_radius_m * torch.sin(th) + d for d in (-0.55, 0.55)])
-                wheel_speed = o["speed"] * (1 - torch.cos(th)).repeat(2)   # rim: 0 at contact, 2v on top
+                wheel_speed = o["speed"] * (1 - sc.wheel_micro * torch.cos(th)).repeat(2)   # rim: 0 at contact, 2v on top
                 px = torch.cat([px, cx + fr * ux, cx + wheel_along * ux])
                 py = torch.cat([py, cy + fr * uy, cy + wheel_along * uy])
                 sp = torch.cat([torch.full((3,), o["speed"]), wheel_speed])
@@ -239,6 +240,16 @@ class CarradaSimulator:
         n_obj = 0 if empty else 1 + int(self._u(0, 1) < 0.5)
         return [self._object(1 + int(torch.randint(3, (), generator=self.g)), i) for i in range(n_obj)]
 
+    def _label(self, o, t, px, py, v_app, rcs):
+        """Where the label of object o sits at time t: range (m), velocity (m/s);
+        None leaves the object unlabelled.
+        Range: the power-weighted mean range of its returns; velocity: the body's,
+        as CARRADA boxes centre on the main return."""
+        w = 10 ** (rcs / 10)
+        r_c = float((w * torch.sqrt(px ** 2 + py ** 2)).sum() / w.sum())
+        bx, by = o["x0"] + o["vx"] * t, o["y0"] + o["vy"] * t
+        return r_c, -(o["vx"] * bx + o["vy"] * by) / math.hypot(bx, by)
+
     def gen_sequence(self):
         spec = self.spec
         gx, gy, grcs = self._static()
@@ -258,13 +269,12 @@ class CarradaSimulator:
                 if not (0.5 < float(rng.min()) and float(rng.max()) < spec.max_range_m
                         and float(az.abs().max()) < math.radians(80)):
                     continue                                       # out of view: no label
-                w = 10 ** (rcs / 10)
-                r_c = float((w * rng).sum() / w.sum())
-                # body velocity, as CARRADA boxes centre on the main return
-                bx, by = o["x0"] + o["vx"] * t, o["y0"] + o["vy"] * t
-                v_body = -(o["vx"] * bx + o["vy"] * by) / math.hypot(bx, by)
+                lab = self._label(o, t, px, py, v_app, rcs)
+                if lab is None:
+                    continue                                       # an unlabelled object
+                r_c, v_c = lab
                 fl.append({"id": o["id"], "cls": o["cls"], "range_bin": r_c / spec.range_res_m,
-                           "doppler_bin": (spec.zero_doppler + v_body / spec.velocity_res_mps) % spec.n_doppler})
+                           "doppler_bin": (spec.zero_doppler + v_c / spec.velocity_res_mps) % spec.n_doppler})
             power = self._render(torch.cat(xs), torch.cat(ys), torch.cat(vs), torch.cat(rs))
             frames.append(10 * torch.log10(power + self._noise() + 1e-12).cpu())
             labels.append(fl)

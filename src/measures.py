@@ -104,3 +104,31 @@ def distances(sim, real):
 
 def group_distances(d):
     return {g: float(np.mean([d[m] for m in ms])) for g, ms in GROUPS.items()}
+
+
+# ---- profiles used to tune the simulators (src/tuned.py), in dB on the raw maps
+
+def range_cut(pool, kr=12, kd=12):
+    """Mean normalised level along range through each labelled object (+/-kr rows),
+    on the label's Doppler column +/-0; objects closer than kr to an edge are skipped."""
+    cuts = []
+    for item in pool:
+        for t in range(item["x"].shape[0]):
+            z = normalised(item, t)
+            for r, d in item["traj"][item["present"][:, t], t].tolist():
+                ri, di = int(round(r)), int(round(d)) % z.shape[1]
+                if kr <= ri < z.shape[0] - kr:
+                    cuts.append(z[ri - kr: ri + kr + 1, di])
+    return torch.stack(cuts).mean(0)
+
+
+def clutter_rows(pool, zero_doppler=None, smooth=9):
+    """Per range row, how far the static scene stands over the row's median (dB, median
+    over frames): the zero-Doppler column when the radar is static (zero_doppler given),
+    else the row's 99th percentile. Smoothed over `smooth` rows."""
+    x = torch.stack([it["x"].float() for it in pool]).flatten(0, 1)
+    med = x.median(dim=2).values
+    top = x[:, :, zero_doppler] if zero_doppler is not None else torch.quantile(x, 0.99, dim=2)
+    prof = (top - med).median(dim=0).values
+    k = smooth // 2
+    return F.avg_pool1d(F.pad(prof[None, None], (k, k), mode="replicate"), smooth, 1)[0, 0]

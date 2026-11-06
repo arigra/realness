@@ -7,10 +7,12 @@ Every version (src/versions.py) trains the frame detector in two settings,
 "only" (the version alone) and "mix" (each batch half from 50 real
 sequences, half from the version), with 3 seeds ("real": the 50 real
 sequences alone, a reference; run it with --versions clean); every detector is scored on
-the real test split. Resumable per (setting, version, seed). Writes
+the real test split, and on the whole real val split (what choices are made
+on; test is only reported). Resumable per (setting, version, seed). Writes
 results/<suite>_<dataset>_runs.json, _verdict.json and _dets/.
 
     PYTHONPATH=. python3 scripts/damage_study.py --suite fair --dataset radial
+    PYTHONPATH=. python3 scripts/damage_study.py --suite budget --dataset carrada --real-n 5
 """
 import argparse
 import json
@@ -22,7 +24,7 @@ import torch
 from src.data import load
 from src.detector import FrameDetector, scores
 from src.train import N_VAL, detections, frame_batch, train
-from src.versions import DATASETS, N_SIM, SUITES, family, version
+from src.versions import DATASETS, N_SIM, ON_BEST, SUITES, best, family, render, version
 
 
 def verdict(report, metric, counted, reported):
@@ -59,18 +61,23 @@ def main():
     ap.add_argument("--settings", default="only,mix")
     ap.add_argument("--versions", help="default: the whole suite")
     ap.add_argument("--seeds", default="1,2,3")
+    ap.add_argument("--real-n", type=int, help="label budget: use only n of the 50 real training "
+                    "sequences (evenly spaced) in the real and mix settings")
     a = ap.parse_args()
     ds = DATASETS[a.dataset]
     versions, counted, reported = SUITES[a.suite]
-    stem = Path("results") / f"{a.suite}_{a.dataset}"
+    stem = Path("results") / (f"{a.suite}_{a.dataset}" + (f"_real{a.real_n}" if a.real_n else ""))
     runs_path, dets_dir = Path(f"{stem}_runs.json"), Path(f"{stem}_dets")
     dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     real = load(ds.real, "train")
+    if a.real_n:
+        real = [real[int(i)] for i in np.linspace(0, len(real) - 1, a.real_n).round()]
     full_val = load(ds.real, "val")
     val = [full_val[int(i)] for i in np.linspace(0, len(full_val) - 1, N_VAL).round()]
     test = load(ds.real, "test")
-    clean = load(ds.sim, "train", limit=N_SIM)
+    clean = (load(render(a.dataset, "best", "tuned2", best(a.dataset)), "train", limit=N_SIM)
+             if a.suite in ON_BEST else load(ds.sim, "train", limit=N_SIM))
     names = a.versions.split(",") if a.versions else list(versions)
     settings, seeds = a.settings.split(","), [int(s) for s in a.seeds.split(",")]
     report = (json.loads(runs_path.read_text()) if runs_path.exists() else
@@ -99,6 +106,10 @@ def main():
             stop = train(model, draw, val, dev, gen)
             dets, tgts = detections(model, test, dev)
             result = scores(dets, tgts, test[0]["x"].shape[-1])
+            # the whole real val split: what versions are chosen on (test is only reported)
+            vd, vt = detections(model, full_val, dev)
+            report.setdefault("val", {}).setdefault(setting, {}).setdefault(name, {})[str(seed)] = \
+                scores(vd, vt, full_val[0]["x"].shape[-1])
             dets_dir.mkdir(parents=True, exist_ok=True)
             torch.save({"dets": dets, "tgts": tgts}, dets_dir / f"{setting}_{name}_s{seed}.pt")
             report["runs"].setdefault(setting, {}).setdefault(name, {})[str(seed)] = result

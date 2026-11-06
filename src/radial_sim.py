@@ -112,6 +112,7 @@ class Scenario:
     # scene-density multipliers (1.0 = the road-type description as written)
     structure_coverage_scale: float = 1.0
     tree_density_scale: float = 1.0
+    pole_density_scale: float = 1.0
     # offset on the link-budget anchor (0 = the published reference SNR)
     snr_offset_db: float = 0.0
     # receiver
@@ -250,7 +251,7 @@ class SceneSimulator:
             points(cx + self._n(0, 1.0, (k,)), cy + self._n(0, 1.0, (k,)),
                    self._n(total - 10 * math.log10(k), 5.0, (k,)))
         # poles and signs: isolated strong points
-        n_poles = int(torch.poisson(torch.tensor(road.poles_per_100m * ymax / 100),
+        n_poles = int(torch.poisson(torch.tensor(road.poles_per_100m * sc.pole_density_scale * ymax / 100),
                                     generator=self.g))
         side = torch.where(torch.rand(n_poles, generator=self.g) < 0.5, -1.0, 1.0)
         points(side * (half_width + self._u(0.5, 3.0, (n_poles,))),

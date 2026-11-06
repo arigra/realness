@@ -9,9 +9,12 @@ Conventions (measured 2026-11-01 on the files and RADDet's own code):
   range rows per frame per Doppler bin towards the radar, i.e. ~0.15 s frames).
 - Labels: per object a box [range, angle, Doppler centre, sizes]; the label is
   the box centre. No instance ids, so objects are numbered within each frame.
-The official split interleaves train and test frames; only synthetic data
-trains in the studies, so that overlap does not reach the detector.
+The official split interleaves train and test frames of the same scenes. Since
+2026-11-02 the caches use a scene-disjoint split instead (scripts/split_raddet.py,
+results/raddet_split.json): the tuned simulator draws its scenes from real
+training labels, so neighbouring test frames must not sit in the same scene.
 """
+import json
 import pickle
 from pathlib import Path
 
@@ -39,3 +42,18 @@ def labels(split, part, frame):
     gt = pickle.load(open(ROOT / split / "gt" / part / f"{frame}.pickle", "rb"))
     return [{"id": k, "cls": c, "range_bin": N_RANGE - 1 - float(b[0]), "doppler_bin": float(b[2])}
             for k, (c, b) in enumerate(zip(gt["classes"], gt["boxes"]))]
+
+
+def scene_groups(split, n=8):
+    """Groups of n consecutive labelled frames inside one scene of the scene-disjoint
+    split (results/raddet_split.json): [[(official split, part, frame id), ...], ...]."""
+    plan = json.loads(Path("results/raddet_split.json").read_text())["scenes"]
+    allf = sorted([(int(f), "train", p, f) for p, f in frames("train")]
+                  + [(int(f), "test", p, f) for p, f in frames("test")])
+    out = []
+    for s, a, b in plan:
+        if s != split:
+            continue
+        fs = [(o, p, f) for i, o, p, f in allf if a <= i <= b]
+        out += [fs[i:i + n] for i in range(0, len(fs) - n + 1, n)]
+    return out

@@ -1,0 +1,36 @@
+{
+  "ap2": {
+    "real": {
+      "metric": "ap2",
+      "test_mean": {
+        "clean": 0.41426396069982996
+      },
+      "seed_range": {
+        "clean": 0.011620679296739544
+      },
+      "noise": 0.011620679296739544,
+      "gap": 0.0,
+      "gap_over_noise": 0.0,
+      "families": {},
+      "counted": [],
+      "n_ordered": 0,
+      "pass": false
+    },
+    "mix": {
+      "metric": "ap2",
+      "test_mean": {
+        "clean": 0.4493168780288648
+      },
+      "seed_range": {
+        "clean": 0.042941154657583636
+      },
+      "noise": 0.042941154657583636,
+      "gap": 0.0,
+      "gap_over_noise": 0.0,
+      "families": {},
+      "counted": [],
+      "n_ordered": 0,
+      "pass": false
+    }
+  }
+}

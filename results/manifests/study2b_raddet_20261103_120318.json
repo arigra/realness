@@ -1,0 +1,283 @@
+{
+  "written": "2026-11-03T12:03:19",
+  "commit": "f69b1ac2f47fe34f20dc6f94aca78f55c9061345",
+  "branch": "main",
+  "dirty": true,
+  "files": {
+    "src/__init__.py": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c14",
+      "full": true
+    },
+    "src/__pycache__/__init__.cpython-310.pyc": {
+      "size": 163,
+      "sha256": "32c01fa59bcf5e5b",
+      "full": true
+    },
+    "src/__pycache__/carrada.cpython-310.pyc": {
+      "size": 4629,
+      "sha256": "24eda5a9183f7214",
+      "full": true
+    },
+    "src/__pycache__/carrada_sim.cpython-310.pyc": {
+      "size": 13918,
+      "sha256": "585c646f7c033913",
+      "full": true
+    },
+    "src/__pycache__/damage.cpython-310.pyc": {
+      "size": 21587,
+      "sha256": "c54c86c6aa5b8b26",
+      "full": true
+    },
+    "src/__pycache__/data.cpython-310.pyc": {
+      "size": 4064,
+      "sha256": "c18f04245112cdaa",
+      "full": true
+    },
+    "src/__pycache__/detector.cpython-310.pyc": {
+      "size": 7584,
+      "sha256": "1d0f22fd3b938c0b",
+      "full": true
+    },
+    "src/__pycache__/detector_scene.cpython-310.pyc": {
+      "size": 6616,
+      "sha256": "2dd95fd629657d46",
+      "full": true
+    },
+    "src/__pycache__/measures.cpython-310.pyc": {
+      "size": 7054,
+      "sha256": "c0909b695cd46a54",
+      "full": true
+    },
+    "src/__pycache__/plots.cpython-310.pyc": {
+      "size": 11390,
+      "sha256": "318dfa8d93e5956d",
+      "full": true
+    },
+    "src/__pycache__/radar.cpython-310.pyc": {
+      "size": 3426,
+      "sha256": "9b2ee9d845d20dbf",
+      "full": true
+    },
+    "src/__pycache__/radar_physics.cpython-310.pyc": {
+      "size": 5100,
+      "sha256": "1c876f83739c9d88",
+      "full": true
+    },
+    "src/__pycache__/raddet.cpython-310.pyc": {
+      "size": 4006,
+      "sha256": "2b7a1d240354faf4",
+      "full": true
+    },
+    "src/__pycache__/raddet_sim.cpython-310.pyc": {
+      "size": 5649,
+      "sha256": "2db56cb0fe218b43",
+      "full": true
+    },
+    "src/__pycache__/raddet_tuned.cpython-310.pyc": {
+      "size": 3509,
+      "sha256": "6311dfd0365b61f5",
+      "full": true
+    },
+    "src/__pycache__/radial_sim.cpython-310.pyc": {
+      "size": 16695,
+      "sha256": "725a3dfe38e15861",
+      "full": true
+    },
+    "src/__pycache__/scene_data.cpython-310.pyc": {
+      "size": 2822,
+      "sha256": "0f5322e88095f67b",
+      "full": true
+    },
+    "src/__pycache__/scene_sim.cpython-310.pyc": {
+      "size": 17454,
+      "sha256": "d39e1de07ba00b9b",
+      "full": true
+    },
+    "src/__pycache__/score.cpython-310.pyc": {
+      "size": 4805,
+      "sha256": "6831d8d5eeddb7e6",
+      "full": true
+    },
+    "src/__pycache__/train.cpython-310.pyc": {
+      "size": 3736,
+      "sha256": "99c7a8e8153783ca",
+      "full": true
+    },
+    "src/__pycache__/tuned.cpython-310.pyc": {
+      "size": 16624,
+      "sha256": "3b89ed18330831f5",
+      "full": true
+    },
+    "src/__pycache__/versions.cpython-310.pyc": {
+      "size": 11231,
+      "sha256": "8925ec66a41fc57a",
+      "full": true
+    },
+    "src/carrada_sim.py": {
+      "size": 14570,
+      "sha256": "fa4a7f2f45fb66c2",
+      "full": true
+    },
+    "src/damage.py": {
+      "size": 22416,
+      "sha256": "0f4a8bc8f4579ea6",
+      "full": true
+    },
+    "src/data.py": {
+      "size": 3501,
+      "sha256": "b1933e493ffb8afd",
+      "full": true
+    },
+    "src/detector.py": {
+      "size": 7144,
+      "sha256": "3ef02d3da6d8196b",
+      "full": true
+    },
+    "src/measures.py": {
+      "size": 5648,
+      "sha256": "0d9d8a0f2d5b16ab",
+      "full": true
+    },
+    "src/plots.py": {
+      "size": 10676,
+      "sha256": "a772b65d2e6c715f",
+      "full": true
+    },
+    "src/radar.py": {
+      "size": 3240,
+      "sha256": "60692dea92ea0955",
+      "full": true
+    },
+    "src/raddet.py": {
+      "size": 2726,
+      "sha256": "6240003db659af88",
+      "full": true
+    },
+    "src/raddet_sim.py": {
+      "size": 4935,
+      "sha256": "f91a10d7d5568c6e",
+      "full": true
+    },
+    "src/raddet_tuned.py": {
+      "size": 2733,
+      "sha256": "cee29aa98519a3a4",
+      "full": true
+    },
+    "src/radial_sim.py": {
+      "size": 22243,
+      "sha256": "14578072293c3e0e",
+      "full": true
+    },
+    "src/score.py": {
+      "size": 3271,
+      "sha256": "e0b479d52f4b3fab",
+      "full": true
+    },
+    "src/train.py": {
+      "size": 3119,
+      "sha256": "c89dc9f8c56986b3",
+      "full": true
+    },
+    "src/tuned.py": {
+      "size": 17270,
+      "sha256": "05659ead0b2641b4",
+      "full": true
+    },
+    "src/versions.py": {
+      "size": 11379,
+      "sha256": "ffe046394fe48a59",
+      "full": true
+    },
+    "scripts/__pycache__/__init__.cpython-310.pyc": {
+      "size": 167,
+      "sha256": "52da5433a7eff427",
+      "full": true
+    },
+    "scripts/__pycache__/build_carrada_cache.cpython-310.pyc": {
+      "size": 5205,
+      "sha256": "7c5ce57b5bb85462",
+      "full": true
+    },
+    "scripts/__pycache__/damage_study.cpython-310.pyc": {
+      "size": 6682,
+      "sha256": "e5ecc6da0818af52",
+      "full": true
+    },
+    "scripts/__pycache__/radial_detector_arms.cpython-310.pyc": {
+      "size": 11280,
+      "sha256": "8758d38a8ad6229e",
+      "full": true
+    },
+    "scripts/__pycache__/radial_detector_study.cpython-310.pyc": {
+      "size": 11817,
+      "sha256": "5b9575402808a46d",
+      "full": true
+    },
+    "scripts/__pycache__/split_raddet.cpython-310.pyc": {
+      "size": 3732,
+      "sha256": "711f72ea0cc5b8c2",
+      "full": true
+    },
+    "scripts/__pycache__/tune_simulators.cpython-310.pyc": {
+      "size": 5240,
+      "sha256": "245872756c2ca811",
+      "full": true
+    },
+    "scripts/build_raddet.py": {
+      "size": 1325,
+      "sha256": "f9b98484708b0317",
+      "full": true
+    },
+    "scripts/build_raddet_sim.py": {
+      "size": 620,
+      "sha256": "5166328af3dd0c49",
+      "full": true
+    },
+    "scripts/choose_best.py": {
+      "size": 1105,
+      "sha256": "14a22ae5d8b640cf",
+      "full": true
+    },
+    "scripts/damage_study.py": {
+      "size": 7014,
+      "sha256": "f8488bdfdd904616",
+      "full": true
+    },
+    "scripts/measure_versions.py": {
+      "size": 1759,
+      "sha256": "1b666aef97052b0d",
+      "full": true
+    },
+    "scripts/pipeline.sh": {
+      "size": 879,
+      "sha256": "c0e80261317ee7d1",
+      "full": true
+    },
+    "scripts/run_study.sbatch": {
+      "size": 710,
+      "sha256": "a193a358fdb1fa49",
+      "full": true
+    },
+    "scripts/run_study.sh": {
+      "size": 1067,
+      "sha256": "a1a3330e0fb531d8",
+      "full": true
+    },
+    "scripts/split_raddet.py": {
+      "size": 2246,
+      "sha256": "13afc3627a22de42",
+      "full": true
+    },
+    "scripts/tune_simulators.py": {
+      "size": 8222,
+      "sha256": "f4f89dad40648100",
+      "full": true
+    },
+    "scripts/write_manifest.py": {
+      "size": 2057,
+      "sha256": "0e1a32884da45242",
+      "full": true
+    }
+  }
+}

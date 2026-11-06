@@ -1,0 +1,26 @@
+{
+ "carrada": [
+  "processing",
+  "range_gain",
+  "scenes",
+  "label",
+  "body",
+  "clutter_profile"
+ ],
+ "raddet": [
+  "processing",
+  "range_gain",
+  "scenes",
+  "label",
+  "contrast",
+  "body"
+ ],
+ "radial": [
+  "processing",
+  "range_gain",
+  "label",
+  "contrast",
+  "body",
+  "clutter_profile"
+ ]
+}

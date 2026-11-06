@@ -5,16 +5,18 @@ A version is the first N_SIM sequences of a simulator cache, either as cached
 from the same seeds with one physical change (written once to its own cache).
 """
 import dataclasses
+import hashlib
 import json
 from pathlib import Path
 
 import torch
 
-from src.damage import (DamagedCarradaSimulator, DamagedSceneSimulator, clutter_scenario,
-                        drop_labels, noisy_spec, shift_labels, smooth_background)
+from src.damage import (DamagedCarradaSimulator, DamagedSceneSimulator, RadialDamage, TrackDamage,
+                        clutter_scenario, drop_labels, noisy_spec, shift_labels, smooth_background)
 from src.data import load, write_cache
 from src.raddet_tuned import TunedRaddetSimulator, range_gain
 from src.radial_sim import Scenario
+from src.tuned import TUNING, simulator
 
 N_SIM, SEED0 = 200, 10_000_000      # sequences per version; the simulator cache's seeds
 
@@ -31,7 +33,7 @@ class Dataset:
 DATASETS = {
     "carrada": Dataset("data/carrada_sim_engineer", "data/carrada_seq_n50", "data/carrada_damage", (256, 64), 1),
     "radial": Dataset("data/scene_engineer", "data/radial_fold0_n50", "data/radial_damage", (512, 256), 4),
-    "raddet": Dataset("data/raddet_sim", "data/raddet_n50", "data/raddet_damage", (256, 64), 1),
+    "raddet": Dataset("data/raddet_sim", "data/raddet_scenesplit", "data/raddet_damage", (256, 64), 1),
 }
 
 # name -> (defect, strength)
@@ -63,13 +65,50 @@ TUNE = {"clean": ("clean", None),
         "rangegain": ("tuned", {"range_gain": True}),
         "contrast": ("tuned", {"contrast": "alone"}),
         "allfixes": ("tuned", {"processing": True, "range_gain": True, "contrast": "all"})}
+# The tuned simulators (src/tuned.py): every fix on, and every fix left out in
+# turn (RADIal has no processing or label fix, CARRADA and RADDet no body fix:
+# leave those versions out with --versions).
+FIXES = ("processing", "range_gain", "scenes", "label", "contrast", "body", "clutter_profile")
+SIM2 = {"clean": ("clean", None), "all": ("tuned2", FIXES)}
+SIM2 |= {f"all-{f}": ("tuned2", tuple(x for x in FIXES if x != f)) for f in FIXES}
+# Study 2 and 2b on each dataset's best tuned simulator (docs/notes/2026-11-02-study2b.md).
+# "t2": the best simulator with a defect (src/damage.py mixins; target_db / static_db move the
+# tuned offsets further). Label shifts and smoothing act on its cache.
+BEST = Path("results/tuning/best.json")       # {dataset: [switches]}, chosen on full real val
+STUDY2 = {"clean": ("clean", None)}
+STUDY2 |= {f"blur{k}": ("t2", {"blur": k}) for k in (1.25, 1.5, 2, 3, 5, 8)}
+STUDY2 |= {f"sidelobes{d:+d}": ("t2", {"sidelobes_db": float(d)}) for d in (-10, 5, 10, 15, 20)}
+STUDY2 |= {f"smoothing{p}": ("smoothall", p / 100) for p in (5, 10, 25, 50, 75, 90)}
+STUDY2 |= {f"contrast-{d}": ("t2", {"target_db": -float(d)}) for d in (3, 6, 12, 20, 30)}
+STUDY2 |= {f"noise+{d}": ("t2", {"target_db": -float(d), "static_db": -float(d)}) for d in (3, 6, 12, 20, 30)}
+STUDY2 |= {f"clutter{d:+d}": ("t2", {"static_db": float(d)}) for d in (-20, -12, -6, 6, 12, 20)}
+STUDY2 |= {f"unrender{p}": ("t2", {"unrender_frac": p / 100}) for p in (10, 25, 50, 75, 90)}
+STUDY2 |= {f"extra{p}": ("t2", {"extra_frac": p / 100}) for p in (10, 25, 50, 100, 200)}
+STUDY2 |= {f"rangeshift{b}": ("range", b) for b in (1, 2, 3, 5, 8)}
+STUDY2 |= {f"dopplershift{b}": ("doppler", b) for b in (1, 2, 3, 5, 8)}
+STUDY2B = {"clean": ("clean", None)}
+STUDY2B |= {f"support{p}": ("t2", {"own_scenario_frac": p / 100}) for p in (25, 50, 75, 100)}
+STUDY2B |= {f"annotation+{d}": ("t2", {"annotation_db": float(d)}) for d in (6, 12, 18)}
+STUDY2B |= {f"tail{c}": ("t2", {"tail": float(c)}) for c in (2, 4, 8, 16)}
+STUDY2B |= {f"confusers{k}": ("t2", {"confusers": k}) for k in (0, 0.5, 2, 4)}
+BUDGET = {"clean": ("clean", None)}
 # suite -> (versions, families counted by the rule, families reported only);
 # a family is a defect, its versions in increasing damage after clean
 SUITES = {"v1": (V1, ("drop", "range", "doppler", "blink", "contrast"), ("clutter",)),
           "fair": (FAIR, ("contrast", "unrender", "extra", "smooth", "noise"), ("clutter", "range")),
           "smoothall": (SMOOTHALL, ("smoothall",), ()),
-          "tune": (TUNE, (), ())}
+          "tune": (TUNE, (), ()),
+          "sim2": (SIM2, (), ()),
+          "study2": (STUDY2, (), ("blur", "sidelobes", "smoothing", "contrast", "noise", "clutter",
+                                  "unrender", "extra", "rangeshift", "dopplershift")),
+          "study2b": (STUDY2B, (), ("support", "annotation", "tail", "confusers")),
+          "budget": (BUDGET, (), ())}
+ON_BEST = ("study2", "study2b", "budget")     # suites whose clean is the best tuned simulator
 ON_CACHE = ("clean", "drop", "range", "doppler", "smooth", "smoothall")      # the rest are re-rendered
+
+
+def best(dataset):
+    return tuple(json.loads(BEST.read_text())[dataset])
 
 
 def family(versions, fam):
@@ -122,15 +161,37 @@ def _raddet_sequence(kind, value, i):
     return o["x"].numpy(), o["labels"], {"classes": o["classes"]}
 
 
+def _tuned_sequence(dataset, switches, tables, i, damage=None):
+    dev = torch.device("cuda") if dataset == "radial" else None
+    kw = {}
+    if damage is not None:
+        kw = {"mixin": RadialDamage if dataset == "radial" else TrackDamage,
+              "damage_generator": torch.Generator().manual_seed(i), **damage}
+    o = simulator(dataset, switches, torch.Generator().manual_seed(SEED0 + i), dev, tables, **kw).gen_sequence()
+    return o["x"].numpy(), o["labels"], {}
+
+
 def render(dataset, name, kind, value):
-    """The cache of a re-rendered version, written on first use."""
+    """The cache of a re-rendered version, written on first use. Tuned versions
+    live in data/tuned/<dataset>/ and are rendered again when their tuning
+    table changes."""
     ds = DATASETS[dataset]
-    out = Path(ds.damage) / name
-    if not (out / "DONE").exists():
-        seq = {"carrada": _carrada_sequence, "radial": _radial_sequence, "raddet": _raddet_sequence}[dataset]
-        write_cache(out, N_SIM, lambda i: seq(kind, value, i), ds.grid, ds.stats_every,
-                    slot_by_rank=dataset != "radial")
-        (out / "DONE").write_text(json.dumps({"kind": kind, "value": value}))
+    if kind in ("tuned2", "t2"):
+        text = (TUNING / f"{dataset}.json").read_text()
+        switches, damage = (value, None) if kind == "tuned2" else (best(dataset), value)
+        sub = "" if kind == "tuned2" else "damage_"
+        out = Path("data/tuned") / dataset / (sub + name)
+        done = {"kind": kind, "switches": list(switches), "damage": damage,
+                "table_md5": hashlib.md5(text.encode()).hexdigest()}
+        tables = json.loads(text)
+        seq = lambda i: _tuned_sequence(dataset, switches, tables, i, damage)
+    else:
+        out, done = Path(ds.damage) / name, {"kind": kind, "value": value}
+        f = {"carrada": _carrada_sequence, "radial": _radial_sequence, "raddet": _raddet_sequence}[dataset]
+        seq = lambda i: f(kind, value, i)
+    if not (out / "DONE").exists() or json.loads((out / "DONE").read_text()) != done:
+        write_cache(out, N_SIM, seq, ds.grid, ds.stats_every, slot_by_rank=dataset != "radial")
+        (out / "DONE").write_text(json.dumps(done))
     return out
 
 
