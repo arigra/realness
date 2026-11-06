@@ -1,0 +1,316 @@
+{
+  "provenance": {
+    "commit": "e67c42ca66aee8959b257351f4671dbeebb7a0c0",
+    "dirty": true,
+    "command": "scripts/plot_label_budget.py",
+    "written": "2026-11-06T11:24:07",
+    "host": "hpc-node3"
+  },
+  "metric": "ap2",
+  "split": "test",
+  "best_tuned": {
+    "carrada": [
+      "processing",
+      "range_gain",
+      "scenes",
+      "label",
+      "body",
+      "clutter_profile"
+    ],
+    "raddet": [
+      "processing",
+      "range_gain",
+      "scenes",
+      "label",
+      "contrast",
+      "body"
+    ],
+    "radial": [
+      "processing",
+      "range_gain",
+      "label",
+      "contrast",
+      "body",
+      "clutter_profile"
+    ]
+  },
+  "datasets": {
+    "carrada": {
+      "real": [
+        {
+          "budget": 1,
+          "seeds": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "source": "results/budget_carrada_real1_runs.json"
+        },
+        {
+          "budget": 5,
+          "seeds": [
+            0.18792526748140373,
+            0.2128533086496777,
+            0.2747223702405391
+          ],
+          "mean": 0.2251669821238735,
+          "min": 0.18792526748140373,
+          "max": 0.2747223702405391,
+          "source": "results/budget_carrada_real5_runs.json"
+        },
+        {
+          "budget": 10,
+          "seeds": [
+            0.22811902904773254,
+            0.2461475193452337,
+            0.29376485494868365
+          ],
+          "mean": 0.25601046778055,
+          "min": 0.22811902904773254,
+          "max": 0.29376485494868365,
+          "source": "results/budget_carrada_real10_runs.json"
+        },
+        {
+          "budget": 25,
+          "seeds": [
+            0.34919927135690515,
+            0.29598027743255495,
+            0.3089330282562146
+          ],
+          "mean": 0.31803752568189153,
+          "min": 0.29598027743255495,
+          "max": 0.34919927135690515,
+          "source": "results/budget_carrada_real25_runs.json"
+        },
+        {
+          "budget": 50,
+          "seeds": [
+            0.4092789045811907,
+            0.43017917566628694,
+            0.411139242680729
+          ],
+          "mean": 0.4168657743094022,
+          "min": 0.4092789045811907,
+          "max": 0.43017917566628694,
+          "source": "results/budget_carrada_real50_runs.json"
+        }
+      ],
+      "mix": [
+        {
+          "budget": 0,
+          "seeds": [
+            0.3423288138976065,
+            0.3132764116172441,
+            0.36358214849145115
+          ],
+          "mean": 0.33972912466876726,
+          "min": 0.3132764116172441,
+          "max": 0.36358214849145115,
+          "source": "results/study2_carrada_runs.json"
+        },
+        {
+          "budget": 1,
+          "seeds": [
+            0.34677559338897945,
+            0.10416116190572042,
+            0.2036942895652474
+          ],
+          "mean": 0.2182103482866491,
+          "min": 0.10416116190572042,
+          "max": 0.34677559338897945,
+          "source": "results/budget_carrada_real1_runs.json"
+        },
+        {
+          "budget": 5,
+          "seeds": [
+            0.3635889361177329,
+            0.334717269191699,
+            0.34459777892571886
+          ],
+          "mean": 0.3476346614117169,
+          "min": 0.334717269191699,
+          "max": 0.3635889361177329,
+          "source": "results/budget_carrada_real5_runs.json"
+        },
+        {
+          "budget": 10,
+          "seeds": [
+            0.3628376889066165,
+            0.3240972958036793,
+            0.3337330267593716
+          ],
+          "mean": 0.34022267048988913,
+          "min": 0.3240972958036793,
+          "max": 0.3628376889066165,
+          "source": "results/budget_carrada_real10_runs.json"
+        },
+        {
+          "budget": 25,
+          "seeds": [
+            0.4261548639410577,
+            0.37256120215352145,
+            0.39694045218380414
+          ],
+          "mean": 0.39855217275946114,
+          "min": 0.37256120215352145,
+          "max": 0.4261548639410577,
+          "source": "results/budget_carrada_real25_runs.json"
+        },
+        {
+          "budget": 50,
+          "seeds": [
+            0.4507740385507812,
+            0.4511994474525165,
+            0.42254474317536356
+          ],
+          "mean": 0.4415060763928871,
+          "min": 0.42254474317536356,
+          "max": 0.4511994474525165,
+          "source": "results/budget_carrada_real50_runs.json"
+        }
+      ]
+    },
+    "raddet": {
+      "real": [
+        {
+          "budget": 1,
+          "seeds": [
+            0.013774148925768968,
+            0.011264346143540738,
+            0.017923018344435066
+          ],
+          "mean": 0.014320504471248255,
+          "min": 0.011264346143540738,
+          "max": 0.017923018344435066,
+          "source": "results/budget_raddet_real1_runs.json"
+        },
+        {
+          "budget": 5,
+          "seeds": [
+            0.10698629136365423,
+            0.08937644498433941,
+            0.10544615606299657
+          ],
+          "mean": 0.10060296413699672,
+          "min": 0.08937644498433941,
+          "max": 0.10698629136365423,
+          "source": "results/budget_raddet_real5_runs.json"
+        },
+        {
+          "budget": 10,
+          "seeds": [
+            0.19606712608356594,
+            0.22917616118235587,
+            0.19150483345158753
+          ],
+          "mean": 0.20558270690583647,
+          "min": 0.19150483345158753,
+          "max": 0.22917616118235587,
+          "source": "results/budget_raddet_real10_runs.json"
+        },
+        {
+          "budget": 25,
+          "seeds": [
+            0.33173144056734705,
+            0.36593090009922025,
+            0.31502558979850714
+          ],
+          "mean": 0.3375626434883581,
+          "min": 0.31502558979850714,
+          "max": 0.36593090009922025,
+          "source": "results/budget_raddet_real25_runs.json"
+        },
+        {
+          "budget": 50,
+          "seeds": [
+            0.4137735633590391,
+            0.42031949901859517,
+            0.4086988197218556
+          ],
+          "mean": 0.41426396069982996,
+          "min": 0.4086988197218556,
+          "max": 0.42031949901859517,
+          "source": "results/budget_raddet_real50_runs.json"
+        }
+      ],
+      "mix": [
+        {
+          "budget": 0,
+          "seeds": [
+            0.3192922891279915,
+            0.2762272521675287,
+            0.2791977932026488
+          ],
+          "mean": 0.291572444832723,
+          "min": 0.2762272521675287,
+          "max": 0.3192922891279915,
+          "source": "results/study2_raddet_runs.json"
+        },
+        {
+          "budget": 1,
+          "seeds": [
+            0.28465425075907286,
+            0.23695328487594275,
+            0.2675694600796161
+          ],
+          "mean": 0.2630589985715439,
+          "min": 0.23695328487594275,
+          "max": 0.28465425075907286,
+          "source": "results/budget_raddet_real1_runs.json"
+        },
+        {
+          "budget": 5,
+          "seeds": [
+            0.3275269536692291,
+            0.3217058158139403,
+            0.29153934726742664
+          ],
+          "mean": 0.313590705583532,
+          "min": 0.29153934726742664,
+          "max": 0.3275269536692291,
+          "source": "results/budget_raddet_real5_runs.json"
+        },
+        {
+          "budget": 10,
+          "seeds": [
+            0.39853765906254895,
+            0.3835421214352268,
+            0.41219638206006454
+          ],
+          "mean": 0.39809205418594673,
+          "min": 0.3835421214352268,
+          "max": 0.41219638206006454,
+          "source": "results/budget_raddet_real10_runs.json"
+        },
+        {
+          "budget": 25,
+          "seeds": [
+            0.4322207472390317,
+            0.43126089177340254,
+            0.4061548929031437
+          ],
+          "mean": 0.42321217730519267,
+          "min": 0.4061548929031437,
+          "max": 0.4322207472390317,
+          "source": "results/budget_raddet_real25_runs.json"
+        },
+        {
+          "budget": 50,
+          "seeds": [
+            0.4586222555388685,
+            0.46613476660265474,
+            0.4231936119450711
+          ],
+          "mean": 0.4493168780288648,
+          "min": 0.4231936119450711,
+          "max": 0.46613476660265474,
+          "source": "results/budget_raddet_real50_runs.json"
+        }
+      ]
+    }
+  },
+  "caption": "Real-test AP@2 against the number of labelled real training sequences (8 frames each). Real only vs the best tuned simulator + real (half of each batch); 0 = the tuned simulator alone. Mean of 3 seeds, bars = seed min-max. Only the real training pool changes; validation (early stopping) and test are fixed."
+}

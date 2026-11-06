@@ -147,7 +147,8 @@ class DamagedSceneSimulator(SceneSimulator):
         return x, y, rcs + self.clutter_offset_db, surf, parked
 
     def _vehicles(self, road, half_width, v_ego):
-        if self.scenes is not None and self._own_scenario:
+        # the spec simulator has no real scenes; a subclass that adds them may draw its own
+        if getattr(self, "scenes", None) is not None and getattr(self, "_own_scenario", False):
             keep, self.scenes = self.scenes, None
             try:
                 out = super()._vehicles(road, half_width, v_ego)
