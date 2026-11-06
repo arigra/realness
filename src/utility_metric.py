@@ -303,8 +303,19 @@ def raw(pool, radar, classes=None, dets=None):
                        "ring_prominence": contrast[k]["prominence"], "displacement": contrast[k]["displacement"]}
                 row |= la | target_response(z, pr, pd)
                 objs.append(row)
-    table = lambda rows: {k: np.asarray([r[k] for r in rows], dtype=np.float64) for k in rows[0]} if rows else {}
-    return {"objects": table(objs), "peaks": table(peaks), "frames": table(frames), "negatives": table(negs)}
+    def table(rows, keys):
+        """Columns of a table; an empty table keeps its columns (e.g. strong sidelobes raise a map's
+        std until no local maximum reaches PEAK_FLOOR)."""
+        keys = list(rows[0]) if rows else keys
+        return {k: np.asarray([r[k] for r in rows], dtype=np.float64) for k in keys}
+    return {"objects": table(objs, OBJECT_KEYS), "peaks": table(peaks, PEAK_KEYS),
+            "frames": table(frames, ["seq", "frame", "n_labels", "n_fp"]),
+            "negatives": table(negs, NEG_KEYS)}
+
+
+PEAK_KEYS = ["seq", "frame", "r", "d", "prom", "nearest_label", "on_ridge"]
+NEG_KEYS = ["seq", "frame", "kind", "score", "r", "d", "prom", "range_m", "on_ridge"]
+OBJECT_KEYS = ["seq", "frame", "range_m", "speed", "speed_abs", "near_zero", "n_in_frame", "cls"]
 
 
 def select(tables, seqs):
@@ -322,6 +333,9 @@ TARGET = tuple(f"width_r{t}" for t in DROPS) + tuple(f"width_d{t}" for t in DROP
     tuple(f"area{t}" for t in DROPS) + ("near_ext2", "far_ext2", "tail_asym2", "tail_level", "n_peaks2",
                                         "entropy_r", "low_r", "mid_r", "high_r", "entropy_d", "low_d",
                                         "mid_d", "high_d", "acorr_r", "acorr_d")
+
+
+NEG_KEYS += list(TARGET)
 
 
 def _clean(a):
@@ -467,7 +481,7 @@ def negative_distances(cand, ref, min_n=5):
     (nearest-neighbour distance, vs to real negatives of other sequences)."""
     cn, rn = cand["negatives"], ref["negatives"]
     out = {}
-    if not cn or not rn:
+    if not len(cn.get("kind", [])) or not len(rn.get("kind", [])):
         return out, {}
     c0, r0 = cn["kind"] == 0, rn["kind"] == 0
     for k in NEG_FEATURES:

@@ -227,7 +227,7 @@ def main():
                     "raw_seconds": raw_s, "summary_seconds": time.time() - t1, "vector": vec})))
         v = json.loads((d / f"reference_{N_REAL}_0.json").read_text())["vector"]
         print(f"{cid:22s} n_obj {len(tables['objects']['seq']):5d}  scores vs 50 real: "
-              + " ".join(f"{k} {x:.2f}" for k, x in v["scores"].items()), flush=True)
+              + " ".join(f"{k} {float('nan') if x is None else x:.2f}" for k, x in v["scores"].items()), flush=True)
     if a.check:
         run_check(a.dataset, cands, real)
 
