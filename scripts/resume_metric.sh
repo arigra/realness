@@ -9,7 +9,7 @@ export PYTHONPATH=.
 DRY=$1
 running() { pgrep -f "$1" > /dev/null; }
 # processes paused with SIGSTOP (e.g. before a session change): continue them first
-for p in $(pgrep -f "scripts/[p]roxy_detector|scripts/[c]lassify_controls_v2|scripts/[p]rospective|scripts/[a]ugment_study|scripts/[l]earned_features|scripts/[b]uild_metric_features|scripts/[a]rchitecture_check|[m]etric_gpu2?.sh"); do
+for p in $(pgrep -f "scripts/[p]roxy_detector|scripts/[c]lassify_controls_v2|scripts/[p]rospective|scripts/[a]ugment_study|scripts/[l]earned_features|scripts/[b]uild_metric_features|scripts/[a]rchitecture_check|[m]etric_gpu[23]?.sh"); do
     [ "$(ps -o stat= -p $p | cut -c1)" = "T" ] && { [ "$DRY" = "--dry" ] && echo "would continue $p" || kill -CONT $p; }
 done
 launch() {        # name, log, command...
@@ -58,3 +58,5 @@ if [ ! -f logs/metric_chain.done ] && ! running "[m]etric_chain.sh" && ! running
 fi
 grep -q "gpu2 done" logs/metric_chain.done 2>/dev/null || running "[m]etric_gpu2.sh" ||
     launch "GPU queue 2 (Stage B RADDet; learned features)" logs/metric_gpu2.log bash scripts/metric_gpu2.sh
+grep -q "gpu3 done" logs/metric_chain.done 2>/dev/null || running "[m]etric_gpu3.sh" ||
+    launch "GPU queue 3 (Phase 7.1 transformer check)" logs/metric_gpu3.log bash scripts/metric_gpu3.sh
