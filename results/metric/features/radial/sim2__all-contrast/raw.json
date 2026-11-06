@@ -1,0 +1,90 @@
+{
+ "provenance": {
+  "commit": "8fd44c50338f8e2298ad47db54dfcdf17c843648",
+  "dirty": false,
+  "command": "scripts/build_metric_features.py --dataset radial --candidates fair:contrast-12,fair:unrender25,fair:extra25,fair:smooth50,fair:noise+12,fair:clutter+12,fair:range2,sim2:all-contrast,smoothall:smoothall25,study2:blur1.5,study2:blur5,study2:sidelobes+5,study2:sidelobes+20,study2:smoothing25,study2:smoothing90,study2:contrast-12,study2:noise+3,study2:noise+20,study2:clutter-12,study2:clutter+12,study2:unrender25,study2:unrender90,study2:extra50,study2:rangeshift1,study2:rangeshift5,study2:dopplershift2,study2:dopplershift8,study2b:support75,study2b:annotation+12,study2b:tail4,study2b:confusers0,study2b:confusers4",
+  "written": "2026-11-06T13:04:03",
+  "host": "hpc-node3"
+ },
+ "candidate": {
+  "dataset": "radial",
+  "candidate": "sim2:all-contrast",
+  "suite": "sim2",
+  "version": "all-contrast",
+  "family": "fixes",
+  "level": null,
+  "base": "fixes",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "result_path": "results/sim2_radial_runs.json",
+  "has_test_ap": true,
+  "cache": "data/tuned/radial/all-contrast",
+  "entries": [
+   {
+    "suite": "sim2",
+    "version": "all-contrast",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/sim2_radial_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/radial_fold0_n50",
+    "usable": true
+   }
+  ],
+  "usable": true
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "8ddd8c199b02",
+ "seconds": 120.41079187393188
+}

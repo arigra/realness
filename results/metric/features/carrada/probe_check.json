@@ -1,0 +1,221 @@
+{
+ "provenance": {
+  "commit": "8fd44c50338f8e2298ad47db54dfcdf17c843648",
+  "dirty": true,
+  "command": "scripts/build_metric_features.py --dataset carrada --candidates all --check",
+  "written": "2026-11-06T13:24:58",
+  "host": "hpc-node3"
+ },
+ "threshold_q": 25,
+ "threshold": 4.344016909599304,
+ "n_boot": 500,
+ "checks": {
+  "study2:rangeshift1": {
+   "probes": {
+    "peak_dr": {
+     "expected": "down",
+     "diff": -0.7541770935058594,
+     "ci95": [
+      -0.8683609008789063,
+      -0.31594362258911163
+     ],
+     "moved": true
+    },
+    "cen_dr": {
+     "expected": "down",
+     "diff": -0.7783902905301154,
+     "ci95": [
+      -0.9297549998367293,
+      -0.4197524935404008
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:dopplershift1": {
+   "probes": {
+    "peak_dd": {
+     "expected": "down",
+     "diff": -0.9919261932373047,
+     "ci95": [
+      -0.9985216617584228,
+      -0.968873119354248
+     ],
+     "moved": true
+    },
+    "cen_dd": {
+     "expected": "down",
+     "diff": -0.9811173128403077,
+     "ci95": [
+      -0.9987286385141313,
+      -0.9754140280746686
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:extra50": {
+   "probes": {
+    "unlabelled_off_ridge_per_frame": {
+     "expected": "up",
+     "diff": 1.465,
+     "ci95": [
+      1.133921875,
+      1.7556718749999998
+     ],
+     "moved": true
+    },
+    "unlabelled_per_frame": {
+     "expected": "up",
+     "diff": -4.76125,
+     "ci95": [
+      -5.091999999999998,
+      -4.412734374999999
+     ],
+     "moved": false
+    }
+   },
+   "any_moved": true
+  },
+  "study2:unrender90": {
+   "probes": {
+    "labels_with_peak_r2": {
+     "expected": "down",
+     "diff": -0.5431034482758621,
+     "ci95": [
+      -0.6006278040877369,
+      -0.4817623770623179
+     ],
+     "moved": true
+    },
+    "label_prom": {
+     "expected": "down",
+     "diff": -6.805314540863037,
+     "ci95": [
+      -7.7733924120664595,
+      -5.72587613761425
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:contrast-12": {
+   "probes": {
+    "label_prom": {
+     "expected": "down",
+     "diff": -2.606888771057129,
+     "ci95": [
+      -3.162888538837433,
+      -2.052481830120087
+     ],
+     "moved": true
+    },
+    "over_floor": {
+     "expected": "down",
+     "diff": -3.1872539843898267,
+     "ci95": [
+      -3.6587259095162152,
+      -2.72714354461059
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:blur2": {
+   "probes": {
+    "width_r2": {
+     "expected": "up",
+     "diff": 3.0,
+     "ci95": [
+      3.0,
+      4.0
+     ],
+     "moved": true
+    },
+    "width_d2": {
+     "expected": "up",
+     "diff": 2.0,
+     "ci95": [
+      2.0,
+      2.0
+     ],
+     "moved": true
+    },
+    "area2": {
+     "expected": "up",
+     "diff": 14.5,
+     "ci95": [
+      12.0,
+      18.0
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2:clutter+12": {
+   "probes": {
+    "ridge_excess": {
+     "expected": "up",
+     "diff": 2.2428056551516056,
+     "ci95": [
+      2.2387068013213574,
+      2.2468779828064145
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2b:confusers4": {
+   "probes": {
+    "unlabelled_per_frame": {
+     "expected": "up",
+     "diff": 1.6231250000000017,
+     "ci95": [
+      1.2205625,
+      2.085703125
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  },
+  "study2b:tail2": {
+   "probes": {
+    "far_ext2": {
+     "expected": "up",
+     "diff": 2.0,
+     "ci95": [
+      2.0,
+      2.0
+     ],
+     "moved": true
+    },
+    "tail_asym2": {
+     "expected": "up",
+     "diff": 1.0,
+     "ci95": [
+      1.0,
+      2.0
+     ],
+     "moved": true
+    },
+    "tail_level": {
+     "expected": "up",
+     "diff": 1.781491994857788,
+     "ci95": [
+      1.398113787546754,
+      2.274446065723896
+     ],
+     "moved": true
+    }
+   },
+   "any_moved": true
+  }
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "provenance": {
+  "commit": "152f631ea0318f1e6fbccad0a8420fe33955d63a",
+  "dirty": true,
+  "command": "scripts/build_metric_features.py --dataset radial --candidates tuned --check",
+  "written": "2026-11-06T12:34:48",
+  "host": "hpc-node3"
+ },
+ "cache": "data/radial_fold0_n50",
+ "split": "train",
+ "n_sequences": 50,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "8ddd8c199b02",
+ "seconds": 12.14347529411316
+}

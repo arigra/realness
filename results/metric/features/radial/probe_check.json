@@ -1,0 +1,13 @@
+{
+ "provenance": {
+  "commit": "152f631ea0318f1e6fbccad0a8420fe33955d63a",
+  "dirty": true,
+  "command": "scripts/build_metric_features.py --dataset radial --candidates tuned --check",
+  "written": "2026-11-06T12:35:50",
+  "host": "hpc-node3"
+ },
+ "threshold_q": 25,
+ "threshold": 3.668073296546936,
+ "n_boot": 500,
+ "checks": {}
+}

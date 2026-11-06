@@ -1,0 +1,90 @@
+{
+ "provenance": {
+  "commit": "152f631ea0318f1e6fbccad0a8420fe33955d63a",
+  "dirty": false,
+  "command": "scripts/build_metric_features.py --dataset carrada --candidates all --check",
+  "written": "2026-11-06T12:28:17",
+  "host": "hpc-node3"
+ },
+ "candidate": {
+  "dataset": "carrada",
+  "candidate": "sim2:all",
+  "suite": "sim2",
+  "version": "all",
+  "family": "fixes",
+  "level": null,
+  "base": "fixes",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "result_path": "results/sim2_carrada_runs.json",
+  "has_test_ap": true,
+  "cache": "data/tuned/carrada/all",
+  "entries": [
+   {
+    "suite": "sim2",
+    "version": "all",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/sim2_carrada_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/carrada_seq_n50",
+    "usable": true
+   }
+  ],
+  "usable": true
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "7adb3035e2cb",
+ "seconds": 12.83324146270752
+}
