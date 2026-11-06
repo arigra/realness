@@ -4,3 +4,4 @@ data/
 logs/
 results/*_dets/
 results/metric/dets/
+results/metric/features/**/raw.npz

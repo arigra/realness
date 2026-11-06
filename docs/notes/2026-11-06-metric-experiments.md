@@ -75,29 +75,68 @@ reference's labelled objects; q = 25 primary, 10 and 50 reported for sensitivity
 Reference budgets: 5 and 10 sequences first (1, 25, 50 later). Subset 0 = evenly spaced (the budget
 study's choice), subsets 1.. = sequence-level random draws, seeds fixed in the feature builder.
 
-## Metric variants (Phase 2) — *TBD (before Phase 3 evaluation)*
-Planned: the existing global realism score (results/score_frozen.json), global and conditional
-target-patch energy distance, support only, label agreement only, the five components unweighted,
-a domain classifier (diagnostic); tolerance (dead-zone) penalties calibrated on development
-datasets/families only and frozen in `results/metric/frozen_metric.json`; scalar readouts: equal
-sum, non-negative linear / rank regression. No high-capacity model.
+## Metric variants (Phase 2) — fixed 2026-11-06, before any Phase 3 evaluation
+All computed by src/utility_score.py from the adequacy vector of a candidate against a real reference.
 
-## Validation (Phase 3) — *TBD details (before Phase 3)*
-Leave-one-family-out within a radar; leave-one-radar-out (frozen before the held-out radar's outcomes
-are read). Primary: top-1 regret (oracle AP@2 minus selected AP@2), P(selected within the dataset's
-seed noise of the oracle), pairwise ordering accuracy. Secondary: Kendall tau, Spearman rho, top-3
-recall, runtime, stability across reference subsets. Bootstrap by family for rank summaries, by real
-sequence for reference stability; paired seeds for AP comparisons.
+**Probes** (x_j, signed where a direction exists; "shift" = (candidate median - reference median) /
+reference sd, from src/utility_metric.feature_distance; "diff" = candidate rate - reference rate):
+- coverage: joint range-speed energy distance; shift of objects per frame; diff of near-zero-Doppler share;
+- label: shifts of peak_dr, peak_dd, cen_dr, cen_dd, label_prom, over_clutter; diff of labels with a
+  target-like peak within 2 cells; shifts of unlabelled target-like peaks per frame (all; off the ridge);
+- target: shifts of width_r2, width_d2, area2, near_ext2, far_ext2, tail_level, n_peaks2, entropy_r,
+  entropy_d;
+- negatives: real-FP coverage ratio - 1 (nearest-neighbour, Phase 1.4); shift of the fixed detector's
+  false positives per frame; shift of the prominence of unlabelled peaks;
+- processing: shifts of spread1, spread4, corr_range, corr_doppler, frame_q99, ridge_width; mean
+  W1 of the row-median and row-q99 profiles; mean shift of the ridge profile.
+A probe the dataset cannot measure (no ridge on RADIal, too few reference objects) is NaN and gets no
+penalty, and is reported as unmeasured.
 
-Decision gate: if held-out-family ranking is not better than both the existing global score and
-random choice, stop before any learned score; report which probe failed and the vector as diagnosis.
+**Tolerance score (M1).** Calibration data: development candidates with whole-val AP@2 (study2,
+study2b, sim2; fair/v1/smoothall have no val AP and are only evaluated). A development candidate is
+*undamaged* if its mean val AP@2 is within the dataset's seed noise (median val seed range) of its
+base (tuned for study2/2b and sim2; spec for spec-based families). For each probe, the tolerance
+interval [lower_j, upper_j] = min..max of x_j over undamaged development candidates; scale_j = MAD of x_j
+over all development candidates (floor 1e-3). penalty_j = distance of x_j outside the interval / scale_j.
+M1 = sum of penalties (equal weights). Component diagnosis = sum of its probes' penalties.
+**M2** = non-negative least squares of development val AP on the penalties (AP ~ a - sum w_j p_j); risk =
+sum w_j p_j. No other readout (no random forest, no neural regressor).
+
+**Baselines:** random choice; the 2026-11-01 global score ("sum"); target-response energy distance
+(all object target features, standardised by the reference); conditional target distance (mean of
+range x near-zero strata scores); coverage only; label only; the five component scores unweighted
+(mean); domain classifier (logistic regression real vs candidate on per-object label + target
+features, 5-fold grouped by sequence, balanced accuracy; diagnostic).
+
+## Validation (Phase 3) — fixed 2026-11-06
+Outcome: synthetic-only real-test AP@2, mean over every usable "only" seed of the candidate (e.g. the
+tuned simulator pools sim2, study2, study2b seeds). Seed noise per dataset = median test seed range.
+Reference subsets: budget 5 (subsets 0, 1, 2), budget 10 (0, 1, 2), and all 50; budget 5 subset 0 primary.
+- **Leave-one-family-out** (within a dataset): calibrate on every other family, rank the held-out family's
+  levels together with its base; families with >= 2 levels.
+- **Leave-one-radar-out**: calibrate on the two other radars, rank (a) every candidate of the held-out
+  radar, (b) its natural candidates only (spec, tuned, sim2 variants): the simulator-choice problem.
+- Primary: top-1 regret (oracle AP@2 - selected AP@2); P(selected within seed noise of the oracle);
+  pairwise ordering accuracy over pairs whose AP differs by more than the noise. Secondary: Kendall
+  tau, Spearman rho, top-3 recall, runtime; stability across reference subsets. Uncertainty: bootstrap
+  over families (LOFO summaries, 2,000 draws).
+- Decision gate: M1 must beat both random and the global score on LOFO mean regret (bootstrap
+  interval of the difference excludes 0) before M2 or anything learned is reported as the metric.
 
 ## Proxy detector (Phase 4) — configuration fixed here
-FrameDetector(width=8), 50 synthetic sequences per candidate, 1,000 steps, no early stopping, 1 seed
-for the sweep then 3 for the top candidates, scored on 5 labelled real training sequences over several
-fixed 5-sequence subsets. Record proxy AP@2, wall-clock and GPU time, ranking metrics, top-1 regret.
+FrameDetector(width=8), the candidate's first 50 synthetic sequences, 1,000 steps, batch 8, no early
+stopping, seed 1; scored (AP@2) on the budget-5 reference subsets 0, 1, 2 of the real training
+sequences (their mean is the proxy score). The 5 best candidates per dataset by proxy score get seeds
+2 and 3. Records wall-clock and GPU time. results/metric/proxy/<dataset>.json.
 
-## Augmentation benefit (Phase 5) — *TBD (results/metric/augmentation_candidates.json, before runs)*
+## Augmentation benefit (Phase 5) — candidates fixed: results/metric/augmentation_candidates.json
+Stage A: CARRADA and RADDet, budget 5 (the evenly spaced 5 real training sequences = reference subset 0),
+3 seeds, each batch 4 real + 4 synthetic frames, early stopping on the 32 real val sequences (the budget
+study's training). Candidates: spec, tuned, study2:extra50, study2:unrender90, study2:contrast-12,
+study2:rangeshift1, study2b:tail2. Delta_AP = AP(candidate + 5 real) - AP(5 real only); the real-only
+and tuned + real runs are the budget study's (same code, seeds and sequences). Stage B (budgets 1 and
+10, sim2 variants, noise+12, blur2) only if Stage A's Delta_AP spread across candidates exceeds 2x the
+seed noise.
 
 ## Prospective selection (Phase 6) — *TBD (freeze point, before generating final candidates)*
 

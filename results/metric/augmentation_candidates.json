@@ -1,0 +1,10 @@
+{
+ "written": "2026-11-06",
+ "stage_A": {"datasets": ["carrada", "raddet"], "budget": 5, "seeds": [1, 2, 3],
+             "candidates": ["spec", "tuned", "study2:extra50", "study2:unrender90", "study2:contrast-12",
+                            "study2:rangeshift1", "study2b:tail2"],
+             "reused": {"real_only": "results/budget_<dataset>_real5_runs.json runs.real.clean",
+                        "tuned": "results/budget_<dataset>_real5_runs.json runs.mix.clean"}},
+ "stage_B": {"condition": "Stage A Delta_AP spread across candidates > 2 x seed noise",
+             "budgets": [1, 10], "extra_candidates": ["sim2 variants", "study2:noise+12", "study2:blur2"]}
+}
