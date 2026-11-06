@@ -29,7 +29,10 @@ REFERENCES = [(5, 0), (5, 1), (5, 2), (10, 0), (10, 1), (10, 2), (50, 0)]
 PRIMARY = (5, 0)
 BASELINES = ("global", "target_energy", "target_conditional", "coverage_only", "label_only",
              "five_unweighted", "domain_classifier")
-METHODS = ("M1", "M2") + BASELINES
+LEARNED = ("cnn", "cnn_conditional", "transformer", "transformer_conditional", "raw_patch", "raw_patch_conditional")
+METHODS = ("M1", "M2") + BASELINES + ("proxy",) + tuple(f"learned_{k}" for k in LEARNED)
+PROXY = Path("results/metric/proxy")
+LEARNED_DIR = Path("results/metric/learned")
 N_BOOT = 2000
 
 
@@ -140,6 +143,23 @@ class Data:
         key = f"{ref[0]}_{ref[1]}"
         self.B = {b: np.asarray([nan(base_cache[r["dataset"]].get(r["candidate"], {}).get(key, {}).get(b))
                                  for r in self.rows], dtype=np.float64) for b in BASELINES}
+        proxy = {d: json.loads((PROXY / f"{d}.json").read_text())["runs"] if (PROXY / f"{d}.json").exists() else {}
+                 for d in DATASETS}
+        # proxy detector (Phase 4): the seed-1 sweep, mean AP@2 over the three 5-sequence subsets; risk = -AP
+        self.B["proxy"] = np.asarray([-proxy[r["dataset"]].get(r["candidate"], {}).get("1", {}).get("proxy", np.nan)
+                                      for r in self.rows], dtype=np.float64)
+        learned = {d: json.loads((LEARNED_DIR / f"{d}.json").read_text()) if (LEARNED_DIR / f"{d}.json").exists() else {}
+                   for d in DATASETS}
+        for k in LEARNED:       # Phase 7.2: learned / raw-patch energy distances (missing -> NaN, ranks last)
+            self.B[f"learned_{k}"] = np.asarray([nan(learned[r["dataset"]].get(r["candidate"], {}).get(key, {}).get(k))
+                                                 for r in self.rows], dtype=np.float64)
+        self.cost = {"metric_seconds": {}, "proxy_seconds": {}}
+        for d in DATASETS:
+            ms = [json.loads((candidate_dir(d, r["candidate"]) / "raw.json").read_text()).get("seconds", np.nan)
+                  for r in self.rows if r["dataset"] == d and (candidate_dir(d, r["candidate"]) / "raw.json").exists()]
+            ps = [v["1"]["seconds"] for v in proxy[d].values() if "1" in v]
+            self.cost["metric_seconds"][d] = float(np.nanmedian(ms)) if ms else None
+            self.cost["proxy_seconds"][d] = float(np.median(ps)) if ps else None
         self.ds = np.asarray([r["dataset"] for r in self.rows])
         self.fam = np.asarray([r["family"] for r in self.rows])
         self.base = np.asarray([r["base"] for r in self.rows])
@@ -167,7 +187,7 @@ class Data:
     def risks(self, tol, w, idx):
         P = tol.penalties(self.X[idx])
         out = {"M1": P.sum(1), "M2": P @ w}
-        for b in BASELINES:
+        for b in METHODS[2:]:
             out[b] = self.B[b][idx]
         return out, P
 
@@ -224,7 +244,7 @@ def lofo(D, dataset):
     methods = METHODS + ("random",)
     summary = {m: {k: float(np.nanmean([per_family[f][m][k] for f in fams])) for k in
                    ("regret", "within_noise", "pairwise", "kendall", "spearman")} for m in methods}
-    diffs = {b: bootstrap_diff(per_family, "M1", b) for b in ("random", "global") + BASELINES[1:]}
+    diffs = {b: bootstrap_diff(per_family, "M1", b) for b in ("random",) + METHODS[1:]}
     return {"families": per_family, "summary": summary, "M1_minus": diffs}
 
 
@@ -260,7 +280,7 @@ def main():
     for ref in REFERENCES:
         D = Data(rows, cache, ref)
         key = f"{ref[0]}_{ref[1]}"
-        r = {"n_candidates": {d: int((D.ds == d).sum()) for d in datasets},
+        r = {"n_candidates": {d: int((D.ds == d).sum()) for d in datasets}, "cost": D.cost,
              "noise_test": D.noise_test, "noise_val": D.noise_val,
              "n_undamaged": {d: int((D.undamaged & (D.ds == d)).sum()) for d in datasets},
              "lofo": {d: lofo(D, d) for d in datasets}}
