@@ -146,6 +146,19 @@ seed noise.
 
 ## Prospective selection (Phase 6) — *TBD (freeze point, before generating final candidates)*
 
+## Architecture and learned features (Phase 7) — fixed 2026-11-06, before its runs
+- 7.1 (scripts/architecture_check.py): src/transformer_detector.py (0.84M parameters vs the U-Net's
+  0.84M; 4 x 4 patches on 256 x 64 maps, 8 x 8 on 512 x 256; circular Doppler positions: the lowest 4
+  harmonics, amplitude 1/k), Study 2's training and early stopping, 3 seeds, synthetic-only, on CARRADA
+  and RADDet: spec, tuned, study2:rangeshift1, study2:blur2, study2b:tail2, and the metric-selected
+  and oracle-best candidates of leave-one-radar-out (all candidates). Readout: AP@2 and seed range;
+  Kendall tau between the transformer's and the U-Net's candidate ordering; whether M1's choice is
+  within the transformer's seed noise of its best.
+- 7.2 (scripts/learned_features.py): encoders = U-Net and transformer detectors trained real-only on
+  one half of the 50 real training sequences (even / odd), early-stopped on the 32 val sequences,
+  frozen; cross-fitted embeddings at label cells; raw multiscale patches as the unlearned comparison;
+  energy distances, global and per stratum, evaluated as extra baselines in the Phase 3 framework.
+
 ## Classification redesign (Phase 8) — fixed 2026-11-06, before its runs
 scripts/classify_controls_v2.py. Designs: current crops (25 x 17, label-centred, ridge filled with
 noise); small (13 x 9); small + mask to the target's connected component (cells >= max(peak - 2, 1)
