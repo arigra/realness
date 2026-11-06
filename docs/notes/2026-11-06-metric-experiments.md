@@ -356,3 +356,68 @@ Weakness seen in the CARRADA scores (not acted on; the rule is fixed for this te
 across the two calibration radars get the scale floor (1e-3), so their penalties are huge (coverage ~1,305
 for every CARRADA candidate). Constant across the bank, it does not change the bank's order, which comes
 from the target and label penalties; a cross-radar scale should not be allowed to collapse like this.
+
+## Results: Phase 6 prospective test (bank trained after the selections were committed)
+results/metric/prospective/<dataset>_report.json. Synthetic-only real-test AP@2, 3 seeds:
+
+| bank candidate | CARRADA | RADDet |
+|---|---|---|
+| dr_weak | **0.376** | **0.263** |
+| dr_narrow | 0.351 | 0.227 |
+| dr_broad | 0.338 | 0.163 |
+| dr_strong | 0.316 | 0.226 |
+| hybrid_x1.5 | 0.320 | 0.061 |
+| hybrid_x1 | 0.251 | 0.058 |
+| seed noise | 0.080 | 0.044 |
+
+| pick (regret) | CARRADA | RADDet |
+|---|---|---|
+| **metric M1** | dr_broad (0.039, within noise) | **dr_weak (0.000)** |
+| global score | hybrid_x1 (0.126) | dr_broad (0.100) |
+| proxy | dr_weak (0.000) | dr_narrow (0.036, within noise) |
+| random (expected) | 0.051 | 0.097 |
+| val oracle | dr_weak | dr_weak |
+
+Preregistered success (within noise of the test oracle and lower regret than random, global and proxy):
+**RADDet: met. CARRADA: within noise and better than random and global, but not better than the proxy.**
+Also: domain-randomised targets with weaker strength (dr_weak) beat the tuned simulator on CARRADA
+(0.376 vs 0.340); pasting real target templates (hybrid_*) is the worst on both radars (RADDet 0.06):
+template pasting creates local discontinuities, the same kind of cue as the Study 1 smoothing box.
+
+## Results: Phase 7.1 transformer detector (0.84M parameters, as the U-Net)
+| | CARRADA transformer / U-Net | RADDet transformer / U-Net |
+|---|---|---|
+| spec | 0.296 / 0.295 | 0.111 / 0.153 |
+| tuned | 0.275 / 0.340 | 0.132 / 0.292 |
+| rangeshift1 | 0.130 / 0.129 | 0.122 / 0.200 |
+| blur2 | 0.300 / 0.311 | 0.112 / 0.210 |
+| tail2 | 0.365 / 0.343 | 0.105 / 0.134 |
+| M1's LORO pick | 0.272 / 0.306 (fair:noise+6) | 0.170 / 0.300 (study2:noise+6) |
+| oracle | 0.287 / 0.379 (sim2:all-scenes) | 0.173 / 0.333 (study2:clutter-12) |
+| Kendall tau vs U-Net | 0.43 | 0.90 |
+
+The 1-cell label shift is as damaging for the transformer on CARRADA (0.13 / 0.13): the label-geometry
+finding is not a U-Net property. On RADDet the transformer is much weaker overall but orders candidates
+like the U-Net (tau 0.90); on CARRADA the orders agree less (0.43). M1's pick is within the transformer's
+noise of its best on RADDet, not on CARRADA.
+
+## Results: Phase 5 Stage B (RADDet, 1 and 10 real sequences)
+Gain in test AP@2 over the same real sequences alone (real only: 0.014 / 0.101 / 0.206 at 1 / 5 / 10):
+
+| | 1 | 5 | 10 |
+|---|---|---|---|
+| tuned | +0.25 | +0.21 | +0.19 |
+| sim2:all | +0.28 | - | +0.18 |
+| rangeshift1 | +0.20 | +0.18 | +0.15 |
+| extra50 | +0.21 | +0.17 | +0.14 |
+| contrast-12 | +0.20 | +0.13 | +0.13 |
+| blur2 | +0.17 | - | +0.11 |
+| tail2 | +0.14 | +0.05 | +0.08 |
+| unrender90 | +0.10 | +0.10 | +0.10 |
+| sim2:all-range_gain | +0.10 | - | +0.14 |
+| spec | +0.07 | +0.08 | +0.07 |
+| seed noise | 0.044 | 0.067 | 0.031 |
+
+On RADDet the order of candidates is stable across budgets (tuned / all fixes on top; spec, unrender90 and
+tail2 at the bottom), the gains shrink slowly (tuned +0.25 -> +0.19), and the label shift stays a mild
+defect once real labels are present (it was the most harmful one synthetic-only).

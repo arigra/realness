@@ -1,0 +1,61 @@
+{
+ "held_out": "raddet",
+ "noise": 0.04418320091309793,
+ "test_ap": {
+  "bank:dr_narrow": 0.22725624948931744,
+  "bank:dr_broad": 0.16327779708509194,
+  "bank:dr_weak": 0.26284236427987895,
+  "bank:dr_strong": 0.22573832693347806,
+  "bank:hybrid_x1": 0.057629017570274894,
+  "bank:hybrid_x1.5": 0.061173455403265464
+ },
+ "seed_range": {
+  "bank:dr_narrow": 0.028525839368297695,
+  "bank:dr_broad": 0.031881324044872095,
+  "bank:dr_weak": 0.09508566642697103,
+  "bank:dr_strong": 0.03569870144299689,
+  "bank:hybrid_x1": 0.06371894471044126,
+  "bank:hybrid_x1.5": 0.05266770038319897
+ },
+ "val_ap": {
+  "bank:dr_narrow": 0.20206227785815897,
+  "bank:dr_broad": 0.13133657347141897,
+  "bank:dr_weak": 0.23579312569560762,
+  "bank:dr_strong": 0.19527465073183473,
+  "bank:hybrid_x1": 0.056409324394824885,
+  "bank:hybrid_x1.5": 0.059665810149606174
+ },
+ "random_expected_regret": 0.09652282915299448,
+ "picks": {
+  "metric (M1)": {
+   "candidate": "bank:dr_weak",
+   "test_ap": 0.26284236427987895,
+   "regret": 0.0,
+   "within_noise": true
+  },
+  "global score": {
+   "candidate": "bank:dr_broad",
+   "test_ap": 0.16327779708509194,
+   "regret": 0.09956456719478701,
+   "within_noise": false
+  },
+  "val oracle": {
+   "candidate": "bank:dr_weak",
+   "test_ap": 0.26284236427987895,
+   "regret": 0.0,
+   "within_noise": true
+  },
+  "test oracle": {
+   "candidate": "bank:dr_weak",
+   "test_ap": 0.26284236427987895,
+   "regret": 0.0,
+   "within_noise": true
+  },
+  "proxy": {
+   "candidate": "bank:dr_narrow",
+   "test_ap": 0.22725624948931744,
+   "regret": 0.03558611479056151,
+   "within_noise": true
+  }
+ }
+}
