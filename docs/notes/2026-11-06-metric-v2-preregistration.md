@@ -174,7 +174,12 @@ Every entry was made before any retrospective scoring of M3-M6 unless stated.
    unlabelled peaks look more like real hard negatives). RADDet's hard-negative block keeps a passing check
    (confusers x4: +0.15 FPs / frame). RADIal support100 is identical to its tuned simulator (RADIal's best
    simulator has no real-scene switch), so the support check cannot be run there; it passed on CARRADA and RADDet.
-5. Clarifications of the text, not changes: visibility = the strongest cell within radius 2 reaches the 25th
+5. Diagnosis for the success criterion when the finalist is not M4 (fixed 2026-11-07 before Phase F's result):
+   M6 reads M4's blocks, so it uses M4's two largest blocks; M3's components map as scnr_* -> label (it holds
+   label_prom / over_clutter), shape_* -> target, label_stochastic -> label, support_stratified -> coverage,
+   combined_moderate -> any of label / target / coverage; M5's sides map as support_stratified -> stratum risk,
+   every other mechanism -> FN or FP risk (its two largest of FN / FP / stratum).
+6. Clarifications of the text, not changes: visibility = the strongest cell within radius 2 reaches the 25th
    percentile of the reference labels' strongest-cell prominence; M5's real-real baseline = the nearest real
    example of the same kind (labelled targets for false negatives, negatives for false positives) in another
    reference sequence; leave-one-family-out calibrates on the same radar's other families (as v1), the held-out

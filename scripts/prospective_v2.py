@@ -386,6 +386,27 @@ def method_eval(order, ap, noise, names):
     return ev
 
 
+M3_EXPECTED = {"scnr_narrow": {"label"}, "scnr_wide": {"label"}, "shape_range": {"target"},
+               "shape_doppler": {"target"}, "label_stochastic": {"label"}, "support_stratified": {"coverage"},
+               "combined_moderate": {"label", "target", "coverage"}}
+
+
+def mechanism_match(finalist, cid, cand):
+    """The modified mechanism among the finalist's two largest risks (note, deviation 5); None for the control."""
+    name = cid.split(":")[1]
+    if EXPECTED_BLOCKS[name] is None:
+        return None
+    if finalist in ("M4", "M6"):
+        return bool(set(cand["M4"]["top_blocks"]) & EXPECTED_BLOCKS[name])
+    if finalist == "M3":
+        comps = {k: v["risk"] for k, v in cand["M3"]["components"].items() if v["risk"] is not None}
+        top = sorted(comps, key=lambda k: -comps[k])[:2]
+        return bool(set(top) & M3_EXPECTED[name])
+    sides = {k: cand["M5"][k] or 0.0 for k in ("fn_risk", "fp_risk", "stratum_risk")}
+    top = set(sorted(sides, key=lambda k: -sides[k])[:2])
+    return bool(top & ({"stratum_risk"} if name == "support_stratified" else {"fn_risk", "fp_risk"}))
+
+
 MECH = {"A": "detectability", "B": "label-task", "C": "morphology", "D": "support", "E": "hard negatives",
         "F": "processing"}
 
@@ -428,8 +449,9 @@ def report(a):
     fin = sel["finalist"]
     f = out["methods"][fin]
     fsel = f["selected"]
-    exp = EXPECTED_BLOCKS[fsel.split(":")[1]]
-    mech_ok = True if exp is None else diag[fsel]["match"]
+    mech_ok = mechanism_match(fin, fsel, prim["candidates"][fsel])
+    for c in names:
+        diag[c]["finalist_match"] = mechanism_match(fin, c, prim["candidates"][c])
     out["success"] = {"within_noise": f["within_noise"], "below_random": f["regret"] < out["random"]["regret"],
                       "below_global": f["regret"] < out["methods"]["global"]["regret"],
                       "mechanism_in_top2": mech_ok}
