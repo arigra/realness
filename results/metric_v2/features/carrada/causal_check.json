@@ -1,0 +1,207 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset carrada --check",
+  "written": "2026-11-07T06:39:24",
+  "host": "hpc-node3"
+ },
+ "reference": "all 50 real training sequences",
+ "n_boot": 300,
+ "visibility_threshold": 3.931717872619629,
+ "checks": {
+  "study2:contrast-12": {
+   "cfar_db": {
+    "expected": "down",
+    "diff": -5.5419919967651365,
+    "ci95": [
+     -7.11033194065094,
+     -3.9557909655570973
+    ],
+    "moved": true
+   },
+   "cfar_z": {
+    "expected": "down",
+    "diff": -1.860629794001579,
+    "ci95": [
+     -2.4521631848812038,
+     -1.2562662968039477
+    ],
+    "moved": true
+   },
+   "visibility": {
+    "expected": "down",
+    "diff": -0.2532327586206897,
+    "ci95": [
+     -0.3096579182008817,
+     -0.1913121576316854
+    ],
+    "moved": true
+   }
+  },
+  "study2:noise+12": {
+   "cfar_db": {
+    "expected": "down",
+    "diff": -6.101952934265135,
+    "ci95": [
+     -7.681518354415884,
+     -4.448945212364196
+    ],
+    "moved": true
+   },
+   "cfar_z": {
+    "expected": "down",
+    "diff": -1.6689580917358389,
+    "ci95": [
+     -2.3078767237812277,
+     -0.9575705109536584
+    ],
+    "moved": true
+   }
+  },
+  "study2:rangeshift1": {
+   "off_r": {
+    "expected": "down",
+    "diff": -0.6278343200683594,
+    "ci95": [
+     -0.7351989269256591,
+     -0.4742216587066652
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.04175390218992783,
+    "ci95": [
+     -0.06635316205033553,
+     -0.02485909764533471
+    ],
+    "moved": true
+   }
+  },
+  "study2:dopplershift1": {
+   "off_d": {
+    "expected": "down",
+    "diff": -0.8960323333740234,
+    "ci95": [
+     -0.9471749305725098,
+     -0.8560011625289917
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.004998386281933914,
+    "ci95": [
+     -0.023035216773923645,
+     0.018824238484857918
+    ],
+    "moved": false
+   }
+  },
+  "study2:blur2": {
+   "width_r6_m": {
+    "expected": "up",
+    "diff": 0.7999999761581422,
+    "ci95": [
+     0.5999999761581423,
+     1.1999999761581421
+    ],
+    "moved": true
+   },
+   "width_d6_mps": {
+    "expected": "up",
+    "diff": 0.8400000262260436,
+    "ci95": [
+     0.4200000262260437,
+     0.8400000262260436
+    ],
+    "moved": true
+   }
+  },
+  "study2b:tail2": {
+   "far6_m": {
+    "expected": "up",
+    "diff": 0.39999999701976785,
+    "ci95": [
+     0.39999999701976785,
+     0.39999999701976785
+    ],
+    "moved": true
+   },
+   "asym6_m": {
+    "expected": "up",
+    "diff": 0.40000000298023225,
+    "ci95": [
+     0.2,
+     0.40000000298023225
+    ],
+    "moved": true
+   }
+  },
+  "study2:unrender90": {
+   "visibility": {
+    "expected": "down",
+    "diff": -0.6497844827586208,
+    "ci95": [
+     -0.7083762663165977,
+     -0.5978412589863388
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.16826185994123588,
+    "ci95": [
+     -0.22963254523994875,
+     -0.12415717155552386
+    ],
+    "moved": true
+   }
+  },
+  "study2:extra50": {
+   "v1_unlabelled_off_ridge_per_frame": {
+    "expected": "up",
+    "diff": 1.465,
+    "ci95": [
+     1.1576250000000001,
+     1.80775
+    ],
+    "moved": true
+   }
+  },
+  "study2b:support100": {
+   "support_under_worst": {
+    "expected": "up",
+    "diff": 0.20940759028523392,
+    "ci95": [
+     0.08129898689528868,
+     0.24463829182284832
+    ],
+    "moved": true
+   }
+  },
+  "study2b:confusers4": {
+   "fp_per_frame": {
+    "expected": "up",
+    "diff": 0.049375,
+    "ci95": [
+     -0.04062500000000002,
+     0.13729687499999993
+    ],
+    "moved": false
+   }
+  },
+  "study2b:confusers0": {
+   "neg_uncovered": {
+    "expected": "up",
+    "diff": 0.28571428571428575,
+    "ci95": [
+     0.2702322308233638,
+     0.2987508796622097
+    ],
+    "moved": true
+   }
+  }
+ }
+}

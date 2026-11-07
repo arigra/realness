@@ -32,12 +32,14 @@ K_R, K_D = 12, 8            # patch half sizes (25 x 17)
 GUARD, LABEL_GUARD = 3, 2   # background exclusions (Euclidean cells)
 FP_SCORE, FP_RADIUS = 0.3, 4
 N_NEG_PEAKS = 3
-VERSION = 2
+RIDGE_KEEP = 2          # capture: a label this close to zero Doppler keeps the ridge in its patch
+VERSION = 3
 
 
 def config():
     return {"version": VERSION, "k_r": K_R, "k_d": K_D, "guard": GUARD, "label_guard": LABEL_GUARD,
             "fp_score": FP_SCORE, "fp_radius": FP_RADIUS, "n_neg_peaks": N_NEG_PEAKS, "peak_floor": PEAK_FLOOR,
+            "ridge_keep": RIDGE_KEEP,
             "radars": {k: dataclasses.asdict(v) for k, v in RADARS.items()}}
 
 
@@ -87,12 +89,16 @@ def cfar_margin(x, pr, pd, labels, radar):
     return float(x[pr, pd] - np.quantile(bg, 0.95)) if bg.size >= 10 else np.nan
 
 
-def capture(lin_excess, rf, df, radius):
-    """Share of the patch's excess energy within Euclidean `radius` of the label (NaN if none)."""
+def capture(lin_excess, rf, df, radius, radar=None):
+    """Share of the patch's excess energy within Euclidean `radius` of the label (NaN if none). On a static
+    radar the zero-Doppler ridge +/-1 is left out of the patch (it is the static scene, not the target),
+    unless the label itself lies within RIDGE_KEEP cells of zero Doppler."""
     n_r, n_d = lin_excess.shape
     ri, di = min(max(int(round(rf)), 0), n_r - 1), int(round(df)) % n_d
     rows, cols = _patch_idx(ri, di, n_r, n_d)
     e = lin_excess[np.ix_(rows, cols)]
+    if radar is not None and radar.static and abs(wrap(df - radar.zero, n_d)) > RIDGE_KEEP:
+        e = e * (np.abs(wrap(cols - radar.zero, n_d)) > 1)[None, :]
     tot = float(e.sum())
     if tot <= 0:
         return np.nan
@@ -166,7 +172,8 @@ def raw_v2(pool, radar, dets):
                        "peak_z": z[pr, pd], "peak_prom": prom[pr, pd],
                        "cfar_db": cfar_margin(x, pr, pd, labels, radar), "cfar_z": cfar_margin(z, pr, pd, labels, radar),
                        "off_r": pr - rf, "off_d": wrap(pd - df, n_d),
-                       "capture_r2": capture(lin_excess, rf, df, 2.0), "capture_r4": capture(lin_excess, rf, df, 4.0),
+                       "capture_r2": capture(lin_excess, rf, df, 2.0, radar),
+                       "capture_r4": capture(lin_excess, rf, df, 4.0, radar),
                        "det_score_r2": best}
                 objs.append(row | morphology(x, pr, pd, radar))
             # negatives

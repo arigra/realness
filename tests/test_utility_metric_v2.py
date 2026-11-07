@@ -169,3 +169,46 @@ def test_builder_reads_training_splits_only():
         b.train_only("data/x", "val")
     with pytest.raises(RuntimeError):
         b.train_only("data/x", "test")
+
+
+def test_capture_leaves_the_static_ridge_out():
+    def ridge(x):            # a strong static scene on the zero-Doppler column (bin 16) at every range
+        x = x.clone()
+        x[:, 16] += 15.0
+        return x
+    x = frame([(30, 10, 12, 1.2, 1.2)], extra=ridge)
+    lin = np.clip(10 ** (x / 10) - 10 ** (np.median(x, 1, keepdims=True) / 10), 0, None)
+    assert capture(lin, 30, 10, 2.0, RADAR) > 0.5 > capture(lin, 30, 10, 2.0)
+    # a label on the ridge keeps it: its target is there
+    assert capture(lin, 30, 16, 2.0, RADAR) == pytest.approx(capture(lin, 30, 16, 2.0))
+
+
+def test_m3_weakest_link_is_not_cancelled_by_harmless_probes():
+    from src.utility_score_v2 import lex_rank
+    names = ["a.p1", "a.p2", "b.q1", "b.q2", "b.q3", "b.q4", "b.q5"]
+    one_bad = np.array([0, 0, 5.0, 5.0, 0, 0, 0])            # component b: 80th percentile of (0, 0, 0, 5, 5) = 5
+    spread = np.array([2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0])    # many moderate penalties: larger sum, smaller risk
+    r1, r2 = m3(one_bad, names), m3(spread, names)
+    assert r1["components"]["b"]["risk"] == pytest.approx(5.0) and r1["dominant"] == "b"
+    assert one_bad.sum() < spread.sum() and r1["key"] > r2["key"]      # M1 would prefer one_bad; M3 does not
+    unmeasured = np.array([np.nan, np.nan, 0, 0, 0, 0, 0])
+    assert m3(unmeasured, names)["unmeasured_components"] == ["a"]
+    assert lex_rank([(1.0, 2.0), (0.5, 9.0), (1.0, 2.0), (1.0, 1.0)]).tolist() == [2, 0, 2, 1]
+
+
+def test_m4_combines_blocks_and_diagnoses_the_driver():
+    names = ["A.x", "B.y", "C.z", "D.u", "E.v", "F.w"]
+    r = m4(np.array([0, 5.0, 2.5, 0, 0, 0]), names)
+    assert r["M4"] == pytest.approx(1 - (1 - 1.0) * (1 - 0.5)) and r["top_blocks"] == ["B", "C"]
+    assert r["diagnosis"][0].startswith("high label-task risk: B.y")
+
+
+def test_pairwise_ranker_pairs_are_family_balanced():
+    g = np.random.default_rng(1)
+    R = g.uniform(size=(30, 8))
+    val = 0.5 - 0.3 * R[:, 0]
+    fam = np.array(["big"] * 24 + ["small"] * 6)
+    rk = PairwiseRanker().fit(R, val, np.array(["a"] * 30), fam, {"a": 0.01})
+    tot = {f: rk.pair_weights[rk.pair_families == f].sum() for f in set(rk.pair_families)}
+    assert all(abs(v - 1.0) < 1e-9 for v in tot.values()) and len(tot) == 2
+    assert all(abs(val[i] - val[j]) > 0.01 for i, j in rk.pairs)          # only pairs beyond the noise

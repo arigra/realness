@@ -1,0 +1,74 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": true,
+  "command": "scripts/build_metric_v2_features.py --dataset carrada --check --only study2:dopplershift1,study2:rangeshift1,study2:unrender90",
+  "written": "2026-11-07T06:56:39",
+  "host": "hpc-node3"
+ },
+ "reference": "all 50 real training sequences",
+ "n_boot": 300,
+ "visibility_threshold": 3.931717872619629,
+ "checks": {
+  "study2:rangeshift1": {
+   "off_r": {
+    "expected": "down",
+    "diff": -0.6278343200683594,
+    "ci95": [
+     -0.7351989269256591,
+     -0.4742216587066652
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.05395352095365524,
+    "ci95": [
+     -0.08462076988071203,
+     -0.023832076601684096
+    ],
+    "moved": true
+   }
+  },
+  "study2:dopplershift1": {
+   "off_d": {
+    "expected": "down",
+    "diff": -0.8960323333740234,
+    "ci95": [
+     -0.9471749305725098,
+     -0.8560011625289917
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.011778846383094788,
+    "ci95": [
+     -0.032097488082945345,
+     0.022010488808155048
+    ],
+    "moved": false
+   }
+  },
+  "study2:unrender90": {
+   "visibility": {
+    "expected": "down",
+    "diff": -0.6497844827586208,
+    "ci95": [
+     -0.7083762663165977,
+     -0.5978412589863388
+    ],
+    "moved": true
+   },
+   "capture_r2": {
+    "expected": "down",
+    "diff": -0.20700417086482048,
+    "ci95": [
+     -0.3009297670330852,
+     -0.14473502468317748
+    ],
+    "moved": true
+   }
+  }
+ }
+}

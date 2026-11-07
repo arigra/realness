@@ -5,3 +5,6 @@ logs/
 results/*_dets/
 results/metric/dets/
 results/metric/features/**/raw.npz
+results/metric_v2/features/**/*.npz
+results/metric_v2/*.lock
+results/metric_v2/**/*.tmp

@@ -154,7 +154,40 @@ A feature that fails is fixed before retrospective scoring or marked unmeasured 
 from M4 / M5), never declared irrelevant.
 
 ## Deviation log
-(empty)
+Every entry was made before any retrospective scoring of M3-M6 unless stated.
+1. Draft review (2026-11-07): coverage features standardised NaN-aware (a morphology value cut at a range
+   edge sits at the reference mean, instead of 0 before standardising); a detector false positive is measured
+   at the strongest cell within +/-1 of the detection (as v1); M3 / M4 orders are exact lexicographic ranks
+   (the draft's "max + 1e-4 mean" scalar could break ties wrongly); the tail unit test used a tail that
+   overtook the peak and is now src/damage.range_tail.
+2. **AP@2 energy capture leaves the zero-Doppler ridge +/-1 out of the 25 x 17 patch** on static radars,
+   unless the label lies within 2 bins of zero Doppler (features v3). Found by the CARRADA Doppler-shift causal
+   check (capture did not move: the ridge's static excess dominated the denominator, median capture 0.19).
+   Re-checked with features v3: the range-shift response grew (-0.042 -> -0.054) but the Doppler shift still does
+   not move it (-0.012 [-0.032, +0.022]), so `B.capture_r2` is **unmeasured on CARRADA** (the fix is kept).
+3. `E.fp_per_frame` is **unmeasured on CARRADA**: the confusers x4 check failed (+0.05 FPs / frame, interval
+   [-0.04, +0.14]); the fixed detector does not fire on more poles there. Its hard-negative coverage check
+   (confusers 0 -> +0.29 uncovered real negatives) passed.
+4. Further failed checks, no implementation fault found -> unmeasured on that radar (scripts/evaluate_metric_v2.UNMEASURED):
+   RADIal `B.capture_r2` (range shift 1: -0.008 [-0.016, +0.002]; its targets are long in range); RADDet
+   `E.uncovered` (confusers 0 *lowers* the uncovered share, -0.054 [-0.071, -0.020]; without poles the strongest
+   unlabelled peaks look more like real hard negatives). RADDet's hard-negative block keeps a passing check
+   (confusers x4: +0.15 FPs / frame). RADIal support100 is identical to its tuned simulator (RADIal's best
+   simulator has no real-scene switch), so the support check cannot be run there; it passed on CARRADA and RADDet.
+5. Clarifications of the text, not changes: visibility = the strongest cell within radius 2 reaches the 25th
+   percentile of the reference labels' strongest-cell prominence; M5's real-real baseline = the nearest real
+   example of the same kind (labelled targets for false negatives, negatives for false positives) in another
+   reference sequence; leave-one-family-out calibrates on the same radar's other families (as v1), the held-out
+   family's base excluded; support_stratified: scenes without objects keep their natural share of draws
+   (CARRADA: 45% of its scene table), the others are reweighted.
+
+## Progress
+- 2026-11-07 06:30 (hpc-node3) Phase B-C started from 88d6516. Draft reviewed and fixed (06eb739).
+- Phase B: M3 implemented (src/utility_score_v2.RobustTolerance, m3, lex_rank); unit tests; M1 / M2 through the
+  v2 code path reproduce v1's Phase 6 bank values to 1e-15 (`scripts/evaluate_metric_v2.py --verify-v1`,
+  results/metric_v2/scores/verify_v1.json).
+- Phase C: causal checks run (results/metric_v2/features/<dataset>/causal_check.json); everything moved except
+  the two CARRADA entries of the deviation log; capture re-checked after the fix (below).
 
 ---
 

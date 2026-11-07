@@ -143,8 +143,9 @@ class PairwiseRanker:
             return self
         fams = np.asarray(fams)
         counts = {f: (fams == f).sum() for f in set(fams)}
-        pw = np.array([1.0 / counts[f] for f in fams])
-        pw = pw / pw.sum() * len(set(fams))
+        pw = np.array([1.0 / counts[f] for f in fams])          # every family's pairs sum to 1
+        self.pair_weights = pw
+        self.pair_families = fams
         self.family_weights = {str(f): float(1.0 / counts[f]) for f in counts}
         D = np.array([Z[j] - Z[i] for i, j in pairs])    # worse minus better: a good w makes w.D > 0
 

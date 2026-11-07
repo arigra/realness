@@ -282,9 +282,10 @@ def check_value(name, t2, t1, ref2, ref1, thr, med):
     return _med(o[name])
 
 
-def run_checks(dataset, real1, real2, n_boot=300, seed=0):
+def run_checks(dataset, real1, real2, n_boot=300, seed=0, only=None):
     reg = registry(dataset)
-    ids = ["tuned"] + [c for c in CHECKS if c in reg]
+    checks = {c: v for c, v in CHECKS.items() if only is None or c in only}
+    ids = ["tuned"] + [c for c in checks if c in reg]
     t2 = {c: Candidate(dataset, reg[c]).v2() for c in ids}
     t1 = {c: Candidate(dataset, reg[c]).v1_tables() for c in ids}
     thr = float(np.quantile(real2["objects"]["peak_prom"][np.isfinite(real2["objects"]["peak_prom"])], 0.25))
@@ -295,11 +296,11 @@ def run_checks(dataset, real1, real2, n_boot=300, seed=0):
     rs = lambda tables, idx: v1b.resample(tables, idx)
     report = {"provenance": provenance(), "reference": "all 50 real training sequences", "n_boot": n_boot,
               "visibility_threshold": thr, "checks": {}}
-    for cid in CHECKS:
+    for cid in checks:
         if cid not in reg:
             continue
         res = {}
-        for feat, sign in CHECKS[cid]:
+        for feat, sign in checks[cid]:
             val = lambda a2, a1: check_value(feat, a2, a1, real2, real1, thr, med)
             diff = val(t2[cid], t1[cid]) - val(t2["tuned"], t1["tuned"])
             bd = []
@@ -311,7 +312,7 @@ def run_checks(dataset, real1, real2, n_boot=300, seed=0):
             print(f"check {dataset} {cid:22s} {feat:34s} {'up  ' if sign > 0 else 'down'} {diff:+.3f} "
                   f"[{lo:+.3f}, {hi:+.3f}] {'OK' if ok else 'NOT MOVED'}", flush=True)
         report["checks"][cid] = res
-    path = Path("results/metric_v2/features") / dataset / "causal_check.json"
+    path = Path("results/metric_v2/features") / dataset / ("causal_check.json" if only is None else "causal_check_recheck.json")
     path.write_text(json.dumps(v1b.to_json(report), indent=1))
 
 
@@ -321,12 +322,13 @@ def main():
     ap.add_argument("--candidates", default="all", help="'all' (usable + bank), 'bank', 'bank2', or ids")
     ap.add_argument("--part", default="0/1", help="k/n: every n-th candidate from k (parallel workers)")
     ap.add_argument("--check", action="store_true", help="only the causal checks")
+    ap.add_argument("--only", default=None, help="comma-separated check candidates (a re-check)")
     a = ap.parse_args()
     data.load = versions.load = v1b.data.load = v1b.versions.load = train_only    # never val or test
     v1b._LOAD = _LOAD
     real1, real2 = real_v1(a.dataset), real_v2(a.dataset)
     if a.check:
-        run_checks(a.dataset, real1, real2)
+        run_checks(a.dataset, real1, real2, only=a.only.split(",") if a.only else None)
         return
     reg = registry(a.dataset)
     if a.candidates == "all":

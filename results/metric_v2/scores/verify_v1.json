@@ -1,0 +1,19 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": true,
+  "command": "scripts/evaluate_metric_v2.py --verify-v1",
+  "written": "2026-11-07T06:44:47",
+  "host": "hpc-node3"
+ },
+ "checks": {
+  "carrada": {
+   "max_abs_diff": 7.216449660063518e-16,
+   "ok": true
+  },
+  "raddet": {
+   "max_abs_diff": 1.6653345369377348e-15,
+   "ok": true
+  }
+ }
+}
