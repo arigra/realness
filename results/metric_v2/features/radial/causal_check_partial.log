@@ -1,0 +1,18 @@
+check radial study2:contrast-12     cfar_db                            down -9.629 [-10.092, -8.887] OK
+check radial study2:contrast-12     cfar_z                             down -1.797 [-1.889, -1.649] OK
+check radial study2:contrast-12     visibility                         down -0.349 [-0.390, -0.316] OK
+check radial study2:noise+12        cfar_db                            down -8.977 [-9.690, -8.137] OK
+check radial study2:noise+12        cfar_z                             down -1.374 [-1.531, -1.179] OK
+check radial study2:rangeshift1     off_r                              down -0.990 [-0.997, -0.980] OK
+check radial study2:rangeshift1     capture_r2                         down -0.008 [-0.016, +0.002] NOT MOVED
+check radial study2:dopplershift1   off_d                              down -0.965 [-0.991, -0.935] OK
+check radial study2:dopplershift1   capture_r2                         down -0.035 [-0.045, -0.021] OK
+check radial study2:blur2           width_r6_m                         up   +0.400 [+0.400, +0.400] OK
+check radial study2:blur2           width_d6_mps                       up   +0.200 [+0.200, +0.200] OK
+check radial study2b:tail2          far6_m                             up   +0.600 [+0.400, +0.600] OK
+check radial study2b:tail2          asym6_m                            up   +0.400 [+0.400, +0.400] OK
+check radial study2:unrender90      visibility                         down -0.635 [-0.673, -0.604] OK
+check radial study2:unrender90      capture_r2                         down -0.779 [-0.804, -0.752] OK
+check radial study2:extra50         v1_unlabelled_off_ridge_per_frame  up   +3.069 [+1.761, +4.502] OK
+check radial study2b:support100     support_under_worst                up   +0.000 [+0.000, +0.000] NOT MOVED
+check radial study2b:confusers4     fp_per_frame                       up   +0.087 [+0.037, +0.140] OK
