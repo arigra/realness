@@ -179,6 +179,11 @@ Every entry was made before any retrospective scoring of M3-M6 unless stated.
    label_prom / over_clutter), shape_* -> target, label_stochastic -> label, support_stratified -> coverage,
    combined_moderate -> any of label / target / coverage; M5's sides map as support_stratified -> stratum risk,
    every other mechanism -> FN or FP risk (its two largest of FN / FP / stratum).
+6a. After the freeze (bugs only, outputs affected: the *_report.json files, regenerated): (i) the report's
+   "modified mechanism among the two largest risks" counted blocks at zero risk, so it was vacuously true when
+   every risk was 0; only risks above 0 now count. (ii) A sequence bootstrap draw of the CARRADA reference could
+   consist of label-free sequences only (no reference); such draws are skipped and counted (n_valid) - fixed
+   before the freeze commit, during scoring.
 6. M2's NNLS (unchanged v1 code) hits SciPy's iteration cap in some leave-one-family-out calibrations (v1's 1e-3
    scale floor makes penalties ~1e5); the identical problem is then solved by bounded-variable least squares
    (scipy lsq_linear, bvls). Implementation only; M2 is not redefined.
@@ -196,6 +201,182 @@ Every entry was made before any retrospective scoring of M3-M6 unless stated.
   results/metric_v2/scores/verify_v1.json).
 - Phase C: causal checks run (results/metric_v2/features/<dataset>/causal_check.json); everything moved except
   the two CARRADA entries of the deviation log; capture re-checked after the fix (below).
+
+## Results: Phase F development (validation AP only; DEVELOPMENT evidence, not the test)
+Development candidates with val AP: CARRADA 82, RADDet 82, RADIal 75 (natural: 14, 14, 7); val seed noise
+0.075 / 0.031 / 0.055. Primary reference (10 sequences, subset 0), regret in val AP@2 / pairwise accuracy:
+
+| | M1 | M2 | global | M3 | M4 | M5 | M6 | proxy (v1, dev only) | random |
+|---|---|---|---|---|---|---|---|---|---|
+| LORO natural CARRADA | 0.000/0.93 | 0.043/0.82 | 0.193/0.45 | **0.000**/0.65 | 0.070/0.59 | 0.048/0.80 | 0.048/0.72 | 0.000/0.90 | 0.122 |
+| LORO natural RADDet | 0.028/0.65 | 0.028/0.79 | 0.039/0.45 | 0.045/0.52 | 0.207/0.23 | 0.028/0.30 | 0.207/0.34 | 0.008/0.87 | 0.077 |
+| LORO natural RADIal | 0.117/0.38 | 0.117/0.38 | 0.174/0.38 | **0.000**/0.38 | 0.164/0.38 | 0.028/0.91 | 0.000/0.56 | 0.117/0.44 | 0.105 |
+| LORO all CARRADA | 0.353 | 0.162 | 0.193 | 0.468 | 0.206 | 0.224 | 0.140 | 0.000 | 0.207 |
+| LORO all RADDet | 0.066 | 0.066 | 0.077 | 0.083 | 0.298 | 0.223 | 0.298 | 0.018 | 0.127 |
+| LORO all RADIal | 0.294 | 0.312 | 0.058 | 0.399 | 0.085 | 0.354 | 0.112 | 0.060 | 0.274 |
+| LOFO CARRADA | 0.021 | 0.026 | 0.081 | 0.030 | 0.024 | 0.100 | 0.024 | 0.016 | 0.105 |
+| LOFO RADDet | 0.010 | 0.018 | 0.059 | 0.011 | 0.007 | 0.071 | 0.012 | 0.018 | 0.073 |
+| LOFO RADIal | 0.041 | 0.038 | 0.062 | 0.045 | 0.040 | 0.086 | 0.030 | 0.033 | 0.113 |
+
+**Finalist (frozen rule): M3_RTW**: mean LORO natural regret M3 0.015, M5 0.035, M6 0.085, M4 0.147 (rule step 1
+decides; no other step needed). Caveats written before bank v2: (a) at the primary reference M3 wins, but over all
+10 references its mean LORO natural regret is 0.083 vs random 0.101 and the v1 proxy 0.042: the development
+signal is weak and reference-dependent; (b) M4, the radar-physics score, generalises worst across radars (it
+picks RADDet's worst first-bank candidate, hybrid_x1), while within a radar (LOFO) M1, M3, M4 and M6 are all
+close to each other and to the proxy; (c) on the all-candidate stress test every metric except the proxy is
+near or worse than random on CARRADA and RADIal.
+
+## Bank-v2 freeze (Phase G) — 2026-11-07, before any bank-v2 full-detector training
+Rendered: results/metric_v2/bank_v2.json (caches data/tuned/<dataset>/bank2_*, per-sequence draws in each
+sequence's meta; tuned_control = data/tuned/<dataset>/best). Features: results/metric_v2/features/<dataset>/bank2__*.
+Proxy: 3 seeds per candidate, results/metric_v2/prospective/<dataset>_proxy.json. Scores, complete rankings at
+every reference, calibration (all development candidates of the three radars; leave-one-radar-out calibration as
+secondary), sequence-bootstrap intervals (100 draws at the primary reference, 20 elsewhere; CARRADA 99 valid at
+10/0: one draw had no labels): results/metric_v2/prospective/<dataset>_selection.json.
+
+**Selections at the primary reference (10 real sequences, subset 0)**; "tied" = candidates with exactly the
+selected one's score, the pick then made by the method's preregistered tie rule (finally the name); bootstrap =
+share of reference resamples in which the method picks the same candidate:
+
+| method | CARRADA | RADDet |
+|---|---|---|
+| global | shape_range (1.00) | shape_range (0.98) |
+| M1 | scnr_narrow (tied 5; 0.08) | combined_moderate (tied 7; 0.62) |
+| M2 | scnr_narrow (tied 5; 0.11) | combined_moderate (tied 7; 0.58) |
+| **M3 (finalist)** | **label_stochastic (tied 6; 0.44)** | **combined_moderate (tied 8; 0.73)** |
+| M4 | scnr_narrow (tied 5; 0.04) | scnr_narrow (tied 5; 0.06) |
+| M5 | shape_doppler (0.33) | label_stochastic (0.04) |
+| M6 | shape_doppler (0.19) | combined_moderate (0.11) |
+| proxy (3 seeds) | shape_range | combined_moderate |
+
+Written before any outcome is known: **the tolerance scores barely separate this bank.** On RADDet every candidate
+has M3 = 0 (all probes' 80th-percentile component risks inside the safe ranges), so M3's pick is the
+alphabetically first name; on CARRADA six of eight tie at 0, broken by name. M1 and M4 tie 5-7 candidates at 0
+as well. The prospective test of M3 is therefore close to a test of its tie rule. The 80th-percentile aggregation
+also hides single-probe failures (CARRADA label_stochastic: M1 1.3, M4 label-task block 0.26 - M3 0). The report
+gives the frozen picks as primary and, labelled secondary, each method's expected regret under a uniform choice
+among its tied best (the development rule). The proxy rates label_stochastic lowest on both radars (0.08 / 0.03).
+
+## Results: Phases H-I (prospective, test AP; bank v2 trained after the freeze commit 3281151)
+results/metric_v2/prospective/<dataset>_{runs,report}.json, figures in results/metric_v2/figures/. Synthetic-only
+U-Net, Study 2's training and early stopping, 3 seeds. Real-test AP@2 (seed range in brackets):
+
+| candidate | CARRADA | RADDet |
+|---|---|---|
+| tuned_control | 0.324 [0.030] | 0.284 [0.037] |
+| scnr_narrow | 0.314 [0.035] | 0.292 [0.036] |
+| scnr_wide | 0.348 [0.035] | **0.296** [0.057] |
+| shape_range | **0.392** [0.019] | 0.142 [0.022] |
+| shape_doppler | 0.324 [0.049] | 0.254 [0.050] |
+| label_stochastic | 0.136 [0.072] | 0.063 [0.039] |
+| support_stratified | 0.320 [0.054] | 0.293 [0.047] |
+| combined_moderate | 0.345 [0.055] | 0.215 [0.035] |
+| seed noise (median range) | 0.042 | 0.038 |
+
+The val oracle equals the test oracle on both radars (shape_range, scnr_wide). The same mechanism has opposite
+effects on the two radars (range blur / tail: best on CARRADA, second worst on RADDet); stochastic real label
+offsets are the worst candidate on both.
+
+**Selections at the primary reference (10 sequences, subset 0): test regret (AP@2) / within noise / pairwise
+accuracy beyond noise / Kendall tau over the bank; secondary: expected regret if the tied best were chosen
+uniformly.**
+
+| method | CARRADA pick | regret | within | pairwise / tau | ties-uniform | RADDet pick | regret | within | pairwise / tau | ties-uniform |
+|---|---|---|---|---|---|---|---|---|---|---|
+| global | shape_range | **0.000** | yes | 0.92 / 0.43 | 0.000 | shape_range | 0.154 | no | 0.24 / -0.57 | 0.154 |
+| M1 | scnr_narrow | 0.078 | no | 0.77 / 0.21 | 0.051 | combined_moderate | 0.081 | no | 0.43 / -0.07 | 0.054 |
+| M2 | scnr_narrow | 0.078 | no | 0.62 / 0.07 | 0.051 | combined_moderate | 0.081 | no | 0.43 / -0.07 | 0.054 |
+| **M3 (finalist)** | label_stochastic | **0.255** | no | 0.23 / -0.29 | 0.085 | combined_moderate | 0.081 | no | 0.33 / -0.21 | 0.066 |
+| M4 | scnr_narrow | 0.078 | no | 0.77 / 0.21 | 0.051 | scnr_narrow | **0.004** | yes | 0.90 / 0.64 | 0.012 |
+| M5 | shape_doppler | 0.068 | no | 0.69 / 0.29 | 0.068 | label_stochastic | 0.233 | no | 0.14 / -0.36 | 0.233 |
+| M6 | shape_doppler | 0.068 | no | 0.92 / 0.43 | 0.068 | combined_moderate | 0.081 | no | 0.29 / -0.14 | 0.081 |
+| proxy (3 seeds) | shape_range | **0.000** | yes | 1.00 / 0.29 | 0.000 | combined_moderate | 0.081 | no | 0.67 / 0.14 | 0.081 |
+| random (expected) | | 0.079 | 12% | 0.50 | | | 0.066 | 50% | 0.50 | |
+| val oracle | shape_range | 0.000 | yes | | | scnr_wide | 0.000 | yes | | |
+
+Mean regret over the two radars: proxy 0.040, M4 0.041, M6 0.075, global 0.077, M1 / M2 0.080, random 0.072,
+M5 0.150, **M3 0.168**.
+
+**Preregistered success of the finalist (M3): not met on either radar.** CARRADA: not within noise (0.255 >
+0.042), worse than random (0.079) and global (0.000); its pick (label_stochastic) has the label-task risk only in
+M1 / M4, not in M3's top components (all M3 risks 0 except coverage). RADDet: not within noise (0.081 > 0.038),
+worse than random (0.066), better than global (0.154); no positive risk names the mechanism. **Strong result: no.**
+Proxy comparison: the finalist is worse than the proxy by 0.255 on CARRADA and equal on RADDet (same pick) -
+mean 0.128 worse, three seed-noise widths, far beyond the half-width allowed.
+
+Diagnosis (M4's blocks above zero risk vs the modified mechanism): CARRADA 3 of 7 modified candidates
+(label_stochastic -> label-task; support_stratified, combined_moderate -> support); RADDet 1 of 7 (shape_range ->
+morphology). Every other candidate had no positive M4 risk: the bank v2 mechanisms mostly stay inside the
+development candidates' safe ranges, which is why the tolerance scores tie.
+
+Leave-one-radar-out calibration (secondary, not the frozen selection): M3 would have picked scnr_wide on CARRADA
+(regret 0.044) and support_stratified on RADDet (0.003); M4 label_stochastic (0.255) and shape_range (0.154). The
+calibration set changes the tolerance metrics' picks completely: their selections are not robust.
+
+**Sample budgets (Phase I; selections at 5 / 10 / 20 sequences x 3 subsets and 50; mean test regret per budget):**
+
+| method | CARRADA 5 / 10 / 20 / 50 | stable from | RADDet 5 / 10 / 20 / 50 | stable from |
+|---|---|---|---|---|
+| global | 0.000 / 0.000 / 0.000 / 0.000 | 5 | 0.154 / 0.154 / 0.154 / 0.154 | 5 |
+| M1 | 0.196 / 0.196 / 0.255 / 0.255 | 20 | 0.182 / 0.182 / 0.081 / 0.081 | 20 |
+| M3 | 0.196 / 0.255 / 0.255 / 0.255 | 10 | 0.131 / 0.182 / 0.081 / 0.081 | 20 |
+| M4 | 0.031 / 0.127 / 0.101 / 0.047 | never | 0.029 / 0.080 / 0.029 / 0.004 | never |
+| M5 | 0.101 / 0.023 / 0.016 / 0.044 | never | 0.105 / 0.233 / 0.154 / 0.233 | 10 |
+| M6 | 0.016 / 0.023 / 0.170 / 0.255 | never | 0.027 / 0.156 / 0.103 / 0.081 | never |
+| proxy | 0.038 / 0.039 / 0.054 / 0.047 | never | 0.008 / 0.029 / 0.006 / 0.003 | never |
+
+Reference sizes (labels / real FNs / real FPs of the fixed detector): CARRADA 23-32 / 6-14 / 8-31 at 5 sequences,
+34-55 / 15-27 / 36-49 at 10, 104-128 at 20, 270 / 127 / 221 at 50 (so CARRADA is low-confidence below 20 sequences);
+RADDet ~100 / ~45 / ~175 at 5, 196-277 at 10, 1,155 / 457 / 1,712 at 50. "Stable" = the same pick on all three
+subsets; stability is not correctness: M3 is stable on CARRADA from 10 sequences on the worst candidate. No metric
+reaches a correct, stable pick at any budget; the proxy is near-correct at every budget without being stable
+(its picks change among near-equivalent candidates). Bootstrap selection frequency of the frozen picks at 10/0: M3
+0.44 (CARRADA) / 0.73 (RADDet), M4 0.04 / 0.06, global 1.00 / 0.98.
+
+**Augmentation (RADDet, + the budget study's fixed 5 / 10 real sequences, 3 seeds).** Real only: 0.101 / 0.206.
+tuned_control + real reproduces the budget study's tuned mix (0.290 vs 0.314 at 5; 0.394 vs 0.398 at 10).
+Delta_AP_5: support_stratified +0.247, scnr_narrow +0.238, scnr_wide +0.212, shape_doppler +0.211, tuned +0.190,
+combined_moderate +0.170, shape_range +0.112, label_stochastic +0.084 (spread 0.163, noise 0.051). Delta_AP_10:
+scnr_narrow +0.190, tuned +0.188, support_stratified +0.186, shape_doppler +0.180, scnr_wide +0.154,
+combined_moderate +0.142, shape_range +0.097, label_stochastic +0.094 (spread 0.096, noise 0.028). Regret of each
+method's (synthetic-only) pick on Delta_AP 5 / 10: M4 0.009 / 0.000 (pairwise 1.00 / 0.89, tau 0.71 / 0.50), proxy
+0.076 / 0.048 (0.87 / 0.79), M1 / M2 / M3 / M6 0.076 / 0.048, global 0.135 / 0.093, M5 0.163 / 0.096, random
+0.064 / 0.036. With real labels in the batch the ordering is the synthetic-only one compressed (label noise and
+range shape still cost most). CARRADA mixed training was not run (preregistered gate: Stage A spread 0.040 <
+2 x 0.051): candidate choice is practically unimportant there at 5 real sequences.
+
+Cost per candidate (hpc-node3, under load): v2 features 9-15 s (CPU, plus the fixed detector on GPU), v1 features
+18-22 s, scoring < 1 s per reference; proxy 12-23 s per seed on the 3090 (x3 seeds); a full training 160-180 s.
+
+## Verdict (Phase J)
+- **Which metric won:** none of the four new metrics passed its preregistered test. The frozen finalist, **M3_RTW,
+  failed on both radars** (mean regret 0.168, the worst of all methods, worse than random 0.072). Its failure is
+  structural, not noise: with robust scales and an 80th-percentile weakest link, nearly every bank-v2 candidate
+  sits at zero risk (6 / 8 on CARRADA, 8 / 8 on RADDet), so the pick is the preregistered name tie-break; even
+  uniform choice among its ties is only random-level (0.085 / 0.066).
+- **M4_RDA** (the radar-physics score, not chosen by the development rule because it generalised worst across
+  radars on val AP) was the best metric prospectively: within noise on RADDet (synthetic-only and both
+  augmentation budgets, tau 0.50-0.71) but 0.078 regret on CARRADA, and its pick is not stable across reference
+  subsets (bootstrap frequency 0.04-0.06). One radar out of two; post hoc; not a preregistered success.
+- **Metric vs proxy: the proxy won.** Synthetic-only mean regret proxy 0.040 vs finalist 0.168 (M4 0.041, global
+  0.077, random 0.072); the proxy picked the oracle on CARRADA and orders the bank best there (pairwise 1.00), and is
+  within noise on RADDet at the other reference subsets (mean regret 0.003-0.029) though not at the primary one
+  (0.081, same pick as M3). On augmentation utility the proxy is behind M4 but ahead of the tolerance scores. Per the
+  plan's stopping rule this is the "proxy wins clearly" outcome: per-candidate task probing is the best selector;
+  M4 / M5 are kept for diagnosis only, and their diagnoses named the modified mechanism for 4 of 14 modified
+  candidates, so even that role is weak.
+- **Global realism score:** right on CARRADA (it picks shape_range at every budget on both radars, which
+  happened to be CARRADA's best) and the worst selector on RADDet (0.154): a radar-dependent coin, as in v1.
+- **How many real sequences were needed:** for the metrics, no budget up to 50 sequences gave a correct and stable
+  pick on either radar, so no sample requirement can be stated for them; more sequences did not fix the tolerance
+  scores (on CARRADA M1 and M3 pick label_stochastic, the worst candidate, at 50 sequences). For the proxy, 5 sequences already gave near-oracle
+  picks on both radars (mean regret 0.038 CARRADA, 0.008 RADDet), with no gain from 50.
+- **What this means for the study:** the development data (damaged versions of known simulators) teach the
+  metrics what "unlike a working simulator" looks like, and the safe ranges become wide enough that a new bank of
+  plausible variations looks equally safe. Utility differences inside that space (range shape helps CARRADA,
+  hurts RADDet) are not visible to distribution-matching probes at 10-50 real sequences, but a 50-sequence,
+  1,000-step detector run sees them. Honest framing: an analysis result (which defects matter, and that cheap task
+  probing beats realism metrics), not a metric that replaces training.
 
 ---
 
@@ -1083,60 +1264,7 @@ Interpret the possible outcomes as follows:
 Every outcome is reportable if this protocol remains frozen.
 - Phase D-E: M5 (src/utility_metric_v2.m5) and M6 (PairwiseRanker, family-balanced pair weights, saved
   weights) implemented and unit-tested (tests/test_utility_metric_v2.py, 22 tests).
+- Phase H-J done 2026-11-07 09:05: bank v2 trained (48 runs), RADDet augmentation (48 runs), reports, figures,
+  verdict below.
 - Phase G (bank-v2 freeze) committed 2026-11-07 ~07:50: renders, features, proxy (3 seeds), scores, rankings, selections; freeze-check: no bank-v2 full-detector result.
 - Phase F done 2026-11-07 07:20 (results/metric_v2/scores/development.json, results/metric_v2/finalist.json).
-
-## Results: Phase F development (validation AP only; DEVELOPMENT evidence, not the test)
-Development candidates with val AP: CARRADA 82, RADDet 82, RADIal 75 (natural: 14, 14, 7); val seed noise
-0.075 / 0.031 / 0.055. Primary reference (10 sequences, subset 0), regret in val AP@2 / pairwise accuracy:
-
-| | M1 | M2 | global | M3 | M4 | M5 | M6 | proxy (v1, dev only) | random |
-|---|---|---|---|---|---|---|---|---|---|
-| LORO natural CARRADA | 0.000/0.93 | 0.043/0.82 | 0.193/0.45 | **0.000**/0.65 | 0.070/0.59 | 0.048/0.80 | 0.048/0.72 | 0.000/0.90 | 0.122 |
-| LORO natural RADDet | 0.028/0.65 | 0.028/0.79 | 0.039/0.45 | 0.045/0.52 | 0.207/0.23 | 0.028/0.30 | 0.207/0.34 | 0.008/0.87 | 0.077 |
-| LORO natural RADIal | 0.117/0.38 | 0.117/0.38 | 0.174/0.38 | **0.000**/0.38 | 0.164/0.38 | 0.028/0.91 | 0.000/0.56 | 0.117/0.44 | 0.105 |
-| LORO all CARRADA | 0.353 | 0.162 | 0.193 | 0.468 | 0.206 | 0.224 | 0.140 | 0.000 | 0.207 |
-| LORO all RADDet | 0.066 | 0.066 | 0.077 | 0.083 | 0.298 | 0.223 | 0.298 | 0.018 | 0.127 |
-| LORO all RADIal | 0.294 | 0.312 | 0.058 | 0.399 | 0.085 | 0.354 | 0.112 | 0.060 | 0.274 |
-| LOFO CARRADA | 0.021 | 0.026 | 0.081 | 0.030 | 0.024 | 0.100 | 0.024 | 0.016 | 0.105 |
-| LOFO RADDet | 0.010 | 0.018 | 0.059 | 0.011 | 0.007 | 0.071 | 0.012 | 0.018 | 0.073 |
-| LOFO RADIal | 0.041 | 0.038 | 0.062 | 0.045 | 0.040 | 0.086 | 0.030 | 0.033 | 0.113 |
-
-**Finalist (frozen rule): M3_RTW**: mean LORO natural regret M3 0.015, M5 0.035, M6 0.085, M4 0.147 (rule step 1
-decides; no other step needed). Caveats written before bank v2: (a) at the primary reference M3 wins, but over all
-10 references its mean LORO natural regret is 0.083 vs random 0.101 and the v1 proxy 0.042: the development
-signal is weak and reference-dependent; (b) M4, the radar-physics score, generalises worst across radars (it
-picks RADDet's worst first-bank candidate, hybrid_x1), while within a radar (LOFO) M1, M3, M4 and M6 are all
-close to each other and to the proxy; (c) on the all-candidate stress test every metric except the proxy is
-near or worse than random on CARRADA and RADIal.
-
-## Bank-v2 freeze (Phase G) — 2026-11-07, before any bank-v2 full-detector training
-Rendered: results/metric_v2/bank_v2.json (caches data/tuned/<dataset>/bank2_*, per-sequence draws in each
-sequence's meta; tuned_control = data/tuned/<dataset>/best). Features: results/metric_v2/features/<dataset>/bank2__*.
-Proxy: 3 seeds per candidate, results/metric_v2/prospective/<dataset>_proxy.json. Scores, complete rankings at
-every reference, calibration (all development candidates of the three radars; leave-one-radar-out calibration as
-secondary), sequence-bootstrap intervals (100 draws at the primary reference, 20 elsewhere; CARRADA 99 valid at
-10/0: one draw had no labels): results/metric_v2/prospective/<dataset>_selection.json.
-
-**Selections at the primary reference (10 real sequences, subset 0)**; "tied" = candidates with exactly the
-selected one's score, the pick then made by the method's preregistered tie rule (finally the name); bootstrap =
-share of reference resamples in which the method picks the same candidate:
-
-| method | CARRADA | RADDet |
-|---|---|---|
-| global | shape_range (1.00) | shape_range (0.98) |
-| M1 | scnr_narrow (tied 5; 0.08) | combined_moderate (tied 7; 0.62) |
-| M2 | scnr_narrow (tied 5; 0.11) | combined_moderate (tied 7; 0.58) |
-| **M3 (finalist)** | **label_stochastic (tied 6; 0.44)** | **combined_moderate (tied 8; 0.73)** |
-| M4 | scnr_narrow (tied 5; 0.04) | scnr_narrow (tied 5; 0.06) |
-| M5 | shape_doppler (0.33) | label_stochastic (0.04) |
-| M6 | shape_doppler (0.19) | combined_moderate (0.11) |
-| proxy (3 seeds) | shape_range | combined_moderate |
-
-Written before any outcome is known: **the tolerance scores barely separate this bank.** On RADDet every candidate
-has M3 = 0 (all probes' 80th-percentile component risks inside the safe ranges), so M3's pick is the
-alphabetically first name; on CARRADA six of eight tie at 0, broken by name. M1 and M4 tie 5-7 candidates at 0
-as well. The prospective test of M3 is therefore close to a test of its tie rule. The 80th-percentile aggregation
-also hides single-probe failures (CARRADA label_stochastic: M1 1.3, M4 label-task block 0.26 - M3 0). The report
-gives the frozen picks as primary and, labelled secondary, each method's expected regret under a uniform choice
-among its tied best (the development rule). The proxy rates label_stochastic lowest on both radars (0.08 / 0.03).

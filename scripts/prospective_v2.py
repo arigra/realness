@@ -391,6 +391,24 @@ def method_eval(order, ap, noise, names):
     return ev
 
 
+def score_key(m, v):
+    """A method's exact score of one candidate (ties = equal keys), as in the freeze note."""
+    if m == "M3":
+        return (round(v["M3"]["max"], 12), round(v["M3"]["mean"], 12))
+    if m == "M4":
+        return tuple(round(x, 12) for x in (v["M4"]["M4"],))
+    if m in ("M1", "M2"):
+        return (round(v["M1"], 9), round(v["M2"], 9)) if m == "M1" else round(v["M2"], 9)
+    if m == "M5":
+        return round(v["M5"]["M5"], 12) if v["M5"]["M5"] is not None else None
+    return round(v[m], 12) if v[m] is not None else None
+
+
+def tied_best(m, cands, selected):
+    k = score_key(m, cands[selected])
+    return [c for c in cands if score_key(m, cands[c]) == k]
+
+
 M3_EXPECTED = {"scnr_narrow": {"label"}, "scnr_wide": {"label"}, "shape_range": {"target"},
                "shape_doppler": {"target"}, "label_stochastic": {"label"}, "support_stratified": {"coverage"},
                "combined_moderate": {"label", "target", "coverage"}}
@@ -401,13 +419,15 @@ def mechanism_match(finalist, cid, cand):
     name = cid.split(":")[1]
     if EXPECTED_BLOCKS[name] is None:
         return None
+    # only risks above zero count: a block at zero risk is no diagnosis (bug fix after the freeze, note)
     if finalist in ("M4", "M6"):
-        return bool(set(cand["M4"]["top_blocks"]) & EXPECTED_BLOCKS[name])
+        top = [b for b in cand["M4"]["top_blocks"] if (cand["M4"]["blocks"][b]["risk"] or 0) > 0]
+        return bool(set(top) & EXPECTED_BLOCKS[name])
     if finalist == "M3":
-        comps = {k: v["risk"] for k, v in cand["M3"]["components"].items() if v["risk"] is not None}
+        comps = {k: v["risk"] for k, v in cand["M3"]["components"].items() if v["risk"] is not None and v["risk"] > 0}
         top = sorted(comps, key=lambda k: -comps[k])[:2]
         return bool(set(top) & M3_EXPECTED[name])
-    sides = {k: cand["M5"][k] or 0.0 for k in ("fn_risk", "fp_risk", "stratum_risk")}
+    sides = {k: cand["M5"][k] for k in ("fn_risk", "fp_risk", "stratum_risk") if (cand["M5"][k] or 0) > 0}
     top = set(sorted(sides, key=lambda k: -sides[k])[:2])
     return bool(top & ({"stratum_risk"} if name == "support_stratified" else {"fn_risk", "fp_risk"}))
 
@@ -438,6 +458,10 @@ def report(a):
            "methods": {}}
     for m in METHODS:
         out["methods"][m] = method_eval(prim["orders"][m], test, noise, names)
+        tied = tied_best(m, prim["candidates"], prim["selected"][m])
+        out["methods"][m]["tied_best"] = tied
+        out["methods"][m]["expected_regret_over_ties"] = float(test[oracle] - np.mean([test[c] for c in tied]))
+        out["methods"][m]["within_noise_share_over_ties"] = float(np.mean([test[c] >= test[oracle] - noise for c in tied]))
     vo = out["val_oracle"]
     out["methods"]["val_oracle"] = {"selected": vo, "selected_ap": test[vo], "regret": test[oracle] - test[vo],
                                     "within_noise": bool(test[vo] >= test[oracle] - noise)}
@@ -446,6 +470,7 @@ def report(a):
     for c in names:
         top = prim["candidates"][c]["M4"]["top_blocks"]
         exp = EXPECTED_BLOCKS[c.split(":")[1]]
+        top = [b for b in top if (prim["candidates"][c]["M4"]["blocks"][b]["risk"] or 0) > 0]
         diag[c] = {"top_blocks": [MECH[b] for b in top], "diagnosis": prim["candidates"][c]["M4"]["diagnosis"],
                    "expected": None if exp is None else sorted(MECH[b] for b in exp),
                    "match": None if exp is None else bool(set(top) & exp),

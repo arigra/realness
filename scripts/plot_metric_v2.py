@@ -19,7 +19,7 @@ import numpy as np
 
 OUT = Path("results/metric_v2/figures")
 P = Path("results/metric_v2/prospective")
-S1, S2, S3 = "#2a78d6", "#eb6834", "#1baf7a"
+S1, S2, S3, S4 = "#2a78d6", "#eb6834", "#1baf7a", "#eda100"
 INK, INK2, GRID, SURF = "#0b0b0b", "#52514e", "#e4e3df", "#fcfcfb"
 DATASETS = ("carrada", "raddet")
 METHODS = ("global", "M1", "M2", "M3", "M4", "M5", "M6", "proxy")
@@ -41,7 +41,8 @@ def short(c):
 
 
 def prospective(reps):
-    fig, axes = plt.subplots(1, len(reps), figsize=(5.2 * len(reps), 3.8), squeeze=False)
+    fig, axes = plt.subplots(1, len(reps), figsize=(5.6 * len(reps), 3.9), squeeze=False,
+                             gridspec_kw={"wspace": 0.45})
     for ax, (ds, r) in zip(axes[0], reps.items()):
         names = sorted(r["test_ap2"], key=lambda c: -r["test_ap2"][c])
         sel = json.loads((P / f"{ds}_runs.json").read_text())["runs"]
@@ -58,9 +59,9 @@ def prospective(reps):
                 ax.text(hi[k] + 0.006, k, " ".join(who), va="center", fontsize=7.5, color=INK)
         ax.set_yticks(y, [short(c) for c in names])
         ax.invert_yaxis()
-        ax.set_xlabel("real-test AP@2 (synthetic-only, mean of 3 seeds; bars: seed range)")
-        ax.set_title(f"{ds.upper()}: bank v2 (prospective). Gray band: within noise of the oracle",
-                     fontsize=9, loc="left", color=INK)
+        ax.set_xlabel("real-test AP@2, synthetic-only (mean of 3 seeds; whiskers: seed range;\n"
+                      "gray: within seed noise of the best); labels: methods that selected it")
+        ax.set_title(f"{ds.upper()} bank v2: PROSPECTIVE result", fontsize=9, loc="left", color=INK)
         ax.set_xlim(0, max(hi) * 1.35)
     save(fig, "prospective")
 
@@ -68,12 +69,13 @@ def prospective(reps):
 def risk_profile(sels):
     blocks = ["A", "B", "C", "D", "E", "F"]
     labels = ["detect.", "label", "morph.", "support", "hard neg.", "process.", "M5 FN", "M5 FP"]
-    fig, axes = plt.subplots(1, len(sels), figsize=(5.0 * len(sels), 3.6), squeeze=False)
+    fig, axes = plt.subplots(1, len(sels), figsize=(5.8 * len(sels), 3.6), squeeze=False,
+                             gridspec_kw={"wspace": 0.55})
     for ax, (ds, s) in zip(axes[0], sels.items()):
         prim = s["references"]["10_0"]["candidates"]
         names = list(prim)
         M = np.array([[prim[c]["M4"]["blocks"][b]["risk"] if prim[c]["M4"]["blocks"][b]["risk"] is not None else np.nan
-                       for b in blocks] + [prim[c]["M5"]["fn_risk"] or np.nan, prim[c]["M5"]["fp_risk"] or np.nan]
+                       for b in blocks] + [np.nan if prim[c]["M5"][k] is None else prim[c]["M5"][k] for k in ("fn_risk", "fp_risk")]
                       for c in names], dtype=float)
         im = ax.imshow(M, cmap="Blues", vmin=0, vmax=1, aspect="auto")
         for i in range(M.shape[0]):
@@ -90,10 +92,11 @@ def risk_profile(sels):
 
 
 def stability(reps):
-    fig, axes = plt.subplots(1, len(reps), figsize=(4.6 * len(reps), 3.2), squeeze=False)
+    fig, axes = plt.subplots(1, len(reps), figsize=(5.0 * len(reps), 3.3), squeeze=False,
+                             gridspec_kw={"wspace": 0.4})
     for ax, (ds, r) in zip(axes[0], reps.items()):
         fin = r["finalist"]
-        for m, col, mk in ((fin, S1, "o"), ("proxy", S2, "s"), ("global", S3, "^")):
+        for m, col, mk in ((fin, S1, "o"), ("proxy", S2, "s"), ("global", S3, "^"), ("M4", S4, "D")):
             b = r["budgets"][m]["mean_regret_by_budget"]
             xs = [5, 10, 20, 50]
             ax.plot(xs, [b[str(x)] if str(x) in b else b[x] for x in xs], color=col, marker=mk, lw=2, ms=6,
@@ -104,8 +107,8 @@ def stability(reps):
         ax.set_xscale("log")
         ax.set_xticks([5, 10, 20, 50], ["5", "10", "20", "50"])
         ax.set_xlabel("real training sequences in the reference")
-        ax.set_ylabel("test regret (mean over 3 subsets)")
-        ax.set_title(f"{ds.upper()}: selection vs reference size (gray: within noise)", fontsize=9, loc="left")
+        ax.set_ylabel("test regret (mean over 3 subsets;\ngray: within seed noise)")
+        ax.set_title(f"{ds.upper()}: selection vs reference size", fontsize=9, loc="left")
         ax.legend(frameon=False, fontsize=7.5)
     save(fig, "stability")
 
@@ -120,8 +123,11 @@ def development(dev):
             ("leave one family out (mean over families)", lambda d, m: prim["lofo"][d]["summary"][m]["regret"]))):
         x = np.arange(len(methods))
         for k, (d, col) in enumerate(zip(radars, (S1, S2, S3))):
-            ax.bar(x + (k - 1) * 0.27, [get(d, m) for m in methods], width=0.25, color=col, edgecolor=SURF,
-                   linewidth=1, label=d.upper())
+            v = [get(d, m) for m in methods]
+            ax.bar(x + (k - 1) * 0.27, v, width=0.25, color=col, edgecolor=SURF, linewidth=1, label=d.upper())
+            for i, y in enumerate(v):
+                if y == 0:
+                    ax.text(x[i] + (k - 1) * 0.27, 0.001, "0", ha="center", va="bottom", fontsize=6.5, color=INK2)
         ax.set_xticks(x, [m.replace("_v1", "") for m in methods], rotation=30)
         ax.set_ylabel("val-AP@2 regret")
         ax.set_title(f"DEVELOPMENT (val AP): {title}", fontsize=9, loc="left")
