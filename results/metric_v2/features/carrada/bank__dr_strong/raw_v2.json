@@ -1,0 +1,91 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": true,
+  "command": "scripts/build_metric_v2_features.py --dataset carrada --candidates all --part 2/4",
+  "written": "2026-11-07T06:56:11",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "candidate": {
+  "dataset": "carrada",
+  "candidate": "bank:dr_strong",
+  "suite": "bank",
+  "version": "dr_strong",
+  "family": "bank",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/carrada/bank_dr_strong",
+  "usable": false,
+  "entries": [],
+  "spec": {
+   "blur": [
+    1.0,
+    1.5
+   ],
+   "tail": [
+    0.0,
+    2.0
+   ],
+   "target_db": [
+    3.0,
+    9.0
+   ],
+   "confusers": [
+    0.75,
+    1.5
+   ],
+   "micro": [
+    0.75,
+    1.0
+   ]
+  },
+  "template_excluded_sequences": [
+   0,
+   12,
+   24,
+   37,
+   49
+  ]
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "2dd2ffaae591",
+ "seconds": 12.659098148345947
+}

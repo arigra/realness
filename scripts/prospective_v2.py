@@ -210,6 +210,8 @@ def _boot_draw(draw):
     from src.utility_score_v2 import lex_rank, m3, m4
     S = _BOOT
     r1, r2 = v1b.resample(S["real1"], draw), v1b.resample(S["real2"], draw)
+    if len(r2["objects"]["seq"]) < 5:
+        return None                         # a draw of (nearly) label-free sequences: no reference
     med = float(np.median(r2["objects"]["range_m"]))
     X1, X4, M5, G = [], [], [], []
     for c1, c2 in zip(S["t1"], S["t2"]):
@@ -235,7 +237,7 @@ def _boot_draw(draw):
     return v, {m: select_order(m, risk, det, S["names"])[0] for m in v}
 
 
-def bootstrap(F_dev, cal, dataset, bank, ref, n_boot, seed=0, workers=8):
+def bootstrap(F_dev, cal, dataset, bank, ref, n_boot, seed=0, workers=6):
     """Sequence bootstrap of the reference (resampled with replacement; a repeated sequence keeps its index),
     calibration fixed: interval of every selector's value per candidate and how often each is selected."""
     import multiprocessing as mp
@@ -252,7 +254,10 @@ def bootstrap(F_dev, cal, dataset, bank, ref, n_boot, seed=0, workers=8):
     draws = [g.choice(seqs, size=len(seqs), replace=True) for _ in range(n_boot)]
     with mp.get_context("fork").Pool(workers) as pool:
         res = pool.map(_boot_draw, draws)
-    out = {"n_boot": n_boot, "reference_sequences": seqs.tolist(), "intervals": {}, "selection_frequency": {}}
+    res = [r for r in res if r is not None]
+    out = {"n_boot": n_boot, "n_valid": len(res), "reference_sequences": seqs.tolist(), "intervals": {},
+           "selection_frequency": {}}
+    n_boot = len(res)
     for m in res[0][0]:
         V = np.asarray([r[0][m] for r in res], float)
         out["intervals"][m] = {c: [_j(np.nanpercentile(V[:, k], 2.5)), _j(np.nanpercentile(V[:, k], 97.5))]

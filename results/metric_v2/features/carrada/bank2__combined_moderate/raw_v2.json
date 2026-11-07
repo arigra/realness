@@ -1,0 +1,119 @@
+{
+ "provenance": {
+  "commit": "fd6c6b5eacce66dce6b7d45f96d118eb3305b424",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset carrada --candidates bank2",
+  "written": "2026-11-07T07:04:20",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "candidate": {
+  "dataset": "carrada",
+  "candidate": "bank2:combined_moderate",
+  "suite": "bank2",
+  "version": "combined_moderate",
+  "family": "bank2",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/carrada/bank2_combined_moderate",
+  "usable": false,
+  "entries": [],
+  "spec": {
+   "target_db": [
+    -3.0,
+    3.0
+   ],
+   "static_minus_target_db": [
+    -2.0,
+    2.0
+   ],
+   "blur_r": [
+    1.0,
+    1.5
+   ],
+   "tail": [
+    0.0,
+    2.0
+   ],
+   "scenes": "stratified"
+  },
+  "primary_reference_sequences": [
+   0,
+   5,
+   11,
+   16,
+   22,
+   27,
+   33,
+   38,
+   44,
+   49
+  ],
+  "render_info": {
+   "median_range_bin": 94.5,
+   "scene_strata_share": {
+    "0": 0.6185185185185185,
+    "1": 0.040740740740740744,
+    "2": 0.34074074074074073,
+    "3": 0.0
+   },
+   "expected_object_strata_share": {
+    "0": 0.4336183894844806,
+    "1": 0.2225093477465176,
+    "2": 0.3438722627690022,
+    "3": 0.0
+   },
+   "empty_scene_share": 0.445,
+   "generated": {
+    "median_range_bin": 94.5,
+    "n_labels": 1298,
+    "share": {
+     "0": 0.5416024653312789,
+     "1": 0.20261941448382126,
+     "2": 0.25577812018489987,
+     "3": 0.0
+    }
+   }
+  }
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "2dd2ffaae591",
+ "seconds": 8.573566436767578
+}

@@ -1,0 +1,50 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": true,
+  "command": "scripts/build_metric_v2_features.py --dataset radial --candidates all --part 2/5",
+  "written": "2026-11-07T06:46:26",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "cache": "data/radial_fold0_n50",
+ "split": "train",
+ "n_sequences": 50,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "e2c38e3e511e",
+ "seconds": 30.721104383468628
+}

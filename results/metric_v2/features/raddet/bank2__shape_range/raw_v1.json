@@ -1,0 +1,109 @@
+{
+ "provenance": {
+  "commit": "fd6c6b5eacce66dce6b7d45f96d118eb3305b424",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset raddet --candidates bank2",
+  "written": "2026-11-07T07:04:56",
+  "host": "hpc-node3"
+ },
+ "candidate": {
+  "dataset": "raddet",
+  "candidate": "bank2:shape_range",
+  "suite": "bank2",
+  "version": "shape_range",
+  "family": "bank2",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/raddet/bank2_shape_range",
+  "usable": false,
+  "entries": [],
+  "spec": {
+   "blur_r": [
+    1.0,
+    2.5
+   ],
+   "tail": [
+    0.0,
+    4.0
+   ]
+  },
+  "primary_reference_sequences": [
+   0,
+   5,
+   11,
+   16,
+   22,
+   27,
+   33,
+   38,
+   44,
+   49
+  ],
+  "render_info": {
+   "generated": {
+    "median_range_bin": 127.25,
+    "n_labels": 4489,
+    "share": {
+     "0": 0.4301626197371352,
+     "1": 0.09467587435954555,
+     "2": 0.437291156159501,
+     "3": 0.03787034974381822
+    }
+   }
+  }
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "ba8a6fe5be9a",
+ "seconds": 22.489312410354614
+}

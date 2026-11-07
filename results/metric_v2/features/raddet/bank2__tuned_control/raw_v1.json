@@ -1,0 +1,91 @@
+{
+ "provenance": {
+  "commit": "fd6c6b5eacce66dce6b7d45f96d118eb3305b424",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset raddet --candidates bank2",
+  "written": "2026-11-07T07:02:26",
+  "host": "hpc-node3"
+ },
+ "candidate": {
+  "dataset": "raddet",
+  "candidate": "bank2:tuned_control",
+  "suite": "bank2",
+  "version": "tuned_control",
+  "family": "bank2",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/raddet/best",
+  "usable": false,
+  "entries": [],
+  "spec": {},
+  "primary_reference_sequences": [
+   0,
+   5,
+   11,
+   16,
+   22,
+   27,
+   33,
+   38,
+   44,
+   49
+  ],
+  "render_info": {
+   "note": "the best tuned simulator's cache, unchanged"
+  }
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "ba8a6fe5be9a",
+ "seconds": 22.01852035522461
+}

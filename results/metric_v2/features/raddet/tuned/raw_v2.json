@@ -1,0 +1,161 @@
+{
+ "provenance": {
+  "commit": "06eb739500315ff09779c42521338f5a06691a0d",
+  "dirty": true,
+  "command": "scripts/build_metric_v2_features.py --dataset raddet --candidates all --part 3/4",
+  "written": "2026-11-07T06:47:10",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "candidate": {
+  "dataset": "raddet",
+  "candidate": "tuned",
+  "suite": "sim2",
+  "version": "all-clutter_profile",
+  "family": "natural",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "result_path": "results/sim2_raddet_runs.json",
+  "has_test_ap": true,
+  "cache": "data/tuned/raddet/best",
+  "entries": [
+   {
+    "suite": "sim2",
+    "version": "all-clutter_profile",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/sim2_raddet_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "study2",
+    "version": "clean",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/study2_raddet_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "study2b",
+    "version": "clean",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/study2b_raddet_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "budget",
+    "version": "clean",
+    "setting": "mix",
+    "real_n": 10,
+    "real_n_mix": 10,
+    "result_path": "results/budget_raddet_real10_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "budget",
+    "version": "clean",
+    "setting": "mix",
+    "real_n": 1,
+    "real_n_mix": 1,
+    "result_path": "results/budget_raddet_real1_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "budget",
+    "version": "clean",
+    "setting": "mix",
+    "real_n": 25,
+    "real_n_mix": 25,
+    "result_path": "results/budget_raddet_real25_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "budget",
+    "version": "clean",
+    "setting": "mix",
+    "real_n": 50,
+    "real_n_mix": 50,
+    "result_path": "results/budget_raddet_real50_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   },
+   {
+    "suite": "budget",
+    "version": "clean",
+    "setting": "mix",
+    "real_n": 5,
+    "real_n_mix": 5,
+    "result_path": "results/budget_raddet_real5_runs.json",
+    "n_seeds": 3,
+    "has_val": true,
+    "real_cache": "data/raddet_scenesplit",
+    "usable": true
+   }
+  ],
+  "usable": true
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "e9f134fbf80c",
+ "seconds": 18.17339777946472
+}

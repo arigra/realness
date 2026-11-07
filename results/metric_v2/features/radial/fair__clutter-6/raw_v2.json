@@ -1,0 +1,89 @@
+{
+ "provenance": {
+  "commit": "fd6c6b5eacce66dce6b7d45f96d118eb3305b424",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset radial --candidates all --part 4/6",
+  "written": "2026-11-07T07:03:26",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "candidate": {
+  "dataset": "radial",
+  "candidate": "fair:clutter-6",
+  "suite": "fair",
+  "version": "clutter-6",
+  "family": "clutter-",
+  "level": -6.0,
+  "base": "spec",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "result_path": "results/fair_radial_runs.json",
+  "has_test_ap": true,
+  "cache": "data/radial_damage/clutter-6",
+  "entries": [
+   {
+    "suite": "fair",
+    "version": "clutter-6",
+    "setting": "only",
+    "real_n": null,
+    "real_n_mix": null,
+    "result_path": "results/fair_radial_runs.json",
+    "n_seeds": 3,
+    "has_val": false,
+    "real_cache": "data/radial_fold0_n50",
+    "usable": true
+   },
+   {
+    "suite": "fair",
+    "version": "clutter-6",
+    "setting": "mix",
+    "real_n": null,
+    "real_n_mix": 50,
+    "result_path": "results/fair_radial_runs.json",
+    "n_seeds": 3,
+    "has_val": false,
+    "real_cache": "data/radial_fold0_n50",
+    "usable": true
+   }
+  ],
+  "usable": true
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "e2c38e3e511e",
+ "seconds": 44.62270188331604
+}

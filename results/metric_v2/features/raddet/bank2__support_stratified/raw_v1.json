@@ -1,0 +1,116 @@
+{
+ "provenance": {
+  "commit": "83f3c08b4989957995e2e4a84eca09041fb4b80e",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset raddet --candidates bank2",
+  "written": "2026-11-07T07:07:29",
+  "host": "hpc-node3"
+ },
+ "candidate": {
+  "dataset": "raddet",
+  "candidate": "bank2:support_stratified",
+  "suite": "bank2",
+  "version": "support_stratified",
+  "family": "bank2",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/raddet/bank2_support_stratified",
+  "usable": false,
+  "entries": [],
+  "spec": {
+   "scenes": "stratified"
+  },
+  "primary_reference_sequences": [
+   0,
+   5,
+   11,
+   16,
+   22,
+   27,
+   33,
+   38,
+   44,
+   49
+  ],
+  "render_info": {
+   "median_range_bin": 127.25,
+   "scene_strata_share": {
+    "0": 0.3852813852813853,
+    "1": 0.15670995670995672,
+    "2": 0.42337662337662335,
+    "3": 0.03463203463203463
+   },
+   "expected_object_strata_share": {
+    "0": 0.3284227177150075,
+    "1": 0.22796536411225693,
+    "2": 0.36114974986411225,
+    "3": 0.08246216830861987
+   },
+   "empty_scene_share": 0.0,
+   "generated": {
+    "median_range_bin": 127.25,
+    "n_labels": 4690,
+    "share": {
+     "0": 0.3927505330490405,
+     "1": 0.10063965884861407,
+     "2": 0.4166311300639659,
+     "3": 0.08997867803837953
+    }
+   }
+  }
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "n_bands": 32,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "k_offset": 4,
+  "radii": [
+   2,
+   4,
+   8
+  ],
+  "k_r": 12,
+  "k_d": 8,
+  "drops": [
+   1,
+   2,
+   4
+  ],
+  "unlabelled_radius": 4,
+  "quantiles": [
+   10,
+   25,
+   50
+  ],
+  "primary_q": 25,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_config_hash": "b180f70d1fec",
+ "feature_key": "ba8a6fe5be9a",
+ "seconds": 21.03841733932495
+}

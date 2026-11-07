@@ -35,8 +35,14 @@ elif [ "$STAGE" = "bank" ]; then
         bash -c 'for d in carrada raddet; do python3 scripts/prospective_v2.py proxy --dataset $d; done # metric_v2_proxy'
 elif [ "$STAGE" = "post" ]; then
     git log --format=%s | grep -q "bank-v2 freeze" || { echo "no freeze commit: refusing to train"; exit 1; }
-    running "[m]etric_v2_gpu_post" || launch "GPU: train carrada, raddet; augment raddet" logs/metric_v2_gpu_post.log \
-        bash -c 'python3 scripts/prospective_v2.py train --dataset carrada; python3 scripts/prospective_v2.py train --dataset raddet; python3 scripts/prospective_v2.py augment --dataset raddet; echo done # metric_v2_gpu_post'
+    running "[p]rospective_v2.py train --dataset carrada" ||
+        launch "train carrada" logs/metric_v2_train_carrada.log python3 scripts/prospective_v2.py train --dataset carrada
+    running "[p]rospective_v2.py train --dataset raddet" ||
+        launch "train raddet" logs/metric_v2_train_raddet.log python3 scripts/prospective_v2.py train --dataset raddet
+    running "[p]rospective_v2.py augment --dataset raddet --budgets 5" ||
+        launch "augment raddet 5" logs/metric_v2_augment_raddet5.log python3 scripts/prospective_v2.py augment --dataset raddet --budgets 5
+    running "[p]rospective_v2.py augment --dataset raddet --budgets 10" ||
+        launch "augment raddet 10" logs/metric_v2_augment_raddet10.log python3 scripts/prospective_v2.py augment --dataset raddet --budgets 10
 else
     echo "usage: $0 pre|bank|post [--dry]"
 fi

@@ -1083,7 +1083,8 @@ Interpret the possible outcomes as follows:
 Every outcome is reportable if this protocol remains frozen.
 - Phase D-E: M5 (src/utility_metric_v2.m5) and M6 (PairwiseRanker, family-balanced pair weights, saved
   weights) implemented and unit-tested (tests/test_utility_metric_v2.py, 22 tests).
-- Phase F done 2026-11-07 07:40 (results/metric_v2/scores/development.json, results/metric_v2/finalist.json).
+- Phase G (bank-v2 freeze) committed 2026-11-07 ~07:50: renders, features, proxy (3 seeds), scores, rankings, selections; freeze-check: no bank-v2 full-detector result.
+- Phase F done 2026-11-07 07:20 (results/metric_v2/scores/development.json, results/metric_v2/finalist.json).
 
 ## Results: Phase F development (validation AP only; DEVELOPMENT evidence, not the test)
 Development candidates with val AP: CARRADA 82, RADDet 82, RADIal 75 (natural: 14, 14, 7); val seed noise
@@ -1108,3 +1109,34 @@ signal is weak and reference-dependent; (b) M4, the radar-physics score, general
 picks RADDet's worst first-bank candidate, hybrid_x1), while within a radar (LOFO) M1, M3, M4 and M6 are all
 close to each other and to the proxy; (c) on the all-candidate stress test every metric except the proxy is
 near or worse than random on CARRADA and RADIal.
+
+## Bank-v2 freeze (Phase G) — 2026-11-07, before any bank-v2 full-detector training
+Rendered: results/metric_v2/bank_v2.json (caches data/tuned/<dataset>/bank2_*, per-sequence draws in each
+sequence's meta; tuned_control = data/tuned/<dataset>/best). Features: results/metric_v2/features/<dataset>/bank2__*.
+Proxy: 3 seeds per candidate, results/metric_v2/prospective/<dataset>_proxy.json. Scores, complete rankings at
+every reference, calibration (all development candidates of the three radars; leave-one-radar-out calibration as
+secondary), sequence-bootstrap intervals (100 draws at the primary reference, 20 elsewhere; CARRADA 99 valid at
+10/0: one draw had no labels): results/metric_v2/prospective/<dataset>_selection.json.
+
+**Selections at the primary reference (10 real sequences, subset 0)**; "tied" = candidates with exactly the
+selected one's score, the pick then made by the method's preregistered tie rule (finally the name); bootstrap =
+share of reference resamples in which the method picks the same candidate:
+
+| method | CARRADA | RADDet |
+|---|---|---|
+| global | shape_range (1.00) | shape_range (0.98) |
+| M1 | scnr_narrow (tied 5; 0.08) | combined_moderate (tied 7; 0.62) |
+| M2 | scnr_narrow (tied 5; 0.11) | combined_moderate (tied 7; 0.58) |
+| **M3 (finalist)** | **label_stochastic (tied 6; 0.44)** | **combined_moderate (tied 8; 0.73)** |
+| M4 | scnr_narrow (tied 5; 0.04) | scnr_narrow (tied 5; 0.06) |
+| M5 | shape_doppler (0.33) | label_stochastic (0.04) |
+| M6 | shape_doppler (0.19) | combined_moderate (0.11) |
+| proxy (3 seeds) | shape_range | combined_moderate |
+
+Written before any outcome is known: **the tolerance scores barely separate this bank.** On RADDet every candidate
+has M3 = 0 (all probes' 80th-percentile component risks inside the safe ranges), so M3's pick is the
+alphabetically first name; on CARRADA six of eight tie at 0, broken by name. M1 and M4 tie 5-7 candidates at 0
+as well. The prospective test of M3 is therefore close to a test of its tie rule. The 80th-percentile aggregation
+also hides single-probe failures (CARRADA label_stochastic: M1 1.3, M4 label-task block 0.26 - M3 0). The report
+gives the frozen picks as primary and, labelled secondary, each method's expected regret under a uniform choice
+among its tied best (the development rule). The proxy rates label_stochastic lowest on both radars (0.08 / 0.03).

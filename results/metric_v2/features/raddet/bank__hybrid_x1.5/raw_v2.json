@@ -1,0 +1,72 @@
+{
+ "provenance": {
+  "commit": "fd6c6b5eacce66dce6b7d45f96d118eb3305b424",
+  "dirty": false,
+  "command": "scripts/build_metric_v2_features.py --dataset raddet --candidates all --part 1/4",
+  "written": "2026-11-07T06:58:05",
+  "host": "hpc-node3"
+ },
+ "hardware": {
+  "host": "hpc-node3",
+  "gpu": "NVIDIA GeForce RTX 3090"
+ },
+ "candidate": {
+  "dataset": "raddet",
+  "candidate": "bank:hybrid_x1.5",
+  "suite": "bank",
+  "version": "hybrid_x1.5",
+  "family": "bank",
+  "level": null,
+  "base": "tuned",
+  "setting": "only",
+  "n_sim_sequences": 200,
+  "cache": "data/tuned/raddet/bank_hybrid_x1.5",
+  "usable": false,
+  "entries": [],
+  "spec": {
+   "template_scale": 1.5
+  },
+  "template_excluded_sequences": [
+   0,
+   12,
+   24,
+   37,
+   49
+  ]
+ },
+ "n_sequences": 200,
+ "feature_config": {
+  "version": 3,
+  "k_r": 12,
+  "k_d": 8,
+  "guard": 3,
+  "label_guard": 2,
+  "fp_score": 0.3,
+  "fp_radius": 4,
+  "n_neg_peaks": 3,
+  "peak_floor": 1.5,
+  "ridge_keep": 2,
+  "radars": {
+   "carrada": {
+    "range_res": 0.2,
+    "vel_res": 0.42,
+    "zero": 32,
+    "static": true
+   },
+   "raddet": {
+    "range_res": 0.1953125,
+    "vel_res": 0.4197,
+    "zero": 32,
+    "static": true
+   },
+   "radial": {
+    "range_res": 0.2,
+    "vel_res": 0.1,
+    "zero": 0,
+    "static": false
+   }
+  }
+ },
+ "feature_key": "e9f134fbf80c",
+ "seconds": 14.084539651870728
+}
