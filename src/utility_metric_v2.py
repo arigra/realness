@@ -25,14 +25,14 @@ import numpy as np
 import torch
 
 from src.data import normalised
-from src.utility_metric import (PEAK_FLOOR, RADARS, _acorr_len, _run, _spectrum, energy_distance,
-                                local_maxima, row_prominence, wrap)
+from src.utility_metric import (PEAK_FLOOR, RADARS, _acorr_len, _run, _spectrum, _window, local_maxima,
+                                row_prominence, wrap)
 
 K_R, K_D = 12, 8            # patch half sizes (25 x 17)
 GUARD, LABEL_GUARD = 3, 2   # background exclusions (Euclidean cells)
 FP_SCORE, FP_RADIUS = 0.3, 4
 N_NEG_PEAKS = 3
-VERSION = 1
+VERSION = 2
 
 
 def config():
@@ -196,7 +196,10 @@ def raw_v2(pool, radar, dets):
                 if len(lab) and np.hypot(lab[:, 0] - r, wrap(lab[:, 1] - d, n_d)).min() <= FP_RADIUS:
                     continue
                 n_fp += 1
-                negs.append(neg(1, float(sc), int(r), int(d) % n_d))
+                # measured at the strongest cell within +/-1 of the detection (as v1)
+                w, o_r, o_d = _window(x, int(r), int(d) % n_d, 1, 1)
+                i = np.unravel_index(int(np.argmax(w)), w.shape)
+                negs.append(neg(1, float(sc), int(r) + int(o_r[i[0]]), (int(d) + int(o_d[i[1]])) % n_d))
             frames.append({"seq": s, "frame": t, "n_labels": len(labels), "n_fp": float(n_fp)})
 
     def table(rows, keys):
@@ -275,16 +278,21 @@ NEG_FEATURES = ("range_m", "speed", "cfar_db", "width_r6_m", "width_d6_mps", "ne
 
 
 def _feat(t, keys, m=None):
+    """Feature matrix of a table (NaN kept: morphology is NaN where the patch is cut at a range edge)."""
     X = np.column_stack([t[k] for k in keys]) if len(t["seq"]) else np.zeros((0, len(keys)))
-    if m is not None:
-        X = X[m]
-    return np.nan_to_num(X, nan=0.0)
+    return X if m is None else X[m]
 
 
 def _std(X, ref):
-    mu, sd = ref.mean(0) if len(ref) else 0, ref.std(0) if len(ref) else 1
-    sd = np.where(sd > 0, sd, 1.0)
-    return np.clip((X - mu) / sd, -5, 5)
+    """Standardise by ref's mean / sd (NaN-aware), clip to [-5, 5]; an unmeasured value is put at the
+    reference mean (0), so a cut patch is neither near nor far by itself."""
+    if len(ref) and np.isfinite(ref).any():
+        with np.errstate(all="ignore"):
+            mu, sd = np.nanmean(ref, 0), np.nanstd(ref, 0)
+    else:
+        mu, sd = np.zeros(X.shape[1]), np.ones(X.shape[1])
+    mu, sd = np.where(np.isfinite(mu), mu, 0.0), np.where(np.isfinite(sd) & (sd > 0), sd, 1.0)
+    return np.nan_to_num(np.clip((X - mu) / sd, -5, 5), nan=0.0)
 
 
 def m5(cand, ref, median_range, low_n=20):

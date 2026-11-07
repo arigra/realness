@@ -67,7 +67,22 @@ def m3(pen_row, names):
     mx = float(risks.max()) if len(risks) else np.nan
     mean = float(risks.mean()) if len(risks) else np.nan
     dom = max((g for g in comps if np.isfinite(comps[g]["risk"])), key=lambda g: comps[g]["risk"], default=None)
-    return {"max": mx, "mean": mean, "scalar": mx + 1e-4 * mean, "dominant": dom, "components": comps}
+    unmeasured = [g for g, c in comps.items() if c["n_measured"] == 0]
+    return {"max": mx, "mean": mean, "key": (_inf(mx), _inf(mean)), "dominant": dom, "components": comps,
+            "unmeasured_components": unmeasured}
+
+
+def _inf(x):
+    """Sort value: unmeasured (NaN) ranks last."""
+    return float(x) if x is not None and np.isfinite(x) else np.inf
+
+
+def lex_rank(keys):
+    """Dense rank (0 = best) of sort-key tuples: equal tuples share a rank, so evaluate_set's tie rule
+    (uniform choice among the tied best) applies to exact ties only."""
+    order = sorted(set(keys))
+    pos = {k: i for i, k in enumerate(order)}
+    return np.asarray([pos[k] for k in keys], dtype=np.float64)
 
 
 # ------------------------------------------------------------------ M4
@@ -96,9 +111,9 @@ def m4(pen_row, names):
     order = sorted(BLOCK_NAMES, key=lambda b: -(blocks[b]["risk"] if np.isfinite(blocks[b]["risk"]) else -1))
     diag = [f"{'high' if blocks[b]['risk'] >= 0.5 else 'some'} {BLOCK_NAMES[b]} risk: {blocks[b]['driver']}"
             for b in order[:2] if np.isfinite(blocks[b]["risk"]) and blocks[b]["risk"] > 0]
-    key = (total, float(np.nanmax(br)) if np.isfinite(br).any() else 0.0, br0[1], br0[0])
-    return {"M4": total, "scalar": total + 1e-6 * key[1] + 1e-8 * key[2] + 1e-10 * key[3], "blocks": blocks,
-            "top_blocks": order[:2], "diagnosis": diag}
+    # ties: lower maximum block risk, then label-task (B), then detectability (A); the name last (selection)
+    key = (total, float(np.nanmax(br)) if np.isfinite(br).any() else 0.0, float(br0[1]), float(br0[0]))
+    return {"M4": total, "key": key, "blocks": blocks, "top_blocks": order[:2], "diagnosis": diag}
 
 
 # ------------------------------------------------------------------ M6

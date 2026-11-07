@@ -106,11 +106,10 @@ def test_range_and_doppler_blur_widen_physical_widths():
 
 
 def test_range_tail_raises_far_extent():
-    def tail(x):
-        x = x.clone()
-        for k in range(1, 9):
-            x[30 + k, 8] += 12 * np.exp(-k / 4)
-        return x
+    from src.damage import range_tail
+
+    def tail(x):          # the Study 2b smear: power convolved away from the radar (src/damage.range_tail)
+        return 10 * torch.log10(range_tail(10 ** (x / 10), 2.0))
     plain = objects([item([(30, 8, 12, 1.0, 1.0)], [(30, 8)], noise=0.01)])
     tailed = objects([item([(30, 8, 12, 1.0, 1.0)], [(30, 8)], noise=0.01, extra=tail)])
     assert np.all(tailed["far6_m"] > plain["far6_m"]) and np.all(tailed["asym6_m"] > plain["asym6_m"])

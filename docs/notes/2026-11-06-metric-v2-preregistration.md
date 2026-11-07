@@ -133,6 +133,26 @@ fixed 5 and 10 real sequences of the budget study, 3 seeds. CARRADA's gate is St
 < 2 x 0.051 noise): CARRADA mixed bank-v2 training is not run, and the report says candidate choice is
 practically unimportant there at 5 sequences.
 
+## Causal feature checks (Phase C) — fixed 2026-11-07, before the check is run
+scripts/build_metric_v2_features.py --check: each controlled candidate vs the tuned simulator (same scene seeds),
+paired bootstrap over the 200 synthetic sequences (300 draws), 95% interval must exclude 0 in the stated
+direction. Reference for thresholds / strata / negatives: all 50 real training sequences.
+| candidate | feature (median over objects unless stated) | expected |
+|---|---|---|
+| study2:contrast-12 | cfar_db, cfar_z, visibility (share of labels whose strongest cell within 2 reaches the reference's q25 prominence) | down |
+| study2:noise+12 | cfar_db, cfar_z | down |
+| study2:rangeshift1 | off_r (strongest cell - label, range), capture_r2 | down |
+| study2:dopplershift1 | off_d, capture_r2 | down |
+| study2:blur2 | width_r6_m, width_d6_mps | up |
+| study2b:tail2 | far6_m, asym6_m | up |
+| study2:unrender90 | visibility, capture_r2 | down |
+| study2:extra50 | unlabelled target-like peaks off the ridge per frame (v1 tables) | up |
+| study2b:support100 | worst stratum undercoverage vs the reference | up |
+| study2b:confusers4 | fixed-detector false positives per frame | up |
+| study2b:confusers0 | share of real hard negatives uncovered by the candidate's negatives | up |
+A feature that fails is fixed before retrospective scoring or marked unmeasured (its probes are then dropped
+from M4 / M5), never declared irrelevant.
+
 ## Deviation log
 (empty)
 
