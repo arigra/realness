@@ -171,6 +171,17 @@ def instability(F, X, idx, budget):
         return np.nanmedian(dev.reshape(-1, stack.shape[-1]), axis=0)
 
 
+def m2_weights(P, ap):
+    """M2's NNLS (src/utility_score.nnls_weights, unchanged); if SciPy's default iteration cap (3 x columns) is
+    hit, the same problem is solved again with a larger cap."""
+    try:
+        return nnls_weights(P, ap)
+    except RuntimeError:          # the same problem (min ||A x - ap||, x >= 0) by bounded-variable least squares
+        from scipy.optimize import lsq_linear
+        A = np.column_stack([np.ones(len(P)), -P])
+        return lsq_linear(A, ap, bounds=(0, np.inf), method="bvls").x[1:]
+
+
 class Calibration:
     """Every calibrated selector fitted on development rows `dev` (bool mask) at one reference."""
 
@@ -181,7 +192,7 @@ class Calibration:
         X1, X4 = F.X1[ref], F.X4[ref]
         # M1 / M2: v1 code, unchanged
         self.tol1 = Tolerance().fit(X1[m], F.undamaged[m])
-        self.w2 = nnls_weights(self.tol1.penalties(X1[m]), F.val[m])
+        self.w2 = m2_weights(self.tol1.penalties(X1[m]), F.val[m])
         # M3: v1 probes, robust scale, weakest link
         self.inst3 = instability(F, F.X1, self.idx, ref[0])
         self.tol3 = RobustTolerance().fit(X1[m], F.undamaged[m], self.inst3)

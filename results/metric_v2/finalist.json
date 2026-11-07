@@ -1,0 +1,41 @@
+{
+ "provenance": {
+  "commit": "83f3c08b4989957995e2e4a84eca09041fb4b80e",
+  "dirty": true,
+  "command": "scripts/evaluate_metric_v2.py",
+  "written": "2026-11-07T07:17:29",
+  "host": "hpc-node3"
+ },
+ "reference": [
+  10,
+  0
+ ],
+ "outcome": "whole-val AP@2",
+ "feature_keys": {
+  "carrada": "2dd2ffaae591",
+  "raddet": "e9f134fbf80c",
+  "radial": "e2c38e3e511e"
+ },
+ "finalist": "M3",
+ "loro_natural_regret": {
+  "M3": 0.01513166024363266,
+  "M4": 0.14683739335505253,
+  "M5": 0.0347652253383961,
+  "M6": 0.08506656948486818
+ },
+ "loro_natural_pairwise": {
+  "M3": 0.5137096774193548,
+  "M4": 0.3961021505376345,
+  "M5": 0.668212365591398,
+  "M6": 0.5420698924731183
+ },
+ "lofo_regret": {
+  "M3": 0.028704359530617656,
+  "M4": 0.02393916983780553,
+  "M5": 0.08545988196777919,
+  "M6": 0.02194108349962451
+ },
+ "rule_trail": [
+  "(1) LORO natural regret: M3 0.0151, M4 0.1468, M5 0.0348, M6 0.0851; within 0.01 of the best: ['M3']"
+ ]
+}

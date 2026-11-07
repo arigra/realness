@@ -179,7 +179,10 @@ Every entry was made before any retrospective scoring of M3-M6 unless stated.
    label_prom / over_clutter), shape_* -> target, label_stochastic -> label, support_stratified -> coverage,
    combined_moderate -> any of label / target / coverage; M5's sides map as support_stratified -> stratum risk,
    every other mechanism -> FN or FP risk (its two largest of FN / FP / stratum).
-6. Clarifications of the text, not changes: visibility = the strongest cell within radius 2 reaches the 25th
+6. M2's NNLS (unchanged v1 code) hits SciPy's iteration cap in some leave-one-family-out calibrations (v1's 1e-3
+   scale floor makes penalties ~1e5); the identical problem is then solved by bounded-variable least squares
+   (scipy lsq_linear, bvls). Implementation only; M2 is not redefined.
+7. Clarifications of the text, not changes: visibility = the strongest cell within radius 2 reaches the 25th
    percentile of the reference labels' strongest-cell prominence; M5's real-real baseline = the nearest real
    example of the same kind (labelled targets for false negatives, negatives for false positives) in another
    reference sequence; leave-one-family-out calibrates on the same radar's other families (as v1), the held-out
@@ -1078,3 +1081,30 @@ Interpret the possible outcomes as follows:
 - **None beats global/random:** the few-label reference or current features cannot identify candidate utility reliably.
 
 Every outcome is reportable if this protocol remains frozen.
+- Phase D-E: M5 (src/utility_metric_v2.m5) and M6 (PairwiseRanker, family-balanced pair weights, saved
+  weights) implemented and unit-tested (tests/test_utility_metric_v2.py, 22 tests).
+- Phase F done 2026-11-07 07:40 (results/metric_v2/scores/development.json, results/metric_v2/finalist.json).
+
+## Results: Phase F development (validation AP only; DEVELOPMENT evidence, not the test)
+Development candidates with val AP: CARRADA 82, RADDet 82, RADIal 75 (natural: 14, 14, 7); val seed noise
+0.075 / 0.031 / 0.055. Primary reference (10 sequences, subset 0), regret in val AP@2 / pairwise accuracy:
+
+| | M1 | M2 | global | M3 | M4 | M5 | M6 | proxy (v1, dev only) | random |
+|---|---|---|---|---|---|---|---|---|---|
+| LORO natural CARRADA | 0.000/0.93 | 0.043/0.82 | 0.193/0.45 | **0.000**/0.65 | 0.070/0.59 | 0.048/0.80 | 0.048/0.72 | 0.000/0.90 | 0.122 |
+| LORO natural RADDet | 0.028/0.65 | 0.028/0.79 | 0.039/0.45 | 0.045/0.52 | 0.207/0.23 | 0.028/0.30 | 0.207/0.34 | 0.008/0.87 | 0.077 |
+| LORO natural RADIal | 0.117/0.38 | 0.117/0.38 | 0.174/0.38 | **0.000**/0.38 | 0.164/0.38 | 0.028/0.91 | 0.000/0.56 | 0.117/0.44 | 0.105 |
+| LORO all CARRADA | 0.353 | 0.162 | 0.193 | 0.468 | 0.206 | 0.224 | 0.140 | 0.000 | 0.207 |
+| LORO all RADDet | 0.066 | 0.066 | 0.077 | 0.083 | 0.298 | 0.223 | 0.298 | 0.018 | 0.127 |
+| LORO all RADIal | 0.294 | 0.312 | 0.058 | 0.399 | 0.085 | 0.354 | 0.112 | 0.060 | 0.274 |
+| LOFO CARRADA | 0.021 | 0.026 | 0.081 | 0.030 | 0.024 | 0.100 | 0.024 | 0.016 | 0.105 |
+| LOFO RADDet | 0.010 | 0.018 | 0.059 | 0.011 | 0.007 | 0.071 | 0.012 | 0.018 | 0.073 |
+| LOFO RADIal | 0.041 | 0.038 | 0.062 | 0.045 | 0.040 | 0.086 | 0.030 | 0.033 | 0.113 |
+
+**Finalist (frozen rule): M3_RTW**: mean LORO natural regret M3 0.015, M5 0.035, M6 0.085, M4 0.147 (rule step 1
+decides; no other step needed). Caveats written before bank v2: (a) at the primary reference M3 wins, but over all
+10 references its mean LORO natural regret is 0.083 vs random 0.101 and the v1 proxy 0.042: the development
+signal is weak and reference-dependent; (b) M4, the radar-physics score, generalises worst across radars (it
+picks RADDet's worst first-bank candidate, hybrid_x1), while within a radar (LOFO) M1, M3, M4 and M6 are all
+close to each other and to the proxy; (c) on the all-candidate stress test every metric except the proxy is
+near or worse than random on CARRADA and RADIal.
