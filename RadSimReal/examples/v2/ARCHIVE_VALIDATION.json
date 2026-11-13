@@ -1,0 +1,255 @@
+{
+  "date": "2026-11-10",
+  "all_passed": true,
+  "purpose": "fresh extraction and execution; no measured data or published accuracy claim",
+  "archive_crc_passed": true,
+  "saved_checkpoint_metrics_identical": true,
+  "saved_checkpoint_predictions_identical": true,
+  "verified_source_config_asset_sha256": {
+    "configs/assets/illustrative_sedan.obj": "41765d9133cdfcab87ba69bb430fdf2745deffe7f8db78cd703130717aa77a05",
+    "configs/assets/vehicle_assets.json": "8d126fd01f37e161272252aac3012ed43105b73b2070f96ece7407153261cba3",
+    "configs/cartesian_demo.yaml": "dd99a8b85ed7950d7ef7718177b56bdcceb221e172229b4206f47931cc32dead",
+    "configs/demo.yaml": "b6a76eb1d96e30b27d78ef188c282743d555f2aaacfef1313c23fe3ca29e78c5",
+    "configs/native_carrada_reference.json": "bfb3f21642596237b9dc1f3266b41c82c5146f63e1e2d3bea638683c3611e781",
+    "configs/native_raddet_reference.json": "afaa85df11ab3122535aa11758f6e927e41e74c59e98f25de7c95b2bc83a9512",
+    "configs/paper_protocol.json": "7c17e860088f7d4768a4be9af42db8f551537093a244962961f5241e450a9e75",
+    "docs/DETECTOR_SOURCE_LOCK.json": "8d436c9cefc09e41e9996002be2838565b29f4bf35d03ff49f4df821af25e52f",
+    "radsimreal/__init__.py": "0f2af0e60345f448b45dff41184ebee8f7f5a9409e42a8e8f0f813db1500528a",
+    "radsimreal/__main__.py": "19f07de3d1765a6803d4332ab1e67346381236f7769f47640e73849922394790",
+    "radsimreal/bev/__init__.py": "781068c6fce326ee2771a3a52fd305c5bd8616f22593aea3e5bf75d47557e12f",
+    "radsimreal/bev/cli.py": "a402437fa36f15e0bcff09f715417a0c8ed2bf7c55fce0bcc909b235121c465c",
+    "radsimreal/bev/evaluation.py": "2f706b7e4af8d9e7a2bff0a2bd9f1058b5330bc098d3904e30aa78e1b80f87dd",
+    "radsimreal/bev/geometry.py": "2f91c8870a7ebc0b7422920883480c499592395196ccfe215ade31bfcea0bf7c",
+    "radsimreal/bev/inference.py": "673774f9df1a038e7f8cb319081e099847bf3486643244244cb9d269295e0070",
+    "radsimreal/bev/losses.py": "376f3a603b7f091954631f3a97fde512861038cc85d59a465005c1653331b503",
+    "radsimreal/bev/models.py": "4cf89721c6aa10b1da191a6d2e69d53994f0080bff84cf60f51396a9ba334c4b",
+    "radsimreal/bev/pretrain.py": "da8e1666d2655f96631f0042310a214b4ddb5fa48b4721e14db43d12dec5ef38",
+    "radsimreal/bev/projection.py": "f0b5eca85d6a613d22189111bb63815bcf24b678cb42a38bd52d446fab4bdb7d",
+    "radsimreal/bev/rad_pretraining.py": "6f344d270aa1a112a7670837d7358d05f52655f2098d955b72b7ddee7797016a",
+    "radsimreal/bev/training.py": "f2c6910fce1b907a39c3d2ded9244ea584ac59cf025f7e7581d1435e04d13241",
+    "radsimreal/cli.py": "0c9ee0cc9c01d315db1631e8f219afd5546ccbaa11692f2f45d0935de9e4f544",
+    "radsimreal/config.py": "01e303ea5666b6074ba38c428a3c2815d7d956b8d329c90d65298930b5c181b1",
+    "radsimreal/datasets/__init__.py": "a7e477b581835b39fbec651a8fe25f79f3adb39c1801c1c8256cc149a5574299",
+    "radsimreal/datasets/bev_dataset.py": "e05e4a7311fe7deec072897d3147f667d23e342f6c57aeb53adf45cdf51ac6cb",
+    "radsimreal/datasets/external.py": "3cc5f797d541c75048cd87eb0eff3af6f57406fc72f855c027d5e6e5cb94f7e0",
+    "radsimreal/datasets/generation_v2.py": "d3ca32c5a1cc32d597a3de8a39f7abee08e928564b8791987f70f26ec582ed10",
+    "radsimreal/datasets/loader.py": "65e5a37c1d9dac43ed35ed308e7596dd0edaf76fa93806115e4283f74a88ddb9",
+    "radsimreal/datasets/protocol.py": "d6490417a8859a5b702f9d34f1bc5bc6af7d5167795b57a3694db6ec998c0207",
+    "radsimreal/datasets/synthetic.py": "9ee190900fe7214e312bf33d2a283eecc05d6035acb421b54fd762713ada70fd",
+    "radsimreal/evaluation/__init__.py": "917239c5c071d0012b7fac27bed2231afb243386e205efd7f6ed822aadd4ec6c",
+    "radsimreal/evaluation/metrics.py": "d187f228168cc63cc74de9295391b1d77df0b891889cfa9fe727c29b8c7b7ac6",
+    "radsimreal/evaluation/runner.py": "72f8ff7cdb413a38297a22e101d44e249fe2348beeb0a47422fd104fdb78f6e1",
+    "radsimreal/models/__init__.py": "a44f7b58abec644621f94f72ce71c2b57332a9908d5ecf6f40e3ef5d1bf01d83",
+    "radsimreal/models/inference.py": "556a3f1c9cf92cb3ef3b2508b0495f7ea77e274624f16bfe5d0691e628f4a99b",
+    "radsimreal/models/losses.py": "4f2093a3e485aec3ed6bf5f19e0a0e3287ffa3419647a36c22c28db1f8d94df6",
+    "radsimreal/models/unet.py": "3e5a229d503a65c9052962d267726f664d311170aea46a5b7b8b58143548f30d",
+    "radsimreal/native/__init__.py": "1b26ec020dd5e69f64539ad740499f36a9ab3fa014de1c637899f8a8166050f7",
+    "radsimreal/native/annotations.py": "bead154bdc529928a747dde16a89d2fb72d953e0467640b03b58d8f86170e229",
+    "radsimreal/native/calibration.py": "61b0ff0601d9f0242a5e84481e712735dae6a85bc0707b48ab47d83c1238ce3a",
+    "radsimreal/native/cli.py": "ca09a9b1fd99d8c20482c00286743635125d6a9d6148aacc9f46b6ff07775f29",
+    "radsimreal/native/export.py": "9e62b1d062769ecb7055bc130a72b50d3ec8a69b2c1b07cf41f88acd0c3ba364",
+    "radsimreal/native/manifest.py": "dd72766c8f28ac9d99e3e73a06620a0d59254610b95e94da3eafa233493220ef",
+    "radsimreal/native/profiles.py": "5ffa5fe6fcaa4350075234161c1f164f3898efaed51537e67b154356a9d9877e",
+    "radsimreal/native/readers.py": "793d78aff16751c74077019ee2ba565749faac783c383165d244642f2373a995",
+    "radsimreal/native/runner.py": "fa2697cdb952564f55c0b4b60f5e48758f0d0aee304e43132a2acd4ebd83af35",
+    "radsimreal/native/validation.py": "f2747f1776d50692dd9b85c3a354985fa7145319b3ab037e3a852fb02f26aca5",
+    "radsimreal/native/workflows.py": "e8538eaffc0ea30525939b59099e24b5ad7b37422e70544cd13f46d2a7bd857a",
+    "radsimreal/radar/__init__.py": "316a1f6b5b463c5485112f55eb9446fffaaf5ebaa1fd8a8ae0d69de670a23ca8",
+    "radsimreal/radar/coordinates.py": "a5f34244958cf674eae8e9ae5c9b9e109ecc2be39556e0748d15c43c37da8f6b",
+    "radsimreal/radar/formation.py": "f411ba7d28ef5e04c1724a422d4e2a43812104636b2688d1dcb4d75b9ea97b83",
+    "radsimreal/radar/noise.py": "6379e1e57cba2d49e8958094c9a9096a306149497835ac09d9427fc516c214b0",
+    "radsimreal/radar/psf.py": "d09553d0ae9fb09277b845263b2f10365ce233b50994f079b92d7297304b620d",
+    "radsimreal/simulation/__init__.py": "0583879989768e18a9cc2aec8493e2e5fe7aae57b7a85d7305a7d0ae3ca2037d",
+    "radsimreal/simulation/assets.py": "789a4f62f81c7a9394cbc9f53399ee02f3526f042f8c4ce1190ee213ed75b2f6",
+    "radsimreal/simulation/carla_bridge.py": "0f4409b4e88268d02a3bc54f7c3aaaa8379ac5281df5c698fa4b065ab59cbba1",
+    "radsimreal/simulation/materials.py": "bae45e67dc7b36e78edce46bd4d1c325753e4f906a8405f5bfdc665d3a27fddd",
+    "radsimreal/simulation/mesh.py": "bd86d96d6a1eb4b922f47b2e2248ebc08183fcaae23af3daf21c98bfa4ab1d67",
+    "radsimreal/simulation/reflections.py": "79e18db453898c9b0da4f293528f09924a84cd98245224de1e8adcd098c1c2ed",
+    "radsimreal/simulation/scene.py": "0813c36f7578c11eff10e31a1522397bee4c9e7fa776e0d633234e6f37d39abe",
+    "radsimreal/training/__init__.py": "cb1342b83b38615c67aac951165689b2e7a6d8b59db337162d03611e96621736",
+    "radsimreal/training/engine.py": "efca894e684c84cb619893147c1a85603f7423855488a940b0b43404ee27d564",
+    "radsimreal/visualization/__init__.py": "ae336292d371273a09d790e657ce6011c77a1400bb32d65a923af51f322bfcf8",
+    "radsimreal/visualization/plots.py": "32bd9871da817bdab8ca85fe7c9dc93f32e2bf96caf19ac8eb29347f32100327",
+    "scripts/calibrate.py": "f11b4a34b03200a28fe143cb37c82e1d80f424374c88a623649b79b9b82fafa0",
+    "scripts/evaluate.py": "34930cdc88e4b59c3e3462f272586c7b5dce162956fd4af570cf2c9c24ef9933",
+    "scripts/generate_dataset.py": "f45ec75272bbe7917fa8aef34915405906686524ceae82a943b69a204e127515",
+    "scripts/hpc_run.py": "de5f8ba4a4e23790bf707b782cfca2d7765cf2ee4c2055f784eec8b29385ba2c",
+    "scripts/import_real.py": "23ddd4a54cc45827c9c7594fe51661dc6e0afdd70a592ec04fad36ed544a2008",
+    "scripts/infer.py": "6b35e78a1fe931b7be72d2e695ae7bcf9804d371db3b20ae904bd0c2be1a06a6",
+    "scripts/mesh_demo.py": "1b0d47f30f928c36981930247b7915faec7ca2942bd097a74bef3eda40eecb37",
+    "scripts/run_demo.py": "3a66d2674772d48b857c066cc2e1ef6c3468826e74ecf2624969f1b7d5311d86",
+    "scripts/train.py": "74bdcc6dc047c2292c566e2a65f551579ef9a815eae9cc0cd092f32325ae8dd8",
+    "tests/native_fixtures.py": "516f3ae3d30efa26ecc152e6c6bb86dc01e75437d27fdb094f5c3a5472445473",
+    "tests/test_assets.py": "8e7bf9bb785e0fe247ca73e4c1a6a5b841d94364ec138e3adc50d4f4f13ba763",
+    "tests/test_bev.py": "88f1cc7a1cb8a1ccf4cd158a990284862556794361a359bd927429bc47ddafb0",
+    "tests/test_data.py": "92d5ccd47942fe64a3309a3df52110ca8afb3378c887a24eede4677af90715b8",
+    "tests/test_detector.py": "93a80936e90885cb84b4412315cd67ad10249512b56059602595fbdbfed07673",
+    "tests/test_generation_v2.py": "f28d4d5c05f7a7bd938452a3488aafb66fad58ba5cdb335e01d6ae63dd72a8ff",
+    "tests/test_mesh.py": "6fa870a9b03575ba039bc14ce52841a63094c683539265e98ca89af6afc2046d",
+    "tests/test_native.py": "2f65acb635e64ab29877b92b238180e7e159ae4af24a9ed50e764b0e17208c55",
+    "tests/test_native_calibration.py": "1f453c339a936902c3a34ad2754f44000b468872ea34fe496865c166972cbe4b",
+    "tests/test_native_export.py": "4a7927db481ba399dd16a8d6d4fcddff593c1b1cde2eb8888664ed1ff70f573f",
+    "tests/test_native_runner.py": "f09aff2fe83cbcba395b79c52365288f56f6a1ca3ad97e222a3612eb5404dab0",
+    "tests/test_native_workflows.py": "0b87ba548d5a37a47ed77800fb2af23fe747e390ceecdfaad3db722666322e57",
+    "tests/test_noise_v2.py": "abc60876fd0dba1a0cd5194b7509cc08485488c9fae9339b971de0f20c43d1d4",
+    "tests/test_physics.py": "2cba5b47a8d2e4639cdf9fbd865bc45d0e76a8c18d714e7cb188359e033c315b",
+    "tests/test_pretrain.py": "c1980b72997fcd8832db9b1b354b5fc49b302309cbc97bc3277594021a56c7ad",
+    "tests/test_protocol.py": "9056d60cda38fd8196ef2bf16d0b2876de0d07fe9dca567e4e6fc3802efb961d"
+  },
+  "checks": [
+    {
+      "name": "extracted_module_location",
+      "exit_code": 0,
+      "elapsed_seconds": 0.239,
+      "stdout": "<workspace>\\work\\archive_v2_release\\RadSimReal\\radsimreal\\__init__.py",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_full_pytest",
+      "exit_code": 0,
+      "elapsed_seconds": 47.85,
+      "stdout": "........................................................................ [ 37%]\n........................................................................ [ 75%]\n..............................................                               [100%]\n190 passed, 68 subtests passed in 45.99s",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_compile",
+      "exit_code": 0,
+      "elapsed_seconds": 0.372,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_mesh_demo",
+      "exit_code": 0,
+      "elapsed_seconds": 10.152,
+      "stdout": "Saved mesh geometry/reflections, full tensor and radar figures to <workspace>\\work\\archive_v2_mesh_demo",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_CAD_generation",
+      "exit_code": 0,
+      "elapsed_seconds": 6.782,
+      "stdout": "Generated Cartesian/native-compatible synthetic data at <workspace>\\work\\archive_v2_generated",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_checkpoint_evaluation",
+      "exit_code": 0,
+      "elapsed_seconds": 3.485,
+      "stdout": "{\n  \"AP@0.1\": 0.9502840909090909,\n  \"AP@0.3\": 0.6941287878787878,\n  \"AP@0.5\": 0.0625,\n  \"num_images\": 4,\n  \"class\": \"car\",\n  \"label_domain\": \"synthetic_original_vehicle_ground_footprints\",\n  \"metric_domain\": \"cartesian_bev_metres_axis_aligned\",\n  \"ap_convention\": \"all_points_monotonic_precision_envelope\",\n  \"matching_policy\": \"best_overall\",\n  \"ap_aggregation\": \"global_pr\",\n  \"score_tie_policy\": \"stable_input_order\",\n  \"zero_gt_policy\": \"undefined class AP without GT; include GT-empty-frame detections as false positives\",\n  \"radsimreal_evaluator_parity\": \"unverified; its exact evaluator was not released\",\n  \"published_result_reproduced\": false,\n  \"checkpoint\": \"examples/v2/unet_training/best.pt\",\n  \"architecture\": \"coordinate_unet_bev\",\n  \"score_definition\": \"sigmoid of center heatmap logit\",\n  \"prediction_clipping\": \"none\",\n  \"training_label_domain\": \"synthetic_original_vehicle_ground_footprints\",\n  \"cross_label_domain_comparison\": false,\n  \"sensor_sampling_comparison\": {\n    \"status\": \"same_declared_sampling\",\n    \"sampling_equal\": true,\n    \"changed_fields\": {},\n    \"missing_reference_fields\": [],\n    \"missing_current_fields\": [],\n    \"reference\": {\n      \"range_bins\": 64,\n      \"doppler_bins\": 16,\n      \"azimuth_bins\": 64,\n      \"range_min\": 0.0,\n      \"range_step\": 0.78125,\n      \"velocity_min\": -13.429769824489025,\n      \"velocity_step\": 1.6787212280611281,\n      \"azimuth_coordinate\": \"sin\",\n      \"azimuth_min_deg\": -75.0,\n      \"azimuth_max_deg\": 75.0\n    },\n    \"current\": {\n      \"range_bins\": 64,\n      \"doppler_bins\": 16,\n      \"azimuth_bins\": 64,\n      \"range_min\": 0.0,\n      \"range_step\": 0.78125,\n      \"velocity_min\": -13.429769824489025,\n      \"velocity_step\": 1.6787212280611281,\n      \"azimuth_coordinate\": \"sin\",\n      \"azimuth_min_deg\": -75.0,\n      \"azimuth_max_deg\": 75.0\n    }\n  },\n  \"sensor_change_explicitly_allowed\": false,\n  \"image_ids\": [\n    \"test_000000\",\n    \"test_000001\",\n    \"test_000002\",\n    \"test_000003\"\n  ],\n  \"score_threshold\": 0.05,\n  \"nms_threshold\": 0.3,\n  \"top_k\": 100\n}",
+      "stderr": ""
+    },
+    {
+      "name": "extracted_checkpoint_inference",
+      "exit_code": 0,
+      "elapsed_seconds": 4.921,
+      "stdout": "Saved 1 Cartesian prediction records to <workspace>\\work\\archive_v2_predictions.png",
+      "stderr": ""
+    },
+    {
+      "name": "help_calibrate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.634,
+      "stdout": "usage: calibrate.py calibrate [-h] --config CONFIG --tensors TENSORS\n                              --noise-mask NOISE_MASK --target R D A\n                              [--half-widths HALF_WIDTHS HALF_WIDTHS HALF_WIDTHS]\n                              [--out OUT]\n\noptions:\n  -h, --help            show this help message and exit\n  --config CONFIG\n  --tensors TENSORS\n  --noise-mask NOISE_MASK\n  --target R D A\n  --half-widths HALF_WIDTHS HALF_WIDTHS HALF_WIDTHS\n  --out OUT",
+      "stderr": ""
+    },
+    {
+      "name": "help_evaluate",
+      "exit_code": 0,
+      "elapsed_seconds": 3.226,
+      "stdout": "usage: evaluate.py [-h] --data DATA --checkpoint CHECKPOINT\n                   [--split {train,val,test}] [--device DEVICE]\n                   [--batch-size BATCH_SIZE]\n                   [--score-threshold SCORE_THRESHOLD]\n                   [--nms-threshold NMS_THRESHOLD] [--top-k TOP_K]\n                   [--threads THREADS] [--allow-label-domain-change]\n                   [--allow-sensor-change] [--out OUT]\n                   [--matching-policy {best_overall,best_unmatched}]\n                   [--ap-aggregation {global_pr,frame_mean}]\n\nEvaluate physical Cartesian car IoU/AP, preserving native annotation\nprovenance\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --checkpoint CHECKPOINT\n  --split {train,val,test}\n  --device DEVICE\n  --batch-size BATCH_SIZE\n  --score-threshold SCORE_THRESHOLD\n  --nms-threshold NMS_THRESHOLD\n  --top-k TOP_K\n  --threads THREADS\n  --allow-label-domain-change\n                        Explicit sim-to-real or cross-dataset label-provenance\n                        comparison\n  --allow-sensor-change\n                        Explicitly allow changed native-RAD sampling, reported\n                        as a transfer experiment\n  --out OUT\n  --matching-policy {best_overall,best_unmatched}\n  --ap-aggregation {global_pr,frame_mean}\n                        global_pr: global PR area; frame_mean: original RADDet\n                        reference frame averaging",
+      "stderr": ""
+    },
+    {
+      "name": "help_generate_dataset",
+      "exit_code": 0,
+      "elapsed_seconds": 0.618,
+      "stdout": "usage: generate_dataset.py generate [-h] [--config CONFIG] [--out OUT]\n                                    [--train TRAIN] [--val VAL] [--test TEST]\n                                    [--save-tensors] [--no-tensors]\n                                    [--legacy-ra]\n                                    [--scene-backend {mesh,procedural}]\n                                    [--max-samples MAX_SAMPLES]\n\noptions:\n  -h, --help            show this help message and exit\n  --config CONFIG\n  --out OUT\n  --train TRAIN\n  --val VAL\n  --test TEST\n  --save-tensors\n  --no-tensors          v2: omit full tensors; RADDet training unavailable\n  --legacy-ra           Generate the former v1 RA-label dataset explicitly\n  --scene-backend {mesh,procedural}\n  --max-samples MAX_SAMPLES",
+      "stderr": ""
+    },
+    {
+      "name": "help_hpc_run",
+      "exit_code": 0,
+      "elapsed_seconds": 6.415,
+      "stdout": "usage: hpc_run.py run [-h] --dataset {raddet,carrada} --root ROOT\n                      [--profile PROFILE]\n                      [--representation {complex,power,amplitude,db}]\n                      [--annotations ANNOTATIONS] [--trusted-labels]\n                      [--reference-cartesian] --out OUT\n                      [--selection SELECTION] [--allow-provisional]\n                      [--split-file SPLIT_FILE]\n                      [--val-sequences VAL_SEQUENCES [VAL_SEQUENCES ...]]\n                      [--test-sequences TEST_SEQUENCES [TEST_SEQUENCES ...]]\n                      [--grid GRID]\n                      [--models {unet,raddet,probabilistic} [{unet,raddet,probabilistic} ...]]\n                      [--train TRAIN] [--val VAL] [--test TEST]\n                      [--epochs EPOCHS] [--max-steps MAX_STEPS]\n                      [--base-channels BASE_CHANNELS]\n                      [--batch-size BATCH_SIZE] [--device DEVICE] [--fit-gain]\n                      [--raddet-pretrain] [--train-real-baseline]\n                      [--max-samples MAX_SAMPLES]\n                      [--half-widths HALF_WIDTHS HALF_WIDTHS HALF_WIDTHS]\n                      [--resume-run] [--vehicle-assets VEHICLE_ASSETS]\n                      [--matching-policy {best_overall,best_unmatched}]\n                      [--ap-aggregation {global_pr,frame_mean}]\n\noptions:\n  -h, --help            show this help message and exit\n  --dataset {raddet,carrada}\n  --root ROOT           Dataset path on the machine executing this command\n  --profile PROFILE     Explicit NativeProfile JSON/YAML, overrides source\n                        reference defaults\n  --representation {complex,power,amplitude,db}\n                        Required for ambiguous real-valued native tensors\n  --annotations ANNOTATIONS\n                        CARRADA annotations_frame_oriented.json when stored\n                        separately\n  --trusted-labels      Read pickle labels from your trusted original RADDet\n                        dataset\n  --reference-cartesian\n                        Explicitly enable the official-helper-derived RADDet\n                        Cartesian affine; verify the overlay locally\n  --out OUT\n  --selection SELECTION\n                        Verified calibration selection JSON; omitted selection\n                        only allowed with --allow-provisional\n  --allow-provisional   Run with UNCONFIRMED automatic target/noise\n                        candidates; no sensor-realism claim\n  --split-file SPLIT_FILE\n  --val-sequences VAL_SEQUENCES [VAL_SEQUENCES ...]\n  --test-sequences TEST_SEQUENCES [TEST_SEQUENCES ...]\n  --grid GRID\n  --models {unet,raddet,probabilistic} [{unet,raddet,probabilistic} ...]\n  --train TRAIN\n  --val VAL\n  --test TEST\n  --epochs EPOCHS\n  --max-steps MAX_STEPS\n                        0 runs all epochs; positive values bound a pilot\n  --base-channels BASE_CHANNELS\n  --batch-size BATCH_SIZE\n  --device DEVICE\n  --fit-gain\n  --raddet-pretrain\n  --train-real-baseline\n  --max-samples MAX_SAMPLES\n  --half-widths HALF_WIDTHS HALF_WIDTHS HALF_WIDTHS\n  --resume-run\n  --vehicle-assets VEHICLE_ASSETS\n                        Moving vehicle CAD/RF-material manifest JSON\n  --matching-policy {best_overall,best_unmatched}\n  --ap-aggregation {global_pr,frame_mean}",
+      "stderr": ""
+    },
+    {
+      "name": "help_import_real",
+      "exit_code": 0,
+      "elapsed_seconds": 0.634,
+      "stdout": "usage: import_real.py import-real [-h] --manifest MANIFEST --config CONFIG\n                                  --out OUT\n\noptions:\n  -h, --help           show this help message and exit\n  --manifest MANIFEST\n  --config CONFIG\n  --out OUT",
+      "stderr": ""
+    },
+    {
+      "name": "help_infer",
+      "exit_code": 0,
+      "elapsed_seconds": 3.099,
+      "stdout": "usage: infer.py [-h] --data DATA --checkpoint CHECKPOINT\n                [--split {train,val,test}] [--device DEVICE]\n                [--batch-size BATCH_SIZE] [--score-threshold SCORE_THRESHOLD]\n                [--nms-threshold NMS_THRESHOLD] [--top-k TOP_K]\n                [--threads THREADS] [--allow-label-domain-change]\n                [--allow-sensor-change] [--out OUT] [--index INDEX]\n\nSave physical Cartesian predictions or original-label/prediction overlays\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --checkpoint CHECKPOINT\n  --split {train,val,test}\n  --device DEVICE\n  --batch-size BATCH_SIZE\n  --score-threshold SCORE_THRESHOLD\n  --nms-threshold NMS_THRESHOLD\n  --top-k TOP_K\n  --threads THREADS\n  --allow-label-domain-change\n                        Explicit sim-to-real or cross-dataset label-provenance\n                        comparison\n  --allow-sensor-change\n                        Explicitly allow changed native-RAD sampling, reported\n                        as a transfer experiment\n  --out OUT\n  --index INDEX         One frame, with a PNG overlay when --out ends in .png",
+      "stderr": ""
+    },
+    {
+      "name": "help_mesh_demo",
+      "exit_code": 0,
+      "elapsed_seconds": 8.65,
+      "stdout": "usage: mesh_demo.py [-h] [--config CONFIG] [--vehicle-assets VEHICLE_ASSETS]\n                    [--out OUT] [--max-samples MAX_SAMPLES]\n\nRender the v2 mesh/PSF simulator without datasets or learned weights.\n\noptions:\n  -h, --help            show this help message and exit\n  --config CONFIG\n  --vehicle-assets VEHICLE_ASSETS\n  --out OUT\n  --max-samples MAX_SAMPLES",
+      "stderr": ""
+    },
+    {
+      "name": "help_run_demo",
+      "exit_code": 0,
+      "elapsed_seconds": 0.598,
+      "stdout": "usage: run_demo.py demo [-h] [--config CONFIG] [--out OUT] [--seed SEED]\n                        [--real-image REAL_IMAGE]\n\noptions:\n  -h, --help            show this help message and exit\n  --config CONFIG\n  --out OUT\n  --seed SEED\n  --real-image REAL_IMAGE\n                        Optional linear real image on exactly the same grid",
+      "stderr": ""
+    },
+    {
+      "name": "help_train",
+      "exit_code": 0,
+      "elapsed_seconds": 3.013,
+      "stdout": "usage: train.py [-h] --data DATA --out OUT\n                [--model {unet,raddet,probabilistic}] [--epochs EPOCHS]\n                [--batch-size BATCH_SIZE] [--max-steps MAX_STEPS]\n                [--base-channels BASE_CHANNELS]\n                [--learning-rate LEARNING_RATE] [--weight-decay WEIGHT_DECAY]\n                [--device DEVICE] [--seed SEED] [--threads THREADS]\n                [--oriented] [--resume RESUME]\n                [--pretrained-backbone PRETRAINED_BACKBONE]\n                [--freeze-backbone] [--allow-sensor-change]\n\nTrain Cartesian U-Net, published RADDet port or probabilistic detector\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --out OUT\n  --model {unet,raddet,probabilistic}\n  --epochs EPOCHS\n  --batch-size BATCH_SIZE\n  --max-steps MAX_STEPS\n  --base-channels BASE_CHANNELS\n  --learning-rate LEARNING_RATE\n  --weight-decay WEIGHT_DECAY\n  --device DEVICE\n  --seed SEED\n  --threads THREADS\n  --oriented            Requires genuine yaw labels for every object\n  --resume RESUME\n  --pretrained-backbone PRETRAINED_BACKBONE\n                        RADDet 3D pretraining checkpoint from bev-pretrain\n  --freeze-backbone\n  --allow-sensor-change\n                        Explicit native-RAD coordinate transfer experiment",
+      "stderr": ""
+    },
+    {
+      "name": "help_native",
+      "exit_code": 0,
+      "elapsed_seconds": 6.133,
+      "stdout": "usage: __main__.py [-h]\n                   {inspect,prepare,candidates,calibrate,gain,generate,validate,run}\n                   ...\n\nNative RADDet/CARRADA simulation and calibration workflows\n\npositional arguments:\n  {inspect,prepare,candidates,calibrate,gain,generate,validate,run}\n    inspect             Read actual native tensors and draw coordinate/label\n                        overlays\n    prepare             Index raw arrays and preserve original\n                        Cartesian/native annotations\n    candidates          Propose unconfirmed point-target/noise regions and\n                        write visual diagnostics\n    calibrate           Measure PSF/noise from selected TRAIN frames,\n                        streaming one tensor at a time\n    gain                Optional unlabeled training-only relative power-\n                        quantile gain fit\n    generate            Generate full tensors, original Cartesian labels and\n                        optional native-layout files\n    validate            Compare held-out real/synthetic distributions and\n                        physical-coordinate figures\n    run                 Execute the on-cluster pilot with explicit calibration\n                        assumptions\n\noptions:\n  -h, --help            show this help message and exit",
+      "stderr": ""
+    },
+    {
+      "name": "help_bev-train",
+      "exit_code": 0,
+      "elapsed_seconds": 2.976,
+      "stdout": "usage: __main__.py [-h] --data DATA --out OUT\n                   [--model {unet,raddet,probabilistic}] [--epochs EPOCHS]\n                   [--batch-size BATCH_SIZE] [--max-steps MAX_STEPS]\n                   [--base-channels BASE_CHANNELS]\n                   [--learning-rate LEARNING_RATE]\n                   [--weight-decay WEIGHT_DECAY] [--device DEVICE]\n                   [--seed SEED] [--threads THREADS] [--oriented]\n                   [--resume RESUME]\n                   [--pretrained-backbone PRETRAINED_BACKBONE]\n                   [--freeze-backbone] [--allow-sensor-change]\n\nTrain Cartesian U-Net, published RADDet port or probabilistic detector\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --out OUT\n  --model {unet,raddet,probabilistic}\n  --epochs EPOCHS\n  --batch-size BATCH_SIZE\n  --max-steps MAX_STEPS\n  --base-channels BASE_CHANNELS\n  --learning-rate LEARNING_RATE\n  --weight-decay WEIGHT_DECAY\n  --device DEVICE\n  --seed SEED\n  --threads THREADS\n  --oriented            Requires genuine yaw labels for every object\n  --resume RESUME\n  --pretrained-backbone PRETRAINED_BACKBONE\n                        RADDet 3D pretraining checkpoint from bev-pretrain\n  --freeze-backbone\n  --allow-sensor-change\n                        Explicit native-RAD coordinate transfer experiment",
+      "stderr": ""
+    },
+    {
+      "name": "help_bev-pretrain",
+      "exit_code": 0,
+      "elapsed_seconds": 3.023,
+      "stdout": "usage: __main__.py [-h] --data DATA --out OUT [--epochs EPOCHS]\n                   [--batch-size BATCH_SIZE] [--max-steps MAX_STEPS]\n                   [--learning-rate LEARNING_RATE] [--device DEVICE]\n                   [--seed SEED] [--threads THREADS] [--resume RESUME]\n                   [--allow-sensor-change]\n\nPretrain RADDet backbone with canonical normalized3D RAD annotations\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA           Version2 dataset root with boxes_rad on training and\n                        validation records\n  --out OUT\n  --epochs EPOCHS\n  --batch-size BATCH_SIZE\n  --max-steps MAX_STEPS\n  --learning-rate LEARNING_RATE\n  --device DEVICE\n  --seed SEED\n  --threads THREADS\n  --resume RESUME       RAD pretraining last.pt; max-steps remains a total\n                        update bound\n  --allow-sensor-change\n                        Explicitly acknowledge native sampling transfer;\n                        architecture shape must still match",
+      "stderr": ""
+    },
+    {
+      "name": "help_bev-evaluate",
+      "exit_code": 0,
+      "elapsed_seconds": 3.0,
+      "stdout": "usage: __main__.py [-h] --data DATA --checkpoint CHECKPOINT\n                   [--split {train,val,test}] [--device DEVICE]\n                   [--batch-size BATCH_SIZE]\n                   [--score-threshold SCORE_THRESHOLD]\n                   [--nms-threshold NMS_THRESHOLD] [--top-k TOP_K]\n                   [--threads THREADS] [--allow-label-domain-change]\n                   [--allow-sensor-change] [--out OUT]\n                   [--matching-policy {best_overall,best_unmatched}]\n                   [--ap-aggregation {global_pr,frame_mean}]\n\nEvaluate physical Cartesian car IoU/AP, preserving native annotation\nprovenance\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --checkpoint CHECKPOINT\n  --split {train,val,test}\n  --device DEVICE\n  --batch-size BATCH_SIZE\n  --score-threshold SCORE_THRESHOLD\n  --nms-threshold NMS_THRESHOLD\n  --top-k TOP_K\n  --threads THREADS\n  --allow-label-domain-change\n                        Explicit sim-to-real or cross-dataset label-provenance\n                        comparison\n  --allow-sensor-change\n                        Explicitly allow changed native-RAD sampling, reported\n                        as a transfer experiment\n  --out OUT\n  --matching-policy {best_overall,best_unmatched}\n  --ap-aggregation {global_pr,frame_mean}\n                        global_pr: global PR area; frame_mean: original RADDet\n                        reference frame averaging",
+      "stderr": ""
+    },
+    {
+      "name": "help_bev-infer",
+      "exit_code": 0,
+      "elapsed_seconds": 3.0,
+      "stdout": "usage: __main__.py [-h] --data DATA --checkpoint CHECKPOINT\n                   [--split {train,val,test}] [--device DEVICE]\n                   [--batch-size BATCH_SIZE]\n                   [--score-threshold SCORE_THRESHOLD]\n                   [--nms-threshold NMS_THRESHOLD] [--top-k TOP_K]\n                   [--threads THREADS] [--allow-label-domain-change]\n                   [--allow-sensor-change] [--out OUT] [--index INDEX]\n\nSave physical Cartesian predictions or original-label/prediction overlays\n\noptions:\n  -h, --help            show this help message and exit\n  --data DATA\n  --checkpoint CHECKPOINT\n  --split {train,val,test}\n  --device DEVICE\n  --batch-size BATCH_SIZE\n  --score-threshold SCORE_THRESHOLD\n  --nms-threshold NMS_THRESHOLD\n  --top-k TOP_K\n  --threads THREADS\n  --allow-label-domain-change\n                        Explicit sim-to-real or cross-dataset label-provenance\n                        comparison\n  --allow-sensor-change\n                        Explicitly allow changed native-RAD sampling, reported\n                        as a transfer experiment\n  --out OUT\n  --index INDEX         One frame, with a PNG overlay when --out ends in .png",
+      "stderr": ""
+    },
+    {
+      "name": "help_generate",
+      "exit_code": 0,
+      "elapsed_seconds": 0.609,
+      "stdout": "usage: __main__.py generate [-h] [--config CONFIG] [--out OUT] [--train TRAIN]\n                            [--val VAL] [--test TEST] [--save-tensors]\n                            [--no-tensors] [--legacy-ra]\n                            [--scene-backend {mesh,procedural}]\n                            [--max-samples MAX_SAMPLES]\n\noptions:\n  -h, --help            show this help message and exit\n  --config CONFIG\n  --out OUT\n  --train TRAIN\n  --val VAL\n  --test TEST\n  --save-tensors\n  --no-tensors          v2: omit full tensors; RADDet training unavailable\n  --legacy-ra           Generate the former v1 RA-label dataset explicitly\n  --scene-backend {mesh,procedural}\n  --max-samples MAX_SAMPLES",
+      "stderr": ""
+    }
+  ]
+}

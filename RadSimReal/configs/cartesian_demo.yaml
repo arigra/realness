@@ -1,0 +1,33 @@
+# Self-contained illustration, not a measured RADDet/CARRADA sensor profile.
+seed: 2024
+radar:
+  range_bins: 64
+  doppler_bins: 16
+  azimuth_bins: 64
+  range_step: 0.78125
+  velocity_min: -13.429769824489025
+  velocity_step: 1.6787212280611281
+  azimuth_min_deg: -75.0
+  azimuth_max_deg: 75.0
+  azimuth_coordinate: sin
+  representation: complex
+  noise_std: 0.03
+  noise_model: gaussian
+  doppler_wrap: true
+  sensor_height: 0.5
+  frequency_hz: 77000000000.0
+  polarization: TE
+  phase_mode: random
+  psf_shape: [11, 7, 25]
+  psf_width_bins: [1.3, 1.3, 4.0]
+  psf_energy: 0.99
+  scattering_gain: 50.0
+  reference_range: 20.0
+scene:
+  min_vehicles: 1
+  max_vehicles: 4
+  min_range: 8.0
+  max_range: 43.0
+  lateral_limit: 20.0
+  speed_range: [-8.0, 8.0]
+  ego_velocity: [0.0, 0.0]

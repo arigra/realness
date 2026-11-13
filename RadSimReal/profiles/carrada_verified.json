@@ -1,0 +1,39 @@
+{
+  "name": "carrada",
+  "shape_native": [
+    256,
+    256,
+    64
+  ],
+  "representation": "amplitude",
+  "range_step": 0.1953125,
+  "range_min": 0.0,
+  "velocity_step": 0.41968030701528203,
+  "velocity_min_native": -13.429769824489025,
+  "range_reversed": true,
+  "doppler_reversed": false,
+  "doppler_positive": "approaching",
+  "azimuth_reversed": false,
+  "azimuth_coordinate": "sin",
+  "angular_min": -1.0,
+  "angular_step": 0.0078125,
+  "cartesian_affine": null,
+  "cartesian_mapping_validated": true,
+  "car_labels": [
+    "car",
+    3
+  ],
+  "annotation_range_reverse_origin": "R",
+  "annotation_angle_step": 0.01227184630308513,
+  "evidence": [
+    "CARRADA transform_annotations.py and paper; source-derived reference, 2026-11-10",
+    "2026-11-10 local: RAD_numpy is amplitude, axes (R,A,D): processed range_angle == max_D RAD exactly; range_doppler == 10log10(mean_A RAD^2) with range flipped (slope 0.9995, offset 0.02 dB)",
+    "2026-11-10 local: annotation pixels vs centroid-tracked DoA points (8,633 pairs): range = 50.10 - 0.19529*row (rms 0.038 m) -> origin R; angle = 0.012425*col - 1.590 rad (rms 0.004; sin rms 0.025) -> annotations use uniform angle step pi/256",
+    "2026-11-10 local: TENSOR azimuth is sine-spaced: energy peak col = 121.96*sin(theta) + 128.23 over 237 train objects (sin grid predicts 128, uniform-angle 81.5)",
+    "2026-11-10 local: Doppler: velocity>0 when range decreases in 90.9% of 4,753 tracked pairs -> positive approaching; RD annotation col = 2.27 v + 32"
+  ],
+  "unresolved": [
+    "Native radar annotation regions are not physical oriented car footprints",
+    "Sensor PSF/noise are uncalibrated until a verified selection is calibrated"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "carrada",
+  "shape_native": [
+    256,
+    256,
+    64
+  ],
+  "representation": null,
+  "range_step": 0.1953125,
+  "range_min": 0.0,
+  "velocity_step": 0.41968030701528203,
+  "velocity_min_native": -13.429769824489025,
+  "range_reversed": true,
+  "doppler_reversed": false,
+  "doppler_positive": "approaching",
+  "azimuth_reversed": false,
+  "azimuth_coordinate": "angle",
+  "angular_min": -1.5707963267948966,
+  "angular_step": 0.01227184630308513,
+  "cartesian_affine": null,
+  "cartesian_mapping_validated": false,
+  "car_labels": [
+    "car",
+    3
+  ],
+  "annotation_range_reverse_origin": "R",
+  "annotation_angle_step": 0.01227184630308513,
+  "evidence": [
+    "CARRADA transform_annotations.py and paper; source-derived reference, 2026-11-10"
+  ],
+  "unresolved": [
+    "Confirm full-tensor representation, range order and angular coordinate against the local RAD release",
+    "Native radar annotation regions are not physical oriented car footprints",
+    "Sensor PSF/noise are uncalibrated",
+    "Uniform-angle tensor grid is a reference hypothesis from annotation conventions; full FFT RAD sampling may instead use direction cosine. Verify local metadata/overlays before sensor-fidelity claims."
+  ]
+}

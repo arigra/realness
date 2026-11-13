@@ -1,0 +1,62 @@
+{
+  "name": "RadSimReal CVPR 2024 published evaluation protocol",
+  "source": "https://arxiv.org/html/2404.18150v1",
+  "source_sections": ["4", "Appendix D", "Supplementary Table 4"],
+  "audit_date": "2026-11-10",
+  "status": "protocol reference; not a claim of completed reproduction",
+  "class_names": ["car"],
+  "metric": "average precision as precision-recall area",
+  "published_box_domain_status": "Fig5 displays Cartesian metres and cited 2D detectors use Cartesian/BEV; exact RadSimReal metric implementation unavailable",
+  "package_box_domain": "v2 physical Cartesian axis-aligned boxes; oriented polygon IoU only with genuine yaw labels; legacy v1 normalized RA rectangles retained separately",
+  "package_ap_is_published_benchmark_equivalent": false,
+  "iou_thresholds": [0.1, 0.3, 0.5],
+  "ap_interpolation_in_publication": "not specified",
+  "published_synthetic_training_frames": 10000,
+  "published_real_frame_counts": {
+    "RADDet": {"train": 8196, "test": 1962},
+    "CARRADA": {"train": 2208, "test": 276},
+    "CRUW": {"train": 9623, "test": 2226}
+  },
+  "raddet": {
+    "frame_id_semantics": "original dataset integer IDs, inclusive interval endpoints",
+    "test_scenes": [9, 11],
+    "train_scenes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 13, 14],
+    "explicit_unassigned_ranges": [[556, 558], [725, 730]],
+    "scene_ranges": {
+      "0": [[0, 439], [559, 724], [1549, 1971]],
+      "1": [[440, 555], [731, 1548], [1972, 2571]],
+      "2": [[2572, 3038]],
+      "3": [[3039, 3437]],
+      "4": [[3438, 3653]],
+      "5": [[3654, 4073]],
+      "6": [[4074, 4331]],
+      "7": [[4332, 5018], [5623, 6243]],
+      "8": [[5019, 5622], [6244, 6608]],
+      "9": [[6609, 8046]],
+      "10": [[8047, 8634]],
+      "11": [[8635, 9158]],
+      "12": [[9159, 9437]],
+      "13": [[9438, 9745], [10175, 10292]],
+      "14": [[9746, 10174]]
+    },
+    "assigned_id_count_from_table": 10284,
+    "published_available_frame_count": 10158,
+    "missing_available_file_manifest": true,
+    "rule": "Intersect mapped original IDs with actually available files; report unmapped IDs; never create missing frames or randomly split adjacent frames."
+  },
+  "unreleased_details": [
+    "exact measured PSF arrays and noise-domain convention/variance",
+    "CARLA scene assets, seed/route manifests and RF reflectivity parameters",
+    "RadSimReal detector adaptations and training hyperparameters",
+    "CARRADA and CRUW exact frame manifests",
+    "CRUW CFAR-generated box annotations and CFAR tuning"
+  ],
+  "comparison_models_not_implemented_in_this_package": [],
+  "implemented_model_status": {
+    "U-Net": "coordinate-augmented family with explicitly reconstructed RadSimReal adaptation",
+    "RADDet": "PyTorch port of pinned released source with disclosed class-car, coordinate and numerical adaptations",
+    "Probabilistic": "published architecture and probabilistic equations with disclosed reconstruction and axis-aligned adaptation when native yaw is unavailable"
+  },
+  "author_experiment_adaptations_fully_known": false,
+  "random_frame_split_allowed_for_published_real_protocol": false
+}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "radsimreal-reconstruction"
+version = "0.2.0"
+description = "Auditable independent reconstruction of the RadSimReal PSF method with explicit approximation boundaries"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = ["numpy>=1.24", "scipy>=1.10", "matplotlib>=3.7", "PyYAML>=6.0", "torch>=2.2"]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[project.scripts]
+radsimreal = "radsimreal.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["radsimreal*"]
+
+[tool.setuptools.package-data]
+"radsimreal.models" = ["FIDELITY.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

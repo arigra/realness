@@ -1,0 +1,46 @@
+diff --git a/model/layers.py b/model/layers.py
+index 2460f9f..cb3760c 100644
+--- a/model/layers.py
++++ b/model/layers.py
+@@ -426,6 +426,9 @@ class BatchNormalization(K.layers.BatchNormalization):
+     """
+     def call(self, x, training=False):
+         if not training:
+-            training = tf.constant(False)
++            # TF 2.15 patch: TF 2.3 constant-folded the tensor below to False (pure inference).
++            # Under tf.function in TF 2.15 it does not, Keras updates the moving stats, and the
++            # loss goes NaN at step 2. A Python False restores the TF 2.3 behaviour.
++            return super().call(x, training=False)
+         training = tf.logical_and(training, self.trainable)
+         return super().call(x, training)
+diff --git a/util/helper.py b/util/helper.py
+index 748e828..cbccedd 100644
+--- a/util/helper.py
++++ b/util/helper.py
+@@ -21,6 +21,8 @@ def polarToCartesian(rho, phi):
+ ################ functions of RAD processing ################
+ def complexTo2Channels(target_array):
+     """ transfer complex a + bi to [a, b]"""
++    if target_array.dtype == np.float32:  # [realness patch] already log-magnitude (util/loader.readRAD cache)
++        return target_array
+     assert target_array.dtype == np.complex64
+     ### NOTE: transfer complex to (magnitude) ###
+     output_array = getMagnitude(target_array)
+diff --git a/util/loader.py b/util/loader.py
+index 2b65716..4a7e480 100644
+--- a/util/loader.py
++++ b/util/loader.py
+@@ -89,6 +89,13 @@ def imgfileFromRADfile(RAD_file, prefix):
+ 
+ def readRAD(filename):
+     """ read input RAD matrices """
++    # [realness patch] local cache of log10(|RAD|^2 + 1) (float32, identical values), built by
++    # benchmarks/scripts/cache_raddet_logmag.py; complexTo2Channels passes it through.
++    raw_root, cache_root = os.environ.get("RADDET_RAW_ROOT"), os.environ.get("RADDET_LOGMAG_CACHE")
++    if raw_root and cache_root:
++        cached = os.path.join(cache_root, os.path.relpath(filename, raw_root))
++        if os.path.exists(cached):
++            return np.load(cached)
+     if os.path.exists(filename):
+         return np.load(filename)
+     else:

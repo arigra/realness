@@ -1,0 +1,8 @@
+# Recorded execution environment, not a cross-platform lock file.
+# Install CPU Torch with --index-url https://download.pytorch.org/whl/cpu.
+numpy==2.5.1
+scipy==1.18.0
+torch==2.15.0
+matplotlib==3.11.1
+PyYAML==6.0.3
+pytest==9.2.0

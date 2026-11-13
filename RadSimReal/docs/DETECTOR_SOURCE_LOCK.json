@@ -1,0 +1,59 @@
+{
+  "repository": "https://github.com/ZhangAoCanada/RADDet",
+  "revision": "e18b4cfaf3823ffd9983b48591d2d30a1082f56d",
+  "revision_date": "2021-05-05T18:45:24Z",
+  "audit_date": "2026-11-10",
+  "files": [
+    {
+      "path": "model/backbone_radarResNet.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/backbone_radarResNet.py",
+      "sha256": "467ef5465b908b72fbb1dfe4c6fdeb65f9a08bc0baa80a9dcf053bbc5b9bde3f"
+    },
+    {
+      "path": "model/model_cart.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/model_cart.py",
+      "sha256": "9ea8aee7be4e27e34ee074113a4edfafffbaf4ddeb1edce42e3b56ffa2db2b5e"
+    },
+    {
+      "path": "model/layers.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/layers.py",
+      "sha256": "df4430d8266020b490ee48e71b186448bb09fa46340fc6cf31cb3eda357c316c"
+    },
+    {
+      "path": "anchors_cartboxes.txt",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/anchors_cartboxes.txt",
+      "sha256": "23ccb579ae5eaab2a7c16458606359c45daf2bc86bb0dfaeb24461e1c8cd9a73"
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/LICENSE",
+      "sha256": "12aaf80ec6778ddb5531cfa9b7d5f9dcaf9caff7e5c4eb598791548c900a0d5d"
+    },
+    {
+      "path": "config.json",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/config.json",
+      "sha256": "0c7131f93d0ff5bc295e7952d55947782e210b2d46111fee266aee6c54789854"
+    },
+    {
+      "path": "train_cart.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/train_cart.py",
+      "sha256": "3b5296e87c54875ba0cc57f83c76a7d5e4996117e078c6ad6499f38652afca52"
+    },
+    {
+      "path": "metrics/mAP.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/metrics/mAP.py",
+      "sha256": "9f067db104c5f79a4a01c1bcbffeb82c9e8ee097dcaac4939cfbd7c1c1483886"
+    },
+    {
+      "path": "evaluate.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/evaluate.py",
+      "sha256": "5a08f02e542eac5b2036b349d2bc0269d29ae620f196f4d75e604396d78419f1"
+    },
+    {
+      "path": "util/helper.py",
+      "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/util/helper.py",
+      "sha256": "4912eb91fb38b785668673f2eb1630275228e9045663d2a3ba4248645761c053"
+    }
+  ],
+  "note": "Backbone file history shows last source change in2021, before RADDet publication and RadSimReal2024. This pins the reference architecture, not the unreleased RadSimReal experiment."
+}

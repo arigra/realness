@@ -1,0 +1,28 @@
+{
+  "coordinate_system": "x_right_y_forward_z_up",
+  "fit_dimensions": true,
+  "height": 1.6,
+  "assets": [
+    {
+      "obj": "illustrative_sedan.obj",
+      "material_overrides": {
+        "body_metal": {
+          "name": "illustrative_conductive_body",
+          "relative_permittivity_real": 1.0,
+          "conductivity_s_per_m": 1400000.0,
+          "roughness_m": 0.0002,
+          "diffuse_fraction": 0.35,
+          "backscatter_scale": 1.0
+        },
+        "glass_reference": {
+          "name": "illustrative_glass",
+          "relative_permittivity_real": 6.0,
+          "loss_tangent": 0.02,
+          "roughness_m": 0.0001,
+          "diffuse_fraction": 0.1,
+          "backscatter_scale": 1.0
+        }
+      }
+    }
+  ]
+}

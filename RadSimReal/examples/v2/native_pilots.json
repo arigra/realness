@@ -1,0 +1,1610 @@
+{
+  "format_version": 1,
+  "execution_date": "2026-11-10",
+  "notice": "SYNTHETIC NATIVE-FORMAT FIXTURES ONLY: not measured RADDet/CARRADA data or real sensor calibration.",
+  "purpose": "Final fresh native-layout pipeline execution after source-scoring and AP fixes; two optimizer steps verify operation, not detector convergence.",
+  "working_directory_relative_to_workspace": "outputs/RadSimReal",
+  "python_interpreter_relative_to_workspace": "work/venv/Scripts/python.exe",
+  "device": "cpu",
+  "torch_threads": 1,
+  "data_origin_independently_certified": false,
+  "sensor_realism_established": false,
+  "published_result_reproduced": false,
+  "source_reference": {
+    "repository": "https://github.com/ZhangAoCanada/RADDet",
+    "revision": "e18b4cfaf3823ffd9983b48591d2d30a1082f56d",
+    "revision_date": "2021-05-05T18:45:24Z",
+    "audit_date": "2026-11-10",
+    "files": [
+      {
+        "path": "model/backbone_radarResNet.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/backbone_radarResNet.py",
+        "sha256": "467ef5465b908b72fbb1dfe4c6fdeb65f9a08bc0baa80a9dcf053bbc5b9bde3f"
+      },
+      {
+        "path": "model/model_cart.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/model_cart.py",
+        "sha256": "9ea8aee7be4e27e34ee074113a4edfafffbaf4ddeb1edce42e3b56ffa2db2b5e"
+      },
+      {
+        "path": "model/layers.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/model/layers.py",
+        "sha256": "df4430d8266020b490ee48e71b186448bb09fa46340fc6cf31cb3eda357c316c"
+      },
+      {
+        "path": "anchors_cartboxes.txt",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/anchors_cartboxes.txt",
+        "sha256": "23ccb579ae5eaab2a7c16458606359c45daf2bc86bb0dfaeb24461e1c8cd9a73"
+      },
+      {
+        "path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/LICENSE",
+        "sha256": "12aaf80ec6778ddb5531cfa9b7d5f9dcaf9caff7e5c4eb598791548c900a0d5d"
+      },
+      {
+        "path": "config.json",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/config.json",
+        "sha256": "0c7131f93d0ff5bc295e7952d55947782e210b2d46111fee266aee6c54789854"
+      },
+      {
+        "path": "train_cart.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/train_cart.py",
+        "sha256": "3b5296e87c54875ba0cc57f83c76a7d5e4996117e078c6ad6499f38652afca52"
+      },
+      {
+        "path": "metrics/mAP.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/metrics/mAP.py",
+        "sha256": "9f067db104c5f79a4a01c1bcbffeb82c9e8ee097dcaac4939cfbd7c1c1483886"
+      },
+      {
+        "path": "evaluate.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/evaluate.py",
+        "sha256": "5a08f02e542eac5b2036b349d2bc0269d29ae620f196f4d75e604396d78419f1"
+      },
+      {
+        "path": "util/helper.py",
+        "url": "https://raw.githubusercontent.com/ZhangAoCanada/RADDet/e18b4cfaf3823ffd9983b48591d2d30a1082f56d/util/helper.py",
+        "sha256": "4912eb91fb38b785668673f2eb1630275228e9045663d2a3ba4248645761c053"
+      }
+    ],
+    "note": "Backbone file history shows last source change in2021, before RADDet publication and RadSimReal2024. This pins the reference architecture, not the unreleased RadSimReal experiment."
+  },
+  "score_and_geometry_regressions": {
+    "raddet_objectness_logit_0_class_logit_minus_100": {
+      "score": 0.5,
+      "class_probability_multiplied": false
+    },
+    "grid_x_minus10_to10_y_0_to40_normalized_box_minus0p09_0p4_0p11_0p6": {
+      "physical_prediction": [
+        -11.8,
+        16,
+        -7.8,
+        24
+      ],
+      "prediction_clipped": false
+    },
+    "executed_regression_suite": "40 BEV/pretraining/legacy-detector tests passed; includes AP protocol, score and prediction-extent regressions."
+  },
+  "runs": [
+    {
+      "dataset_format": "raddet",
+      "source_notice": "SYNTHETIC NATIVE-FORMAT FIXTURE: not a real radar recording or sensor calibration.",
+      "fixture_description": "Isolated generated 3D Gaussian return plus complex IID Gaussian noise; co-located car annotation exercises I/O, not physical car scattering.",
+      "command": "python -m radsimreal native run --dataset raddet --root ../../work/native_integration_sources/raddet/raddet --profile ../../work/native_integration_sources/raddet/raddet/fixture_profile.json --selection ../../work/native_integration_sources/raddet/raddet/fixture_selection.json --split-file ../../work/native_integration_sources/raddet/raddet/fixture_split.json --out ../../work/v2_final_raddet --models unet raddet probabilistic --train 4 --val 2 --test 2 --epochs 1 --max-steps 2 --base-channels 8 --batch-size 2 --device cpu --max-samples 2000 --fit-gain --train-real-baseline --vehicle-assets configs/assets/vehicle_assets.json --matching-policy best_overall --ap-aggregation global_pr --trusted-labels --raddet-pretrain",
+      "run_report": "work/v2_final_raddet/run_report.json",
+      "run_inputs": "work/v2_final_raddet/run_inputs.json",
+      "status": "pilot_completed",
+      "elapsed_seconds": 12.136,
+      "completed_stages": [
+        "inspection",
+        "native_preparation",
+        "calibration",
+        "relative_gain_fit",
+        "simulation",
+        "distribution_diagnostics",
+        "synthetic_unet_native_test",
+        "native_unet_baseline",
+        "synthetic_raddet_native_test",
+        "native_raddet_baseline",
+        "synthetic_probabilistic_native_test",
+        "native_probabilistic_baseline",
+        "finished"
+      ],
+      "calibration_selection_status": "confirmed for controlled synthetic fixture only",
+      "fixture_split_counts": {
+        "train": 3,
+        "val": 2,
+        "test": 2
+      },
+      "fixture_split_source": "explicit scene/sequence split",
+      "generated_split_counts": {
+        "train": 4,
+        "val": 2,
+        "test": 2
+      },
+      "relative_gain_fit": "Unlabeled TRAIN-only quantiles; no absolute RCS fit",
+      "native_label_domain": "native_RADDet_Cartesian_rectangles",
+      "raddet_pretraining_protocol": "Both generated and native-fixture arms: two-step native RAD 3D pretraining, then two-step Cartesian head with frozen backbone",
+      "models": [
+        {
+          "training_arm": "generated simulator data",
+          "model": "unet",
+          "architecture": "coordinate_unet_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 3.4263060092926025,
+              "train_heatmap_loss": 2.6595932245254517,
+              "train_box_loss": 0.7667128443717957,
+              "target_collisions": 0,
+              "val_loss": 3.1889255046844482,
+              "last_gradient_norm": 13.889533996582031
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of center heatmap logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 2,
+                "false_positives": 171
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 0,
+                "false_positives": 173
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 0,
+                "false_positives": 173
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 2,
+                "false_positives": 171,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 0,
+                "false_positives": 173,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 173,
+                "true_positives": 0,
+                "false_positives": 173,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.16545608639717102
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -4.7562103271484375,
+                28.383241653442383,
+                2.0289154052734375,
+                31.709869384765625
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "generated simulator data",
+          "model": "raddet",
+          "architecture": "raddet_cartesian_port",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 14.575845718383789,
+              "train_heatmap_loss": 0.6025100946426392,
+              "train_box_loss": 13.97333574295044,
+              "target_collisions": 2,
+              "val_loss": 25.217031478881836,
+              "last_gradient_norm": 240.027099609375
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.9999914169311523
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -27.73518943786621,
+                -4000.7001953125,
+                -27.618709564208984,
+                3999.79248046875
+              ]
+            ]
+          },
+          "native_rad_pretraining_steps": 2,
+          "native_rad_pretraining_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "train_loss": 17.025249004364014,
+              "val_loss": 54514.55859375
+            }
+          ],
+          "backbone_frozen_weights_and_running_statistics_verified_unchanged": true
+        },
+        {
+          "training_arm": "generated simulator data",
+          "model": "probabilistic",
+          "architecture": "dong_probabilistic_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 65.25054168701172,
+              "train_heatmap_loss": 2.324595034122467,
+              "train_box_loss": 62.925947189331055,
+              "target_collisions": 0,
+              "val_loss": 41.305355072021484,
+              "last_gradient_norm": 12619.638671875
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.1108868271112442
+            ],
+            "boxes_cartesian_metres": [
+              [
+                45.70514678955078,
+                35.560176849365234,
+                47.72008514404297,
+                40.79757308959961
+              ]
+            ]
+          },
+          "probabilistic_output_verified": {
+            "localization_variance_shape": [
+              1,
+              6
+            ],
+            "physical_variance_shape": [
+              1,
+              4
+            ],
+            "uncertainty_calibrated_on_real_data": false,
+            "yaw_supervision_mask": [
+              false,
+              false
+            ]
+          }
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "unet",
+          "architecture": "coordinate_unet_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 5.26002852121989,
+              "train_heatmap_loss": 4.526731093724568,
+              "train_box_loss": 0.7332973877588908,
+              "target_collisions": 0,
+              "val_loss": 3.6384992599487305,
+              "last_gradient_norm": 36.79087829589844
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of center heatmap logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 2,
+                "false_positives": 142
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 0,
+                "false_positives": 144
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 0,
+                "false_positives": 144
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 2,
+                "false_positives": 142,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 0,
+                "false_positives": 144,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 144,
+                "true_positives": 0,
+                "false_positives": 144,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.1681986153125763
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -3.741466522216797,
+                30.005624771118164,
+                4.113018035888672,
+                33.28510284423828
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "raddet",
+          "architecture": "raddet_cartesian_port",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 9.072283109029135,
+              "train_heatmap_loss": 0.18035264313220978,
+              "train_box_loss": 8.89193058013916,
+              "target_collisions": 0,
+              "val_loss": 26.58350372314453,
+              "last_gradient_norm": 118.28704833984375
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 70,
+                "true_positives": 0,
+                "false_positives": 70,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.9998254179954529
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -28.733713150024414,
+                -450.8765869140625,
+                -28.299095153808594,
+                451.27313232421875
+              ]
+            ]
+          },
+          "native_rad_pretraining_steps": 2,
+          "native_rad_pretraining_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "train_loss": 4.218185504277547,
+              "val_loss": 38590.60546875
+            }
+          ],
+          "backbone_frozen_weights_and_running_statistics_verified_unchanged": true
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "probabilistic",
+          "architecture": "dong_probabilistic_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 7.313357671101888,
+              "train_heatmap_loss": 5.632351080576579,
+              "train_box_loss": 1.6810064315795898,
+              "target_collisions": 0,
+              "val_loss": 11.787848472595215,
+              "last_gradient_norm": 92586.28125
+            }
+          ],
+          "training_label_domain": "native_RADDet_Cartesian_rectangles",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 2,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 2,
+                "num_predictions": 134,
+                "true_positives": 0,
+                "false_positives": 134,
+                "num_frames_scored": 2,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.11044224351644516
+            ],
+            "boxes_cartesian_metres": [
+              [
+                45.71637725830078,
+                35.59186553955078,
+                47.742454528808594,
+                40.850791931152344
+              ]
+            ]
+          },
+          "probabilistic_output_verified": {
+            "localization_variance_shape": [
+              1,
+              6
+            ],
+            "physical_variance_shape": [
+              1,
+              4
+            ],
+            "uncertainty_calibrated_on_real_data": false,
+            "yaw_supervision_mask": [
+              false,
+              false
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "dataset_format": "carrada",
+      "source_notice": "SYNTHETIC NATIVE-FORMAT FIXTURE: not a real radar recording or sensor calibration.",
+      "fixture_description": "Isolated generated 3D Gaussian return plus complex IID Gaussian noise; co-located car annotation exercises I/O, not physical car scattering.",
+      "command": "python -m radsimreal native run --dataset carrada --root ../../work/native_integration_sources/carrada/carrada --profile ../../work/native_integration_sources/carrada/carrada/fixture_profile.json --selection ../../work/native_integration_sources/carrada/carrada/fixture_selection.json --split-file ../../work/native_integration_sources/carrada/carrada/fixture_split.json --out ../../work/v2_final_carrada --models unet raddet probabilistic --train 4 --val 2 --test 2 --epochs 1 --max-steps 2 --base-channels 8 --batch-size 2 --device cpu --max-samples 2000 --fit-gain --train-real-baseline --vehicle-assets configs/assets/vehicle_assets.json --matching-policy best_overall --ap-aggregation global_pr",
+      "run_report": "work/v2_final_carrada/run_report.json",
+      "run_inputs": "work/v2_final_carrada/run_inputs.json",
+      "status": "pilot_completed",
+      "elapsed_seconds": 11.823,
+      "completed_stages": [
+        "inspection",
+        "native_preparation",
+        "calibration",
+        "relative_gain_fit",
+        "simulation",
+        "distribution_diagnostics",
+        "synthetic_unet_native_test",
+        "native_unet_baseline",
+        "synthetic_raddet_native_test",
+        "native_raddet_baseline",
+        "synthetic_probabilistic_native_test",
+        "native_probabilistic_baseline",
+        "finished"
+      ],
+      "calibration_selection_status": "confirmed for controlled synthetic fixture only",
+      "fixture_split_counts": {
+        "train": 3,
+        "val": 3,
+        "test": 3
+      },
+      "fixture_split_source": "explicit scene/sequence split",
+      "generated_split_counts": {
+        "train": 4,
+        "val": 2,
+        "test": 2
+      },
+      "relative_gain_fit": "Unlabeled TRAIN-only quantiles; no absolute RCS fit",
+      "native_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+      "raddet_pretraining_protocol": "Neither arm: public CARRADA annotation format has no genuine native 3D RAD boxes",
+      "models": [
+        {
+          "training_arm": "generated simulator data",
+          "model": "unet",
+          "architecture": "coordinate_unet_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 3.9498515129089355,
+              "train_heatmap_loss": 2.614005923271179,
+              "train_box_loss": 1.3358455896377563,
+              "target_collisions": 0,
+              "val_loss": 3.7237372398376465,
+              "last_gradient_norm": 14.196412086486816
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of center heatmap logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.4285714285714286,
+              "AP@0.3": 0.4285714285714286,
+              "AP@0.5": 0.4285714285714286
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.4444444444444444,
+              "AP@0.3": 0.4444444444444444,
+              "AP@0.5": 0.4444444444444444
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 224,
+                "true_positives": 3,
+                "false_positives": 221,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.1837700605392456
+            ],
+            "boxes_cartesian_metres": [
+              [
+                0.11522293090820312,
+                25.832111358642578,
+                8.288318634033203,
+                29.194843292236328
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "generated simulator data",
+          "model": "raddet",
+          "architecture": "raddet_cartesian_port",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 15.045255184173584,
+              "train_heatmap_loss": 1.0155104100704193,
+              "train_box_loss": 14.029744148254395,
+              "target_collisions": 2,
+              "val_loss": 118.338134765625,
+              "last_gradient_norm": 743.7512817382812
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 105,
+                "true_positives": 0,
+                "false_positives": 105,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              1.0
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -26.43473243713379,
+                -333774.28125,
+                -26.414077758789062,
+                333774.6875
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "generated simulator data",
+          "model": "probabilistic",
+          "architecture": "dong_probabilistic_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 162.18511199951172,
+              "train_heatmap_loss": 2.2221617102622986,
+              "train_box_loss": 159.96295166015625,
+              "target_collisions": 0,
+              "val_loss": 152.9822540283203,
+              "last_gradient_norm": 5842.80029296875
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 200,
+                "true_positives": 0,
+                "false_positives": 200,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.10775440186262131
+            ],
+            "boxes_cartesian_metres": [
+              [
+                44.20039367675781,
+                32.98697280883789,
+                46.276084899902344,
+                38.0450325012207
+              ]
+            ]
+          },
+          "probabilistic_output_verified": {
+            "localization_variance_shape": [
+              1,
+              6
+            ],
+            "physical_variance_shape": [
+              1,
+              4
+            ],
+            "uncertainty_calibrated_on_real_data": false,
+            "yaw_supervision_mask": [
+              false,
+              false
+            ]
+          }
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "unet",
+          "architecture": "coordinate_unet_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 5.678188800811768,
+              "train_heatmap_loss": 4.5867321491241455,
+              "train_box_loss": 1.0914567311604817,
+              "target_collisions": 0,
+              "val_loss": 3.4015448888142905,
+              "last_gradient_norm": 38.277523040771484
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of center heatmap logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 1.0,
+              "AP@0.5": 1.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 1.0,
+              "AP@0.3": 1.0,
+              "AP@0.5": 1.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 195,
+                "true_positives": 3,
+                "false_positives": 192,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.3181193768978119
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -3.4442825317382812,
+                29.801729202270508,
+                4.998416900634766,
+                31.82533073425293
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "raddet",
+          "architecture": "raddet_cartesian_port",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 5.034182866414388,
+              "train_heatmap_loss": 0.506741444269816,
+              "train_box_loss": 4.527441581090291,
+              "target_collisions": 0,
+              "val_loss": 34430.834635416664,
+              "last_gradient_norm": 348.3448181152344
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 99,
+                "true_positives": 0,
+                "false_positives": 99,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.9999997615814209
+            ],
+            "boxes_cartesian_metres": [
+              [
+                -28.02326011657715,
+                -59030.078125,
+                -27.989133834838867,
+                59031.01953125
+              ]
+            ]
+          }
+        },
+        {
+          "training_arm": "native-format fixture only baseline",
+          "model": "probabilistic",
+          "architecture": "dong_probabilistic_bev",
+          "cartesian_training_steps": 2,
+          "cartesian_history": [
+            {
+              "epoch": 0,
+              "global_step": 2,
+              "updates": 2,
+              "train_loss": 77.73968251546223,
+              "train_heatmap_loss": 5.752726872762044,
+              "train_box_loss": 71.98695246378581,
+              "target_collisions": 0,
+              "val_loss": 108.20865631103516,
+              "last_gradient_norm": 16096.6220703125
+            }
+          ],
+          "training_label_domain": "Cartesian_enclosure_of_CARRADA_radar_annotation_support",
+          "metric_domain": "cartesian_bev_metres_axis_aligned",
+          "score_definition": "sigmoid of objectness logit",
+          "prediction_clipping": "none",
+          "sensor_sampling_equal": true,
+          "evaluation_thresholds": {
+            "score_threshold": 0.05,
+            "nms_threshold": 0.3,
+            "top_k": 100
+          },
+          "global_pr": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "global_pr",
+            "zero_gt_policy": "undefined class AP without GT; include GT-empty-frame detections as false positives",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197
+              }
+            }
+          },
+          "reference_frame_mean": {
+            "AP": {
+              "AP@0.1": 0.0,
+              "AP@0.3": 0.0,
+              "AP@0.5": 0.0
+            },
+            "matching_policy": "best_overall",
+            "ap_aggregation": "frame_mean",
+            "zero_gt_policy": "exclude GT-empty frames; class AP0 if no positive frame exists (RADDet released per-class evaluator)",
+            "num_images": 3,
+            "counts": {
+              "0.1": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.3": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              },
+              "0.5": {
+                "num_ground_truth": 3,
+                "num_predictions": 197,
+                "true_positives": 0,
+                "false_positives": 197,
+                "num_frames_scored": 3,
+                "num_gt_empty_frames_excluded": 0,
+                "num_predictions_ignored_in_gt_empty_frames": 0
+              }
+            }
+          },
+          "first_frame_top_prediction_at_zero_cutoff": {
+            "score": [
+              0.10872555524110794
+            ],
+            "boxes_cartesian_metres": [
+              [
+                44.240631103515625,
+                36.04656982421875,
+                46.25750732421875,
+                41.17985916137695
+              ]
+            ]
+          },
+          "probabilistic_output_verified": {
+            "localization_variance_shape": [
+              1,
+              6
+            ],
+            "physical_variance_shape": [
+              1,
+              4
+            ],
+            "uncertainty_calibrated_on_real_data": false,
+            "yaw_supervision_mask": [
+              false,
+              false
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "raddet",
+  "shape_native": [
+    256,
+    256,
+    64
+  ],
+  "representation": null,
+  "range_step": 0.1953125,
+  "range_min": 0.0,
+  "velocity_step": 0.41968030701528203,
+  "velocity_min_native": -13.429769824489025,
+  "range_reversed": true,
+  "doppler_reversed": false,
+  "doppler_positive": "approaching",
+  "azimuth_reversed": false,
+  "azimuth_coordinate": "sin",
+  "angular_min": -0.9974025974025974,
+  "angular_step": 0.007792207792207792,
+  "cartesian_affine": {
+    "x_from_col_scale": 0.1953125,
+    "x_from_col_offset": -49.8046875,
+    "y_from_row_scale": -0.1953125,
+    "y_from_row_offset": 49.8046875
+  },
+  "cartesian_mapping_validated": true,
+  "car_labels": [
+    "car",
+    "truck",
+    "bus"
+  ],
+  "annotation_range_reverse_origin": "R-1",
+  "annotation_angle_step": null,
+  "evidence": [
+    "RADDet util/helper.py toCartesianMask, inference.py and config.json; reference 2026-11-10",
+    "REFERENCE ONLY: explicit public-helper affine, not validated on the user recording release",
+    "2026-11-10 local: RAD gt boxes -> (R-1-row)*0.1953 m and sin grid agree with cart_boxes via the affine: median 0.077 m range, 0.0033 sin error over 5,695 boxes (reversed alternatives fail: 18.5 m / 0.60)",
+    "2026-11-10 local: Doppler sign from 3,422 frame-to-frame matched moving boxes: range decreases for v>0 in 90.9% -> positive = approaching (reference said receding)",
+    "2026-11-10 local: gt 'boxes' Doppler centre is absolute index in [0,64) over all 28,401 boxes",
+    "2026-11-10 local: paper's 'car' counts = car+truck+bus (original split 16,755/4,135 exactly)",
+    "2026-11-10 local: radar static; zero-Doppler returns phase coherence 0.999 over ~400 frames (scene 3)"
+  ],
+  "unresolved": [
+    "Sensor PSF/noise are uncalibrated until a verified selection is calibrated"
+  ]
+}

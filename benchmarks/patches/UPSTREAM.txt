@@ -1,0 +1,3 @@
+RADIal  https://github.com/valeoai/RADIal.git          02f52fc  (unmodified; config in configs/radial_config.json)
+MVRSS   https://github.com/valeoai/MVRSS.git           368c2c8  (patches/MVRSS.diff; config.ini -> configs/mvrss_config.ini)
+RADDet  https://github.com/ZhangAoCanada/RADDet.git    3ea3975  (patches/RADDet.diff; config.json -> configs/raddet_config.json)

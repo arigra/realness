@@ -1,0 +1,42 @@
+{
+  "name": "raddet",
+  "shape_native": [
+    256,
+    256,
+    64
+  ],
+  "representation": null,
+  "range_step": 0.1953125,
+  "range_min": 0.0,
+  "velocity_step": 0.41968030701528203,
+  "velocity_min_native": -13.429769824489025,
+  "range_reversed": true,
+  "doppler_reversed": false,
+  "doppler_positive": "receding",
+  "azimuth_reversed": false,
+  "azimuth_coordinate": "sin",
+  "angular_min": -0.9974025974025974,
+  "angular_step": 0.007792207792207792,
+  "cartesian_affine": {
+    "x_from_col_scale": 0.1953125,
+    "x_from_col_offset": -49.8046875,
+    "y_from_row_scale": -0.1953125,
+    "y_from_row_offset": 49.8046875
+  },
+  "cartesian_mapping_validated": false,
+  "car_labels": [
+    "car"
+  ],
+  "annotation_range_reverse_origin": "R-1",
+  "annotation_angle_step": null,
+  "evidence": [
+    "RADDet util/helper.py toCartesianMask, inference.py and config.json; reference 2026-11-10",
+    "REFERENCE ONLY: explicit public-helper affine, not validated on the user recording release"
+  ],
+  "unresolved": [
+    "Confirm range/angle overlays on the local release",
+    "Confirm physical Doppler sign",
+    "Sensor PSF/noise are uncalibrated",
+    "The explicitly supplied public-helper Cartesian affine still requires local overlay validation"
+  ]
+}

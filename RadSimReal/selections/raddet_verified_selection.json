@@ -1,0 +1,5456 @@
+{
+ "targets": [
+  {
+   "record_id": "raddet/009159",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009160",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009161",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009163",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009169",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009170",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009171",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009172",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009175",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009176",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009177",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009178",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009179",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009180",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009181",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009182",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009183",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009184",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009185",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009186",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009187",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009188",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009189",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009190",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009191",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009192",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009193",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009194",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009195",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009198",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009199",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009200",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009201",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009202",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009203",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009204",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009205",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009206",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009207",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009208",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009231",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009233",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009234",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009235",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009236",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009237",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009238",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009239",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009240",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009242",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009243",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009244",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009245",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009246",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009247",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009248",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009249",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009251",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009252",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009253",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009254",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009255",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009256",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009257",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009258",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009259",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009260",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009261",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009262",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009263",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009264",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009270",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009271",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009272",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009273",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009274",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009275",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009276",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009277",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009278",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009279",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009280",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009281",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009282",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009283",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009289",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009290",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009291",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009292",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009293",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009294",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009295",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009296",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009297",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009298",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009299",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009300",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009301",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009302",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009303",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009304",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009305",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009306",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009307",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009308",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009309",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009310",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009311",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009312",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009313",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009314",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009315",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009316",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009317",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009318",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009319",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009320",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009321",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009322",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009323",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009324",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009325",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009326",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009327",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009328",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009329",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009330",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009331",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009333",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009334",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009335",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009336",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009337",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009338",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009339",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009340",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009342",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009343",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009344",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009345",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009346",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009347",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009349",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009350",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009352",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009353",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009354",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009355",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009356",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009357",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009358",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009359",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009360",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009361",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009362",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009363",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009364",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009365",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009366",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009369",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009370",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009371",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009372",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009385",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009386",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009387",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009388",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009389",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009394",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009396",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009397",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009398",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009399",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009403",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009404",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009405",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009406",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009407",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009408",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009410",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009412",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009413",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009414",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009415",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009416",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009417",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009418",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009419",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009420",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009421",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009422",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009423",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009424",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009425",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009426",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009427",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009428",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009429",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009430",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009431",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009432",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009433",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009434",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009436",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  },
+  {
+   "record_id": "raddet/009437",
+   "center": [
+    99,
+    31,
+    88
+   ],
+   "half_widths": [
+    8,
+    3,
+    64
+   ]
+  }
+ ],
+ "noise_regions": [
+  {
+   "record_id": "raddet/001029",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004608",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004608",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004582",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004582",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004178",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004178",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/002369",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/002369",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004110",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004110",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008048",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008048",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005983",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005983",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/000197",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/000197",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004206",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004206",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005299",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005299",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004656",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/004656",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/001018",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/001018",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/009868",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/009868",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008226",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008226",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/006095",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/006095",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008422",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008422",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005094",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005094",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/003806",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005455",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005455",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/010064",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/010064",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008225",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/008225",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/003306",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/009728",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/009728",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/005909",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/000992",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  },
+  {
+   "record_id": "raddet/000992",
+   "bounds": [
+    [
+     128,
+     250
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     0,
+     256
+    ]
+   ]
+  }
+ ],
+ "energy_fraction": 0.99,
+ "target_is_isolated": true,
+ "sensor_target_stationary": true,
+ "domain_verified": true,
+ "evidence": {
+  "radar_static": "zero-Doppler phase coherence 0.999 over ~400 frames (scene_3)",
+  "target_stationary": "phase coherence 1.000, amplitude CV 0.008, 100% of Doppler-profile energy in zero bin (24 frames)",
+  "target_isolation": "no local maximum within +-12 range / +-48 azimuth bins above 9.7 dB below the target; range cut shows clutter at -15..-25 dB beyond +-2 bins (partial isolation, recorded)",
+  "point_like": "azimuth cut matches 4 other independent stationary reflectors (scenes 0,1,2,12): nulls at +-32 bins, first sidelobes -10..-13 dB; range -3 dB width 1-2 bins",
+  "unlabelled": "no labelled RAD box of any class overlaps the crop in any used frame",
+  "noise": "far range 25-49 m at |v|>10.9 m/s; both Doppler sides agree (2824 vs 2846), zero mean, re/im variance ratio 1.00; mean/median 1.57 vs 1.44 complex Gaussian -> empirical model",
+  "domain": "complex64 RADDet field; profile verified against native labels (profiles/raddet_verified.json)",
+  "per_frame_checks": [
+   {
+    "record_id": "raddet/009159",
+    "peak_power": 75045175.58124849,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.14123129944231372
+   },
+   {
+    "record_id": "raddet/009160",
+    "peak_power": 75072930.92889999,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1428372342287199
+   },
+   {
+    "record_id": "raddet/009161",
+    "peak_power": 74581306.8979287,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.11430341187017641
+   },
+   {
+    "record_id": "raddet/009162",
+    "peak_power": 72404395.967196,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.01434713310583716
+   },
+   {
+    "record_id": "raddet/009163",
+    "peak_power": 73511652.23250984,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0515653586760767
+   },
+   {
+    "record_id": "raddet/009164",
+    "peak_power": 74979154.29436803,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.13740889510895773
+   },
+   {
+    "record_id": "raddet/009165",
+    "peak_power": 71038280.3505919,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.0970720832976025
+   },
+   {
+    "record_id": "raddet/009166",
+    "peak_power": 74734591.1152749,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.12322014666230932
+   },
+   {
+    "record_id": "raddet/009167",
+    "peak_power": 74215004.49200153,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.09292069969380548
+   },
+   {
+    "record_id": "raddet/009168",
+    "peak_power": 74490270.78802349,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.10899904926606356
+   },
+   {
+    "record_id": "raddet/009169",
+    "peak_power": 74121537.39733434,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08744770587737093
+   },
+   {
+    "record_id": "raddet/009170",
+    "peak_power": 74162358.16969536,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08983882685021378
+   },
+   {
+    "record_id": "raddet/009171",
+    "peak_power": 74406056.0880816,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10408637154631273
+   },
+   {
+    "record_id": "raddet/009172",
+    "peak_power": 74831898.58033751,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.12887115862003531
+   },
+   {
+    "record_id": "raddet/009173",
+    "peak_power": 74580560.3491235,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": 0.11425993936174524
+   },
+   {
+    "record_id": "raddet/009174",
+    "peak_power": 72689745.24541976,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": 0.0027349869138592825
+   },
+   {
+    "record_id": "raddet/009175",
+    "peak_power": 73140120.0827527,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.029560209314625628
+   },
+   {
+    "record_id": "raddet/009176",
+    "peak_power": 74274646.20285082,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09640943674515051
+   },
+   {
+    "record_id": "raddet/009177",
+    "peak_power": 71440610.51220535,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.07254490843613706
+   },
+   {
+    "record_id": "raddet/009178",
+    "peak_power": 73813057.46709655,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06933546840061837
+   },
+   {
+    "record_id": "raddet/009179",
+    "peak_power": 72252254.36401747,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.023482459126458764
+   },
+   {
+    "record_id": "raddet/009180",
+    "peak_power": 72440207.74673891,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.012199609737932205
+   },
+   {
+    "record_id": "raddet/009181",
+    "peak_power": 71517205.68722844,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06789110692735571
+   },
+   {
+    "record_id": "raddet/009182",
+    "peak_power": 75097506.99561717,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1442587190968413
+   },
+   {
+    "record_id": "raddet/009183",
+    "peak_power": 71638081.64730668,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06055700479114065
+   },
+   {
+    "record_id": "raddet/009184",
+    "peak_power": 73620714.69709516,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.058003810828470684
+   },
+   {
+    "record_id": "raddet/009185",
+    "peak_power": 71398685.46746945,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.07509432118426494
+   },
+   {
+    "record_id": "raddet/009186",
+    "peak_power": 73061364.8573792,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.02488132891570119
+   },
+   {
+    "record_id": "raddet/009187",
+    "peak_power": 72567437.57083538,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.004578601259835527
+   },
+   {
+    "record_id": "raddet/009188",
+    "peak_power": 73400453.99424194,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.04499098005748614
+   },
+   {
+    "record_id": "raddet/009189",
+    "peak_power": 71192727.27563573,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.0876401774457073
+   },
+   {
+    "record_id": "raddet/009190",
+    "peak_power": 71169083.84877445,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.08908272862322404
+   },
+   {
+    "record_id": "raddet/009191",
+    "peak_power": 72569716.26996279,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.004442230050831804
+   },
+   {
+    "record_id": "raddet/009192",
+    "peak_power": 74147514.33653642,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08896948555232098
+   },
+   {
+    "record_id": "raddet/009193",
+    "peak_power": 72014621.06945276,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.037789682676222736
+   },
+   {
+    "record_id": "raddet/009194",
+    "peak_power": 73717719.44807172,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06372243196070139
+   },
+   {
+    "record_id": "raddet/009195",
+    "peak_power": 73171937.1509633,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.03144904576915609
+   },
+   {
+    "record_id": "raddet/009196",
+    "peak_power": 71110111.18378925,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.09268290424229556
+   },
+   {
+    "record_id": "raddet/009197",
+    "peak_power": 72603754.43325998,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.0024056889812584647
+   },
+   {
+    "record_id": "raddet/009198",
+    "peak_power": 73856178.50854349,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07187184380242619
+   },
+   {
+    "record_id": "raddet/009199",
+    "peak_power": 73857887.01646852,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07197230756821939
+   },
+   {
+    "record_id": "raddet/009200",
+    "peak_power": 69896713.17696573,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.16742894141413084
+   },
+   {
+    "record_id": "raddet/009201",
+    "peak_power": 72905900.64479566,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0156303129491049
+   },
+   {
+    "record_id": "raddet/009202",
+    "peak_power": 72484636.69640589,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.009536816018092592
+   },
+   {
+    "record_id": "raddet/009203",
+    "peak_power": 72733577.33543037,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.005353003757447295
+   },
+   {
+    "record_id": "raddet/009204",
+    "peak_power": 74331860.50259897,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09975355086843737
+   },
+   {
+    "record_id": "raddet/009205",
+    "peak_power": 73518989.51437761,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.05199881132133856
+   },
+   {
+    "record_id": "raddet/009206",
+    "peak_power": 71117302.36088681,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09224373594742422
+   },
+   {
+    "record_id": "raddet/009207",
+    "peak_power": 70757614.0626526,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.1142646797122828
+   },
+   {
+    "record_id": "raddet/009208",
+    "peak_power": 72888872.32579446,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.01461583144729839
+   },
+   {
+    "record_id": "raddet/009209",
+    "peak_power": 73170043.2531588,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.03133663655294023
+   },
+   {
+    "record_id": "raddet/009210",
+    "peak_power": 73409301.33699894,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.04551442649125334
+   },
+   {
+    "record_id": "raddet/009211",
+    "peak_power": 72974418.1638913,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.019709928744858815
+   },
+   {
+    "record_id": "raddet/009212",
+    "peak_power": 72010664.98814584,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.03802826637621306
+   },
+   {
+    "record_id": "raddet/009213",
+    "peak_power": 72551915.67601061,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.005507639757591215
+   },
+   {
+    "record_id": "raddet/009214",
+    "peak_power": 74932277.51515795,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.13469284777912627
+   },
+   {
+    "record_id": "raddet/009215",
+    "peak_power": 73351388.60343027,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": 0.04208691713074522
+   },
+   {
+    "record_id": "raddet/009216",
+    "peak_power": 72759579.41637635,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.006905318745338228
+   },
+   {
+    "record_id": "raddet/009217",
+    "peak_power": 72379727.70572402,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.015827031545986442
+   },
+   {
+    "record_id": "raddet/009218",
+    "peak_power": 73480841.58440827,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.049744735826177174
+   },
+   {
+    "record_id": "raddet/009219",
+    "peak_power": 73859297.19851421,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": 0.07205522741051039
+   },
+   {
+    "record_id": "raddet/009220",
+    "peak_power": 73940004.25002313,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": 0.0767982309648273
+   },
+   {
+    "record_id": "raddet/009221",
+    "peak_power": 73918065.91896653,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.07550946854840054
+   },
+   {
+    "record_id": "raddet/009222",
+    "peak_power": 71632092.85484554,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.06092008099031341
+   },
+   {
+    "record_id": "raddet/009223",
+    "peak_power": 75365626.3171358,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.15973664548502242
+   },
+   {
+    "record_id": "raddet/009224",
+    "peak_power": 74203285.56930399,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.09223487270174519
+   },
+   {
+    "record_id": "raddet/009225",
+    "peak_power": 73072195.17088534,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.025525061320591243
+   },
+   {
+    "record_id": "raddet/009226",
+    "peak_power": 72707761.64741158,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.0038112672677741394
+   },
+   {
+    "record_id": "raddet/009227",
+    "peak_power": 71458513.57771707,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.07145669986227905
+   },
+   {
+    "record_id": "raddet/009228",
+    "peak_power": 71658665.94158268,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.05930929392123639
+   },
+   {
+    "record_id": "raddet/009229",
+    "peak_power": 72108275.18754767,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.032145406370723835
+   },
+   {
+    "record_id": "raddet/009230",
+    "peak_power": 71964467.57866979,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.04081531443715829
+   },
+   {
+    "record_id": "raddet/009231",
+    "peak_power": 72728249.75206992,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.005034880425341934
+   },
+   {
+    "record_id": "raddet/009232",
+    "peak_power": 72728499.33600259,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.00504978422670019
+   },
+   {
+    "record_id": "raddet/009233",
+    "peak_power": 73140094.87968113,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.029558712795781237
+   },
+   {
+    "record_id": "raddet/009234",
+    "peak_power": 72738194.03330733,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.005628659493867122
+   },
+   {
+    "record_id": "raddet/009235",
+    "peak_power": 73813933.76264046,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06938702676620856
+   },
+   {
+    "record_id": "raddet/009236",
+    "peak_power": 74085278.5835421,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08532270198193222
+   },
+   {
+    "record_id": "raddet/009237",
+    "peak_power": 71572550.18003201,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06453156397737546
+   },
+   {
+    "record_id": "raddet/009238",
+    "peak_power": 72598943.86849046,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.002693452467673063
+   },
+   {
+    "record_id": "raddet/009239",
+    "peak_power": 71882245.25175214,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.045780142072896754
+   },
+   {
+    "record_id": "raddet/009240",
+    "peak_power": 72764491.47487283,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.007198504592538922
+   },
+   {
+    "record_id": "raddet/009241",
+    "peak_power": 71453841.67070866,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.07174064780098807
+   },
+   {
+    "record_id": "raddet/009242",
+    "peak_power": 70756179.34342028,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11435274047734345
+   },
+   {
+    "record_id": "raddet/009243",
+    "peak_power": 72606263.63789561,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.002255598272393735
+   },
+   {
+    "record_id": "raddet/009244",
+    "peak_power": 70022324.05568361,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.15963127110016512
+   },
+   {
+    "record_id": "raddet/009245",
+    "peak_power": 72200546.2576151,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.026591647199341702
+   },
+   {
+    "record_id": "raddet/009246",
+    "peak_power": 71688834.52242112,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.05748128180578049
+   },
+   {
+    "record_id": "raddet/009247",
+    "peak_power": 71535358.28894518,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06678891419750048
+   },
+   {
+    "record_id": "raddet/009248",
+    "peak_power": 73115671.78432894,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0281082652841412
+   },
+   {
+    "record_id": "raddet/009249",
+    "peak_power": 71931830.7775278,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.04278534188719067
+   },
+   {
+    "record_id": "raddet/009250",
+    "peak_power": 73350730.06369494,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": 0.042047926531867966
+   },
+   {
+    "record_id": "raddet/009251",
+    "peak_power": 72481654.018986,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.009715527957060748
+   },
+   {
+    "record_id": "raddet/009252",
+    "peak_power": 72836291.72738124,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.011481785946593263
+   },
+   {
+    "record_id": "raddet/009253",
+    "peak_power": 72535801.45026445,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.0064723415930172355
+   },
+   {
+    "record_id": "raddet/009254",
+    "peak_power": 72423936.570225,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.01317521101416225
+   },
+   {
+    "record_id": "raddet/009255",
+    "peak_power": 72952994.80621457,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.018434767909711998
+   },
+   {
+    "record_id": "raddet/009256",
+    "peak_power": 73851894.62505652,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07161993245857595
+   },
+   {
+    "record_id": "raddet/009257",
+    "peak_power": 72462700.0923047,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.010851354994336766
+   },
+   {
+    "record_id": "raddet/009258",
+    "peak_power": 72478331.65681839,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.00991460131510531
+   },
+   {
+    "record_id": "raddet/009259",
+    "peak_power": 72615305.79096699,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.001714775417505064
+   },
+   {
+    "record_id": "raddet/009260",
+    "peak_power": 71940050.48566292,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.042289098443581585
+   },
+   {
+    "record_id": "raddet/009261",
+    "peak_power": 72270777.21104288,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.02236922890859687
+   },
+   {
+    "record_id": "raddet/009262",
+    "peak_power": 72661579.96937966,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0010518892055287373
+   },
+   {
+    "record_id": "raddet/009263",
+    "peak_power": 72622293.58442426,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.00129687259419108
+   },
+   {
+    "record_id": "raddet/009264",
+    "peak_power": 72347634.50684786,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.017753121981673822
+   },
+   {
+    "record_id": "raddet/009265",
+    "peak_power": 72271210.95778894,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.022343163981616596
+   },
+   {
+    "record_id": "raddet/009266",
+    "peak_power": 72213520.06054807,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.025811328331257412
+   },
+   {
+    "record_id": "raddet/009267",
+    "peak_power": 71161539.23573492,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.08954314729395291
+   },
+   {
+    "record_id": "raddet/009268",
+    "peak_power": 71901574.66951942,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.04461246416172404
+   },
+   {
+    "record_id": "raddet/009269",
+    "peak_power": 73650509.61143686,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": 0.059761081079285364
+   },
+   {
+    "record_id": "raddet/009270",
+    "peak_power": 74468038.81152773,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10770268321417191
+   },
+   {
+    "record_id": "raddet/009271",
+    "peak_power": 74970022.17035532,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1368799117340317
+   },
+   {
+    "record_id": "raddet/009272",
+    "peak_power": 74095454.24023674,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08591916705197934
+   },
+   {
+    "record_id": "raddet/009273",
+    "peak_power": 75238109.92817737,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.15238228912023444
+   },
+   {
+    "record_id": "raddet/009274",
+    "peak_power": 75511364.87460256,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.168126721465946
+   },
+   {
+    "record_id": "raddet/009275",
+    "peak_power": 72716260.23632859,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.004318871201018303
+   },
+   {
+    "record_id": "raddet/009276",
+    "peak_power": 72670546.70691393,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.001587793375626752
+   },
+   {
+    "record_id": "raddet/009277",
+    "peak_power": 74500150.28957868,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10957500750346279
+   },
+   {
+    "record_id": "raddet/009278",
+    "peak_power": 72721635.93663074,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.004639920534113983
+   },
+   {
+    "record_id": "raddet/009279",
+    "peak_power": 73119701.98061849,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.028347645396479267
+   },
+   {
+    "record_id": "raddet/009280",
+    "peak_power": 74612525.48186542,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.11612092117577773
+   },
+   {
+    "record_id": "raddet/009281",
+    "peak_power": 73407237.87945296,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.045392349206132755
+   },
+   {
+    "record_id": "raddet/009282",
+    "peak_power": 75122197.84036277,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.14568637437479834
+   },
+   {
+    "record_id": "raddet/009283",
+    "peak_power": 73301936.2227254,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.03915798293895819
+   },
+   {
+    "record_id": "raddet/009284",
+    "peak_power": 73521480.92740868,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.052145982631167896
+   },
+   {
+    "record_id": "raddet/009285",
+    "peak_power": 73679087.70850873,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.06144591701762326
+   },
+   {
+    "record_id": "raddet/009286",
+    "peak_power": 72019278.46335648,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.03750882095135131
+   },
+   {
+    "record_id": "raddet/009287",
+    "peak_power": 75153093.56511118,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.147472142725163
+   },
+   {
+    "record_id": "raddet/009288",
+    "peak_power": 74193469.66157077,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.09166033256938294
+   },
+   {
+    "record_id": "raddet/009289",
+    "peak_power": 73930183.35721447,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07622135206456314
+   },
+   {
+    "record_id": "raddet/009290",
+    "peak_power": 75006606.51167989,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.13899869224218064
+   },
+   {
+    "record_id": "raddet/009291",
+    "peak_power": 74155803.64206053,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08945497700332157
+   },
+   {
+    "record_id": "raddet/009292",
+    "peak_power": 72121852.46457005,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.03132774967118434
+   },
+   {
+    "record_id": "raddet/009293",
+    "peak_power": 71565599.22849463,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06495336066980284
+   },
+   {
+    "record_id": "raddet/009294",
+    "peak_power": 73986706.5816767,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07954047616030462
+   },
+   {
+    "record_id": "raddet/009295",
+    "peak_power": 74459159.9969485,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10718484359682537
+   },
+   {
+    "record_id": "raddet/009296",
+    "peak_power": 74418502.18012236,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10481276632551613
+   },
+   {
+    "record_id": "raddet/009297",
+    "peak_power": 74326062.60099457,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09941478699738185
+   },
+   {
+    "record_id": "raddet/009298",
+    "peak_power": 73035477.96709538,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.02334227666731481
+   },
+   {
+    "record_id": "raddet/009299",
+    "peak_power": 73391860.4120524,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.044482486769664396
+   },
+   {
+    "record_id": "raddet/009300",
+    "peak_power": 74513539.70442249,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.11035546586248515
+   },
+   {
+    "record_id": "raddet/009301",
+    "peak_power": 72079255.83632873,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.033893538706921
+   },
+   {
+    "record_id": "raddet/009302",
+    "peak_power": 73557030.4588628,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.054245400894230175
+   },
+   {
+    "record_id": "raddet/009303",
+    "peak_power": 73337088.22531222,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.041240146415043547
+   },
+   {
+    "record_id": "raddet/009304",
+    "peak_power": 73999278.59542131,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08027837795584254
+   },
+   {
+    "record_id": "raddet/009305",
+    "peak_power": 72508368.91596317,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.008115123703273042
+   },
+   {
+    "record_id": "raddet/009306",
+    "peak_power": 73894943.73226786,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07415074671486525
+   },
+   {
+    "record_id": "raddet/009307",
+    "peak_power": 73478388.36324717,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.04959974045383716
+   },
+   {
+    "record_id": "raddet/009308",
+    "peak_power": 72664489.7531836,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0012258019869264233
+   },
+   {
+    "record_id": "raddet/009309",
+    "peak_power": 73969949.04259683,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07855671415878075
+   },
+   {
+    "record_id": "raddet/009310",
+    "peak_power": 73597503.41256571,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.05663434270122496
+   },
+   {
+    "record_id": "raddet/009311",
+    "peak_power": 73858757.3973191,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07202348685164522
+   },
+   {
+    "record_id": "raddet/009312",
+    "peak_power": 73878841.81655978,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07320430372542852
+   },
+   {
+    "record_id": "raddet/009313",
+    "peak_power": 72527081.68419836,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.006994452584984939
+   },
+   {
+    "record_id": "raddet/009314",
+    "peak_power": 73563143.98258138,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.054606339783484996
+   },
+   {
+    "record_id": "raddet/009315",
+    "peak_power": 73800893.61546159,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06861972390398052
+   },
+   {
+    "record_id": "raddet/009316",
+    "peak_power": 74143979.50016618,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08876243929624737
+   },
+   {
+    "record_id": "raddet/009317",
+    "peak_power": 72309258.13222171,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.020057422568051084
+   },
+   {
+    "record_id": "raddet/009318",
+    "peak_power": 74182958.31601334,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09104500310730734
+   },
+   {
+    "record_id": "raddet/009319",
+    "peak_power": 74144305.17389609,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.08878151542274218
+   },
+   {
+    "record_id": "raddet/009320",
+    "peak_power": 75031969.7791903,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1404669982605441
+   },
+   {
+    "record_id": "raddet/009321",
+    "peak_power": 73819671.14730932,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06972458060498564
+   },
+   {
+    "record_id": "raddet/009322",
+    "peak_power": 73199122.80929686,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.03306228564596469
+   },
+   {
+    "record_id": "raddet/009323",
+    "peak_power": 73924642.71179603,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07589586093295637
+   },
+   {
+    "record_id": "raddet/009324",
+    "peak_power": 72660210.35687663,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0009700274075020909
+   },
+   {
+    "record_id": "raddet/009325",
+    "peak_power": 73541720.88503957,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.053341400908509605
+   },
+   {
+    "record_id": "raddet/009326",
+    "peak_power": 74263276.10633877,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09574456004473977
+   },
+   {
+    "record_id": "raddet/009327",
+    "peak_power": 74435029.60192584,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.10577717315320855
+   },
+   {
+    "record_id": "raddet/009328",
+    "peak_power": 73958329.02582741,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.07787442281613069
+   },
+   {
+    "record_id": "raddet/009329",
+    "peak_power": 74391961.2736025,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1032636051844267
+   },
+   {
+    "record_id": "raddet/009330",
+    "peak_power": 75304762.17928816,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.1562279320723098
+   },
+   {
+    "record_id": "raddet/009331",
+    "peak_power": 74298849.47891714,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.09782440639156363
+   },
+   {
+    "record_id": "raddet/009332",
+    "peak_power": 72316858.5053742,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.019600962808181098
+   },
+   {
+    "record_id": "raddet/009333",
+    "peak_power": 72132583.48649429,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.03068161028770547
+   },
+   {
+    "record_id": "raddet/009334",
+    "peak_power": 72763313.17064714,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.007128176997825522
+   },
+   {
+    "record_id": "raddet/009335",
+    "peak_power": 72247339.05696893,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.02377791888220341
+   },
+   {
+    "record_id": "raddet/009336",
+    "peak_power": 71583480.4608555,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.0638683770148329
+   },
+   {
+    "record_id": "raddet/009337",
+    "peak_power": 74696660.9613192,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.12101540612971365
+   },
+   {
+    "record_id": "raddet/009338",
+    "peak_power": 72643982.99787642,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0
+   },
+   {
+    "record_id": "raddet/009339",
+    "peak_power": 72004640.80512333,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.038391598513969866
+   },
+   {
+    "record_id": "raddet/009340",
+    "peak_power": 71790587.04166053,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.05132143469293019
+   },
+   {
+    "record_id": "raddet/009341",
+    "peak_power": 70779970.5427766,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.1128927054680638
+   },
+   {
+    "record_id": "raddet/009342",
+    "peak_power": 71032626.26657724,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09741776103663388
+   },
+   {
+    "record_id": "raddet/009343",
+    "peak_power": 72294299.88512515,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.02095591832918249
+   },
+   {
+    "record_id": "raddet/009344",
+    "peak_power": 69878982.6146822,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.16853074746967842
+   },
+   {
+    "record_id": "raddet/009345",
+    "peak_power": 71398385.69099067,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.07511255562975953
+   },
+   {
+    "record_id": "raddet/009346",
+    "peak_power": 71097370.90584016,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09346106757726298
+   },
+   {
+    "record_id": "raddet/009347",
+    "peak_power": 72154626.26655698,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.029354665531078183
+   },
+   {
+    "record_id": "raddet/009348",
+    "peak_power": 72194305.85846424,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.026967030515029872
+   },
+   {
+    "record_id": "raddet/009349",
+    "peak_power": 73585638.26829197,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.05593413116376413
+   },
+   {
+    "record_id": "raddet/009350",
+    "peak_power": 72130618.3658688,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.03079992750692921
+   },
+   {
+    "record_id": "raddet/009351",
+    "peak_power": 71196900.24028994,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.08738562301577646
+   },
+   {
+    "record_id": "raddet/009352",
+    "peak_power": 72566875.63419436,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.004612231622909025
+   },
+   {
+    "record_id": "raddet/009353",
+    "peak_power": 73101598.49185659,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.027272255520002942
+   },
+   {
+    "record_id": "raddet/009354",
+    "peak_power": 72276676.2195828,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.022014756131912738
+   },
+   {
+    "record_id": "raddet/009355",
+    "peak_power": 71935610.32172251,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.04255715472048883
+   },
+   {
+    "record_id": "raddet/009356",
+    "peak_power": 73815567.14994286,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.06948312830253893
+   },
+   {
+    "record_id": "raddet/009357",
+    "peak_power": 72260327.54757167,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.022997222612620313
+   },
+   {
+    "record_id": "raddet/009358",
+    "peak_power": 71971507.99180792,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.04039045712590855
+   },
+   {
+    "record_id": "raddet/009359",
+    "peak_power": 72494916.53611086,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.008920939149022188
+   },
+   {
+    "record_id": "raddet/009360",
+    "peak_power": 73184666.44449832,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.03220449674559455
+   },
+   {
+    "record_id": "raddet/009361",
+    "peak_power": 70801617.32113358,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11156469712933702
+   },
+   {
+    "record_id": "raddet/009362",
+    "peak_power": 73187779.22733045,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.032389212441415266
+   },
+   {
+    "record_id": "raddet/009363",
+    "peak_power": 70664148.04785372,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.12000520787102309
+   },
+   {
+    "record_id": "raddet/009364",
+    "peak_power": 73129983.51416111,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.02895827416813247
+   },
+   {
+    "record_id": "raddet/009365",
+    "peak_power": 73334651.18094753,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.041095824826696464
+   },
+   {
+    "record_id": "raddet/009366",
+    "peak_power": 71071993.98804782,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09501147971987887
+   },
+   {
+    "record_id": "raddet/009367",
+    "peak_power": 71742476.88732268,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.05423281619109925
+   },
+   {
+    "record_id": "raddet/009368",
+    "peak_power": 73180197.0719228,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": 0.03193926589700322
+   },
+   {
+    "record_id": "raddet/009369",
+    "peak_power": 72684993.21872424,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0024510615229338816
+   },
+   {
+    "record_id": "raddet/009370",
+    "peak_power": 72017077.45553634,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.037641549323280406
+   },
+   {
+    "record_id": "raddet/009371",
+    "peak_power": 73207556.8258345,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.033562651729773976
+   },
+   {
+    "record_id": "raddet/009372",
+    "peak_power": 72954697.45665956,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.018536126745759073
+   },
+   {
+    "record_id": "raddet/009373",
+    "peak_power": 70158794.57767606,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.1511752944400155
+   },
+   {
+    "record_id": "raddet/009374",
+    "peak_power": 72909225.11093952,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.01582834416079473
+   },
+   {
+    "record_id": "raddet/009375",
+    "peak_power": 74272653.48391366,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.09629291805510755
+   },
+   {
+    "record_id": "raddet/009376",
+    "peak_power": 72131155.32697296,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.03076759749481809
+   },
+   {
+    "record_id": "raddet/009377",
+    "peak_power": 69952881.96176745,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.16394036576511675
+   },
+   {
+    "record_id": "raddet/009378",
+    "peak_power": 71496046.1362481,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.06917622927513796
+   },
+   {
+    "record_id": "raddet/009379",
+    "peak_power": 71035431.1447861,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.09724627377188584
+   },
+   {
+    "record_id": "raddet/009380",
+    "peak_power": 75306204.57078744,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.1563111162762783
+   },
+   {
+    "record_id": "raddet/009381",
+    "peak_power": 72773380.17082238,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.007728993538591821
+   },
+   {
+    "record_id": "raddet/009382",
+    "peak_power": 70992323.90031171,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.0998825527124645
+   },
+   {
+    "record_id": "raddet/009383",
+    "peak_power": 73556103.69094323,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": 0.054190682436112275
+   },
+   {
+    "record_id": "raddet/009384",
+    "peak_power": 71519219.47559834,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.06776881959029049
+   },
+   {
+    "record_id": "raddet/009385",
+    "peak_power": 70508717.024426,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.1295683577061214
+   },
+   {
+    "record_id": "raddet/009386",
+    "peak_power": 70175198.62546633,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.150159975584472
+   },
+   {
+    "record_id": "raddet/009387",
+    "peak_power": 70544202.29960825,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.12738321193254334
+   },
+   {
+    "record_id": "raddet/009388",
+    "peak_power": 72787374.82746173,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0085640815639866
+   },
+   {
+    "record_id": "raddet/009389",
+    "peak_power": 70486774.78450131,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.13092008798835356
+   },
+   {
+    "record_id": "raddet/009390",
+    "peak_power": 72725963.2367787,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.004898339729347756
+   },
+   {
+    "record_id": "raddet/009391",
+    "peak_power": 71734683.83874343,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.05470459552954881
+   },
+   {
+    "record_id": "raddet/009392",
+    "peak_power": 70929438.10662268,
+    "local_max": false,
+    "label_overlap": true,
+    "db_from_median": -0.10373128663324549
+   },
+   {
+    "record_id": "raddet/009393",
+    "peak_power": 71171696.14337777,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.08892332172219172
+   },
+   {
+    "record_id": "raddet/009394",
+    "peak_power": 70707350.0045991,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11735087198798286
+   },
+   {
+    "record_id": "raddet/009395",
+    "peak_power": 72222064.80257513,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.025297475139263982
+   },
+   {
+    "record_id": "raddet/009396",
+    "peak_power": 71559383.61061215,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.06533057064336974
+   },
+   {
+    "record_id": "raddet/009397",
+    "peak_power": 72185869.0378859,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.02747458837451852
+   },
+   {
+    "record_id": "raddet/009398",
+    "peak_power": 72062528.50316238,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.03490151686634213
+   },
+   {
+    "record_id": "raddet/009399",
+    "peak_power": 72454056.10826586,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.011369450302650961
+   },
+   {
+    "record_id": "raddet/009400",
+    "peak_power": 71630428.89661263,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.06102096541840656
+   },
+   {
+    "record_id": "raddet/009401",
+    "peak_power": 72027531.33036901,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.037011180689483635
+   },
+   {
+    "record_id": "raddet/009402",
+    "peak_power": 73021841.67582725,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": 0.022531339415684824
+   },
+   {
+    "record_id": "raddet/009403",
+    "peak_power": 72659339.20404673,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.0009179577626303415
+   },
+   {
+    "record_id": "raddet/009404",
+    "peak_power": 70788723.45300315,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11235567422061256
+   },
+   {
+    "record_id": "raddet/009405",
+    "peak_power": 70700792.99622177,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.1177536313337574
+   },
+   {
+    "record_id": "raddet/009406",
+    "peak_power": 72262487.47862671,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.022867409733125354
+   },
+   {
+    "record_id": "raddet/009407",
+    "peak_power": 73026508.8858702,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.02280891099529291
+   },
+   {
+    "record_id": "raddet/009408",
+    "peak_power": 71930125.55127929,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.042888297577361144
+   },
+   {
+    "record_id": "raddet/009409",
+    "peak_power": 70868463.23519373,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.10746632806587297
+   },
+   {
+    "record_id": "raddet/009410",
+    "peak_power": 71261761.02285625,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.0834309765720839
+   },
+   {
+    "record_id": "raddet/009411",
+    "peak_power": 71858036.30096531,
+    "local_max": true,
+    "label_overlap": true,
+    "db_from_median": -0.0472430324645428
+   },
+   {
+    "record_id": "raddet/009412",
+    "peak_power": 72582414.73054884,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.0036823553817865937
+   },
+   {
+    "record_id": "raddet/009413",
+    "peak_power": 72214190.82496308,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.025770988526338665
+   },
+   {
+    "record_id": "raddet/009414",
+    "peak_power": 70732729.74007247,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11579229266500063
+   },
+   {
+    "record_id": "raddet/009415",
+    "peak_power": 71975148.65246223,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.04017077590929049
+   },
+   {
+    "record_id": "raddet/009416",
+    "peak_power": 69901159.07228301,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.16715271005624238
+   },
+   {
+    "record_id": "raddet/009417",
+    "peak_power": 72445836.81872414,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.011862147988599137
+   },
+   {
+    "record_id": "raddet/009418",
+    "peak_power": 71869735.35861395,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.04653602419010447
+   },
+   {
+    "record_id": "raddet/009419",
+    "peak_power": 72809242.092175,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.009868621830323209
+   },
+   {
+    "record_id": "raddet/009420",
+    "peak_power": 72881383.02026486,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": 0.014169572495507762
+   },
+   {
+    "record_id": "raddet/009421",
+    "peak_power": 71098319.88478279,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09340310009372768
+   },
+   {
+    "record_id": "raddet/009422",
+    "peak_power": 72408815.54986691,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.014082046744340306
+   },
+   {
+    "record_id": "raddet/009423",
+    "peak_power": 70242861.31394386,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.14597454038851526
+   },
+   {
+    "record_id": "raddet/009424",
+    "peak_power": 69409972.14458491,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.19777777991016465
+   },
+   {
+    "record_id": "raddet/009425",
+    "peak_power": 70755719.88716745,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11438094154260561
+   },
+   {
+    "record_id": "raddet/009426",
+    "peak_power": 71064452.62848975,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09547232856240381
+   },
+   {
+    "record_id": "raddet/009427",
+    "peak_power": 71323910.9794998,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.07964498818332957
+   },
+   {
+    "record_id": "raddet/009428",
+    "peak_power": 72251343.46033145,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.023537212149960685
+   },
+   {
+    "record_id": "raddet/009429",
+    "peak_power": 70773295.294533,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.11330230724765308
+   },
+   {
+    "record_id": "raddet/009430",
+    "peak_power": 72320330.8786435,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.019392436556160082
+   },
+   {
+    "record_id": "raddet/009431",
+    "peak_power": 71306414.8770888,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.08071046436791936
+   },
+   {
+    "record_id": "raddet/009432",
+    "peak_power": 70483250.67545533,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.13113722650522935
+   },
+   {
+    "record_id": "raddet/009433",
+    "peak_power": 71046487.23702647,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.09657038201651288
+   },
+   {
+    "record_id": "raddet/009434",
+    "peak_power": 70688771.49823189,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.1184921399036737
+   },
+   {
+    "record_id": "raddet/009435",
+    "peak_power": 69129086.15982531,
+    "local_max": false,
+    "label_overlap": false,
+    "db_from_median": -0.21538832265087796
+   },
+   {
+    "record_id": "raddet/009436",
+    "peak_power": 70901323.16812514,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.10545307994503808
+   },
+   {
+    "record_id": "raddet/009437",
+    "peak_power": 70703837.42498612,
+    "local_max": true,
+    "label_overlap": false,
+    "db_from_median": -0.1175666249239709
+   }
+  ],
+  "rejected_target_frames": 74
+ }
+}

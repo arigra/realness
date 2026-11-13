@@ -1,0 +1,53 @@
+diff --git a/mvrss/learners/model.py b/mvrss/learners/model.py
+index 64a7fff..2bc60ff 100755
+--- a/mvrss/learners/model.py
++++ b/mvrss/learners/model.py
+@@ -90,8 +90,21 @@ class Model(nn.Module):
+         iteration = 0
+         best_val_prec = 0
+         self.net.to(self.device)
++        # [realness patch] resume support only; training itself unchanged
++        start_epoch = 0
++        best_epoch = 0  # [realness patch] early stop: MVRSS_PATIENCE epochs without a better val prec
++        patience = int(os.environ.get('MVRSS_PATIENCE', '0'))
++        resume_path = os.environ.get('MVRSS_RESUME')
++        if resume_path and os.path.isfile(resume_path):
++            state = torch.load(resume_path, map_location=self.device)
++            self.net.load_state_dict(state['net'])
++            optimizer.load_state_dict(state['optimizer'])
++            scheduler.load_state_dict(state['scheduler'])
++            start_epoch, iteration, best_val_prec = state['epoch'] + 1, state['iteration'], state['best_val_prec']
++            best_epoch = state.get('best_epoch', state['epoch'])
++            print('resumed after epoch', state['epoch'] + 1, 'iteration', iteration, 'best val prec', best_val_prec, flush=True)
+ 
+-        for epoch in range(self.nb_epochs):
++        for epoch in range(start_epoch, self.nb_epochs):
+             if epoch % self.lr_step == 0 and epoch != 0:
+                 scheduler.step()
+             for _, sequence_data in enumerate(train_loader):
+@@ -207,6 +220,7 @@ class Model(nn.Module):
+ 
+                         if val_metrics['global_prec'] > best_val_prec and iteration > 0:
+                             best_val_prec = val_metrics['global_prec']
++                            best_epoch = epoch
+                             test_metrics = self.tester.predict(self.net, test_loader,
+                                                                add_temp=add_temp)
+                             print('[Epoch {}/{}] Test losses: '
+@@ -230,6 +244,17 @@ class Model(nn.Module):
+                             self._save_results()
+                         self.net.train()  # Train mode after evaluation process
+                     iteration += 1
++            if resume_path:  # [realness patch] end-of-epoch resume state
++                tmp = resume_path + '.tmp'
++                torch.save({'net': self.net.state_dict(), 'optimizer': optimizer.state_dict(),
++                            'scheduler': scheduler.state_dict(), 'epoch': epoch, 'iteration': iteration,
++                            'best_val_prec': best_val_prec, 'best_epoch': best_epoch}, tmp)
++                os.replace(tmp, resume_path)
++                print('[Epoch {}/{}] saved resume state'.format(epoch + 1, self.nb_epochs), flush=True)
++            if patience and epoch - best_epoch >= patience:
++                print('[Epoch {}/{}] early stop: no better val prec since epoch {}'.format(
++                    epoch + 1, self.nb_epochs, best_epoch + 1), flush=True)
++                break
+         self.writer.close()
+ 
+     def _init_weights(self, m):

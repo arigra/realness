@@ -1,0 +1,9 @@
+# Official repos are cloned here (see patches/UPSTREAM.txt); only our scripts, configs and patches are tracked.
+/RADIal/
+/MVRSS/
+/RADDet/
+/.venv*/
+/papers/
+/runs/
+/logs/
+/STOP
